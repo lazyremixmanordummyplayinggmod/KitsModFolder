@@ -9,12 +9,12 @@ function onEvent(name, value1, value2)
         if botherme then
             debugPrint('Go to custom_events/transparenthelp.lua to use transparency events!')
         end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
             bugged = true
         else
             bugged = false
         end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
             if value1 == 1 then
                 setPropertyFromClass("openfl.Lib", "application.window.fullscreen", false)
                 setPropertyFromClass("openfl.Lib", "application.window.borderless", true)

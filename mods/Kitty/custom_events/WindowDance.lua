@@ -11,12 +11,12 @@ local v2 = 0
 function onEvent(name, value1, value2)
     if name == "WindowDance" then
         a = true
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
             bugged = true
         else
             bugged = false
         end
-            if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+            if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
             value1 = tonumber(value1);
             value2 = tonumber(value2);
             v2 = tonumber(value2);
@@ -53,7 +53,7 @@ function onEvent(name, value1, value2)
 end
 function onUpdatePost(elapsed)
     if a then
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true then
             if dance then
                 Elap = Elap + (elapsed*v2)
                 setPropertyFromClass("openfl.Lib", "application.window.fullscreen", false)

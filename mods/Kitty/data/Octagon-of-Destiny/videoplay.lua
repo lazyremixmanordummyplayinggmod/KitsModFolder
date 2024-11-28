@@ -1,6 +1,6 @@
 local offset = 0
 function onSongStart()
-    offset = getPropertyFromClass('ClientPrefs','noteOffset')
+    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')
     setProperty('showComboNum', false)
     setProperty('showRating', false)
     runTimer('vid',((offset-75)/1000))

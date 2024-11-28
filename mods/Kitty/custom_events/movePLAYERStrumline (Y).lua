@@ -7,17 +7,17 @@ function onEvent(name, value1, value2)
     if name == 'movePLAYERStrumline (Y)' then
         value1 = tonumber(value1)
         value2 = tonumber(value2)
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
             bugged = true
         else
             bugged = false
         end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
             if r1t then
-                if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
-                    debugPrint('Hey bro, turn off downscroll or middlescroll in clientPrefs so you dont have visual bugs!')
-                    debugPrint('Hey bro, turn off downscroll or middlescroll in clientPrefs so you dont have visual bugs!')
-                    debugPrint('Hey bro, turn off downscroll or middlescroll in clientPrefs so you dont have visual bugs!')
+                if getPropertyFromClass("backend.ClientPrefs", "data.downScroll") == true or getPropertyFromClass("backend.ClientPrefs", "data.middleScroll") == true then
+                    debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+                    debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+                    debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
                     r1t = false
                 end
             end

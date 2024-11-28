@@ -11,12 +11,12 @@ local v1 = false
 local v2 = false
 function onEvent(name, value1, value2)
     if name == "TiltBGTimed" then
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
             bugged = true
         else
             bugged = false
         end
-            if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+            if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
         event = "TiltBGTimed"
         value1 = tonumber(value1) or 0;
         value2 = tonumber(value2) or 0;
@@ -65,12 +65,12 @@ end
 end
 
 function onBeatHit()
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
         if v2 then
             thing = thing * -1
             doTweenAngle('rotate', 'camHUD', thing * 5, crochet / 1000, 'quadInOut')

@@ -22,7 +22,7 @@ function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to
 end
 
 function onSongStart()
-    if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
         bugged = true
     else
         bugged = false
@@ -51,12 +51,12 @@ end
 
 function onEvent(name, value1, value2)
     if name == "DodgeEvent" then
-        if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
             bugged = true
         else
             bugged = false
         end
-            if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+            if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
             --Get Dodge time
             DodgeTime = (value1)
             Dodged = false
@@ -79,12 +79,12 @@ end
 
 function onUpdate()
     if allowCountdown then
-        if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
             bugged = true
         else
             bugged = false
         end
-        if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) then
             if bugged or force then
                 if mouseOverlaps('ddgg', 'camOther') and mouseClicked("left") then
                     sdgd = true
@@ -113,12 +113,12 @@ end
 
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
     if tag == 'Died' and Dodged == false then
         setProperty('health', getProperty('health')-.8)
         removeLuaSprite('dodge')

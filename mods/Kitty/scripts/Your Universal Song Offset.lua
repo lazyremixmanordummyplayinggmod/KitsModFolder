@@ -1,12 +1,12 @@
-offset = 150
+offset = 75
 local newOff = 0
 local c = true -- set to True to use custom offsets
 
 function onCreate()
     if not c then
-        offset = getPropertyFromClass('ClientPrefs','noteOffset')
+        offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')
     elseif c then
-        setPropertyFromClass('ClientPrefs','noteOffset',offset) --Number is YOUR Song Offset
+        setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset) --Number is YOUR Song Offset
     end
     for _, curS in pairs({'marshmallow-(alone)','alan-becker-(sea-shanty-edit)','alan-becker-(sea-shanty)'}) do
         if songName == curS then
@@ -22,7 +22,7 @@ function onCreate()
         end
     end
     if newOff ~= 0 then
-        setPropertyFromClass('ClientPrefs','noteOffset',offset+newOff)
+        setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset+newOff)
     end
 end
 
@@ -36,6 +36,6 @@ end
 
 function onDestroy()
     if c then
-        setPropertyFromClass('ClientPrefs','noteOffset',offset)
+        setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset)
     end
 end

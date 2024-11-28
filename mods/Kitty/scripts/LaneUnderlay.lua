@@ -65,7 +65,7 @@ function getVarr(fo)
 
 	simpleishText('NavigationText', 'CONTROLS: "SPACE" to select | "BACKSPACE" to deselect | Arrow Keys to navigate', screenWidth, 0, 680, 25, 'center', 'other')
 
-    if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
         bugged = true
     else
         bugged = false
@@ -151,7 +151,7 @@ function mouseOverlaps(tag, camera)
 end
 
 function buttonStuff()
-	if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
         bugged = true
     else
         bugged = false

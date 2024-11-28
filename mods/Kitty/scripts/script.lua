@@ -82,31 +82,31 @@ function onSongStart()
         setTextSize("drawfps", 20)
         setObjectCamera("drawfps", 'other')
         addLuaText("drawfps")
-    offset = getPropertyFromClass('ClientPrefs','noteOffset')-changeOffset
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' and botherme then
+    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')-changeOffset
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == 'ratingPenalty' and botherme then
         debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? WILL NOT penalize player for bad ratings unless you change the setting to (local penalizeanyway = true) in mods/kitty/scripts/script.lua!')
         bugged = true
-    elseif not botherme and getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' then
+    elseif not botherme and getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == 'ratingPenalty' then
         bugged = true
     end
-    if getPropertyFromClass('ClientPrefs','assetMovement') == 'assetMovement' and botherme then
+    if getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == 'assetMovement' and botherme then
         debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? Modcharts will CONTINUE to be used unless you change the setting to (local visuals = false) in mods/kitty/scripts/script.lua!')        
         bugged = true
-    elseif not botherme and getPropertyFromClass('ClientPrefs','assetMovement') == 'assetMovement' then
+    elseif not botherme and getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == 'assetMovement' then
         bugged = true
     end
-    if getPropertyFromClass('ClientPrefs','mechanics') == 'mechanics' and botherme then
+    if getPropertyFromClass('backend.ClientPrefs','data.mechanics') == 'mechanics' and botherme then
         debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? Mechanics will CONTINUE to be used unless you change the setting to (local mechanics = false) in mods/kitty/scripts/script.lua!')
         bugged = true
-    elseif not botherme and getPropertyFromClass('ClientPrefs','mechanics') == 'mechanics' then
+    elseif not botherme and getPropertyFromClass('backend.ClientPrefs','data.mechanics') == 'mechanics' then
         bugged = true
     end
     debugPrint('- - -')
-    debugPrint('Song Offset to Mains: ','(',changeOffset,')')
-    debugPrint('Main Offset: ','(',offset,')')
+    debugPrint('Song Offset to Mains: '..'('..changeOffset..')')
+    debugPrint('Main Offset: '..'('..offset..')')
     debugPrint('- - -')
     debugPrint(' | ')
     debugPrint(' | ')
@@ -125,12 +125,12 @@ function onSongStart()
 end
 
 function goodNoteHit()
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == 'ratingPenalty' then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == true or (bugged and penalizeanyway) then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == true or (bugged and penalizeanyway) then
         if getProperty('ratingPercent') < 0.9 and getProperty('ratingPercent') > 0.85 then
             setProperty('health', getProperty('health') + 0.01)
         elseif getProperty('ratingPercent') < 0.85 and getProperty('ratingPercent') > 0.8 then
@@ -146,12 +146,12 @@ function goodNoteHit()
 end
 
 function noteMiss()
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == 'ratingPenalty' then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == true or (bugged and penalizeanyway) then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == true or (bugged and penalizeanyway) then
         if getProperty('ratingPercent') < 0.86 and getProperty('ratingPercent') > 0.8 then
             setProperty('health', getProperty('health') - 0.1)
         elseif getProperty('ratingPercent') < 0.78 and getProperty('ratingPercent') > 0.7 then
@@ -167,12 +167,12 @@ function noteMiss()
 end
 
 function onEvent(name, value1, value2)
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
         if name == 'newArrowToggler' then
             value1 = tonumber(value1)
             value2 = tonumber(value2)

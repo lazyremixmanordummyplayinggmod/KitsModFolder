@@ -4,7 +4,7 @@ local shaderTween = {}
 local changeCharacterStrum = {}
 local enableShader = true
 function onCreate()
-    enableShader = getPropertyFromClass('ClientPrefs','shaders')
+    enableShader = getPropertyFromClass('backend.ClientPrefs','data.shaders')
     if enableShader == nil then
         enableShader = true
     end
@@ -26,14 +26,14 @@ function createShader(lua,s,obrigatory)--(tag, shader, obrigatory)
             end
             if not enableShader then
                 if obrigatory then
-                    setPropertyFromClass('ClientPrefs','shaders',true)
+                    setPropertyFromClass('backend.ClientPrefs','data.shaders',true)
                 end
             end
             initLuaShader(s)
             makeLuaSprite(lua,nil)
             loadShader(lua,s)
             if obrigatory and not enableShader then
-                setPropertyFromClass('ClientPrefs','shaders',false)
+                setPropertyFromClass('backend.ClientPrefs','data.shaders',false)
             end
         end
     end

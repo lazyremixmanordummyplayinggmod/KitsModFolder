@@ -4,25 +4,25 @@ end
 
 function onCreatePost()
     script = false
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
-        dscrolm = getPropertyFromClass('ClientPrefs', 'downScroll')
-        mscrolm = getPropertyFromClass('ClientPrefs', 'middleScroll')
-        dscrol = getPropertyFromClass('ClientPrefs', 'downScroll')
-        mscrol = getPropertyFromClass('ClientPrefs', 'middleScroll')
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
+        dscrolm = getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')
+        mscrolm = getPropertyFromClass('backend.ClientPrefs', 'data.middleScroll')
+        dscrol = getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')
+        mscrol = getPropertyFromClass('backend.ClientPrefs', 'data.middleScroll')
         script = true
     end
 end
 
 function onSongStart()
-    if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
-        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
-        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
-        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
+    if getPropertyFromClass("backend.ClientPrefs", "data.downScroll") == true or getPropertyFromClass("backend.ClientPrefs", "data.middleScroll") == true then
+        debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+        debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+        debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
     end
     dosx0 = defaultOpponentStrumX0
     dosx1 = defaultOpponentStrumX1

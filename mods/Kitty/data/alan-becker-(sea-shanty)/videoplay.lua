@@ -49,7 +49,7 @@ function onSongStart()
     setProperty('timeTxt.visible', false)
     setProperty('showRating', false);
     setProperty('showComboNum', false);
-    offset = getPropertyFromClass('ClientPrefs','noteOffset')
+    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')
     setProperty('showComboNum', false)
     setProperty('showRating', false)
     runTimer('vid',offset/1000)

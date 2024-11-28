@@ -3,12 +3,12 @@ function getVarr(vis)
 end
 local r1t = true
 function mysplit (inputstr, sep)
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
     if sep == nil then
         sep = "%s";
     end
@@ -23,17 +23,17 @@ end
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == "MoveArrow" then
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
             bugged = true
         else
             bugged = false
         end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
             if r1t then
-                if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
-                    debugPrint('Hey bro, turn off downscroll or middlescroll in clientPrefs so you dont have visual bugs!')
-                    debugPrint('Hey bro, turn off downscroll or middlescroll in clientPrefs so you dont have visual bugs!')
-                    debugPrint('Hey bro, turn off downscroll or middlescroll in clientPrefs so you dont have visual bugs!')
+                if getPropertyFromClass("backend.ClientPrefs", "data.downScroll") == true or getPropertyFromClass("backend.ClientPrefs", "data.middleScroll") == true then
+                    debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+                    debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+                    debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
                     for i = 0,3 do
                         setPropertyFromGroup('opponentStrums',i,'downScroll',false)
                         setPropertyFromGroup('playerStrums',i,'downScroll',false)
