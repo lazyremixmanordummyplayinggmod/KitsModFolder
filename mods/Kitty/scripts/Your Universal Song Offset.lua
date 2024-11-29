@@ -10,7 +10,7 @@ function onCreate()
     end
     for _, curS in pairs({'marshmallow-(alone)','alan-becker-(sea-shanty-edit)','alan-becker-(sea-shanty)'}) do
         if songName == curS then
-            newOff = -30 --Number is YOUR Song Offset
+            newOff = -25 --Number is YOUR Song Offset
         elseif songName == 'sandstorm' or songName == 'the-living-tombstone-(FNaF1)' then
             newOff = 0 --Number is YOUR Song Offset
         elseif songName == 'TON-GD-Level' or songName == 'alan-becker-(rush-e)' or songName == 'run-run' then
@@ -19,6 +19,8 @@ function onCreate()
             newOff = -70 --Number is YOUR Song Offset
         elseif songName == 'Stress' or songName == 'Ugh' then
             newOff = 35 --Number is YOUR Song Offset
+        elseif songName == 'Octagon of Destiny' then
+            newOff = -10 --Number is YOUR Song Offset
         end
     end
     if newOff ~= 0 then
