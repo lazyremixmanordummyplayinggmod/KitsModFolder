@@ -168,6 +168,14 @@ function noteMiss()
 end
 
 function onEvent(name, value1, value2)
+    if name == 'Add Camera Zoom' then
+        if stopui then
+            setProperty('camHUD.zoom',getProperty('camHUD.zoom')+tonumber(value1))
+        end
+        if stopcam then
+            setProperty('camGame.zoom',getProperty('camGame.zoom')+tonumber(value2))
+        end
+    end
     if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
