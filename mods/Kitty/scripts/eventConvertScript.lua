@@ -52,14 +52,14 @@ function onEvent(name, value1, value2)
     value2 = tonumber(value2);
    if name == "ArrowToggling" then
     if run1time == true then
-        if getPropertyFromClass("backend.ClientPrefs", "data.downScroll") == true or getPropertyFromClass("backend.ClientPrefs", "data.middleScroll") == true then
-            debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
-            debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
-            debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+        if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
+            debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
+            debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
+            debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
         end
     end
     run1time = false
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false

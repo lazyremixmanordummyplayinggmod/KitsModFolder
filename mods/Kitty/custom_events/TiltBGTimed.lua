@@ -11,7 +11,7 @@ local v1 = false
 local v2 = false
 function onEvent(name, value1, value2)
     if name == "TiltBGTimed" then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
             bugged = true
         else
             bugged = false
@@ -65,7 +65,7 @@ end
 end
 
 function onBeatHit()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false

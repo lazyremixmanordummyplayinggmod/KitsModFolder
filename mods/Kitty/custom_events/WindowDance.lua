@@ -11,7 +11,7 @@ local v2 = 0
 function onEvent(name, value1, value2)
     if name == "WindowDance" then
         a = true
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
             bugged = true
         else
             bugged = false

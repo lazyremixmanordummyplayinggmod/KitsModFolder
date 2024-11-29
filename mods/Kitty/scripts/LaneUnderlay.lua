@@ -51,50 +51,50 @@ function getVarr(fo)
 		run1 = false
 	callScript("custom_events/DodgeForBF", "cdal", {allowCountdown})
 
-	simpleishGraphic('BG', 0, 0, screenWidth, screenHeight, '06000e', 'other')
+	simpleishGraphic('BG', 0, 0, screenWidth, screenHeight, '06000e', 'hud')
 
-	simpleishText('Song Start', 'Begin Song?', screenWidth, 0, 90, 60, 'center', 'other')
+	simpleishText('Song Start', 'Begin Song?', screenWidth, 0, 90, 60, 'center', 'hud')
 
-	simpleishText('UnderLaySettingsHeader', 'UnderLay Settings', screenWidth, 0, 225, 60, 'center', 'other')
+	simpleishText('UnderLaySettingsHeader', 'UnderLay Settings', screenWidth, 0, 225, 60, 'center', 'hud')
 
-	simpleishText('UnderLayTypeSetting', 'UnderLay Type: [ '..underlayTypeSettings..' ]', screenWidth, 0, 360, 40, 'center', 'other')
-	simpleishText('UnderLayOpacitySetting', 'UnderLay Opacity: [ '..visualLaneOpacity..'% ]', screenWidth, 0, 450, 40, 'center', 'other')
+	simpleishText('UnderLayTypeSetting', 'UnderLay Type: [ '..underlayTypeSettings..' ]', screenWidth, 0, 360, 40, 'center', 'hud')
+	simpleishText('UnderLayOpacitySetting', 'UnderLay Opacity: [ '..visualLaneOpacity..'% ]', screenWidth, 0, 450, 40, 'center', 'hud')
 
-	simpleishText('AssistText', '(PlaceHolderText)', screenWidth, 0, 680, 30, 'center', 'other')
+	simpleishText('AssistText', '(PlaceHolderText)', screenWidth, 0, 680, 30, 'center', 'hud')
 	setProperty('AssistText.alpha', 0.9)
 
-	simpleishText('NavigationText', 'CONTROLS: "SPACE" to select | "BACKSPACE" to deselect | Arrow Keys to navigate', screenWidth, 0, 680, 25, 'center', 'other')
+	simpleishText('NavigationText', 'CONTROLS: "SHIFT" to select | "BACKSPACE" to deselect | Arrow Keys to navigate', screenWidth, 0, 680, 25, 'center', 'hud')
 
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false
     end
 	
     if bugged or force then
-		luasprite('up','me/buttons/button',(screenWidth/1.085)-120,(screenHeight/1.1625)-210,'other',0.5,0.5,0,0,'.',true)
-		luasprite('down','me/buttons/button',getProperty('up.x'),getProperty('up.y')+110,'other',0.5,0.5,0,0,'.',true)
-		luasprite('left','me/buttons/button',getProperty('up.x')-110,getProperty('up.y')+50,'other',0.5,0.5,0,0,'.',true)
-		luasprite('right','me/buttons/button',getProperty('up.x')+110,getProperty('up.y')+50,'other',0.5,0.5,0,0,'.',true)
-		luasprite('back','me/buttons/button',getProperty('up.x')-100,getProperty('up.y')-300,'other',0.5,0.5,0,0,'.',true)
-		luasprite('space','me/buttons/button',getProperty('up.x')+100,getProperty('up.y')-300,'other',0.5,0.5,0,0,'.',true)
-		luasprite('cc','me/buttons/button',getProperty('up.x')-1000,getProperty('up.y')-150,'other',0.5,0.5,0,0,'.',true)
-		luasprite('invert','me/buttons/button',getProperty('up.x')-1000,getProperty('up.y')+100,'other',0.5,0.5,0,0,'.',true)
+		luasprite('up','me/buttons/button',(screenWidth/1.085)-120,(screenHeight/1.1625)-210,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('down','me/buttons/button',getProperty('up.x'),getProperty('up.y')+110,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('left','me/buttons/button',getProperty('up.x')-110,getProperty('up.y')+50,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('right','me/buttons/button',getProperty('up.x')+110,getProperty('up.y')+50,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('back','me/buttons/button',getProperty('up.x')-100,getProperty('up.y')-300,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('space','me/buttons/button',getProperty('up.x')+100,getProperty('up.y')-300,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('cc','me/buttons/button',getProperty('up.x')-1000,getProperty('up.y')-150,'hud',0.5,0.5,0,0,'.',true)
+		luasprite('invert','me/buttons/button',getProperty('up.x')-1000,getProperty('up.y')+100,'hud',0.5,0.5,0,0,'.',true)
 
-		luatxt('txtup','Up', 0,(screenWidth/1.075)-100,(screenHeight/1.105)-210,'other',screenWidth/39,'.','.',true)
-		luatxt('txtdown','Down', 0,getProperty('txtup.x')-20,getProperty('txtup.y')+110,'other',screenWidth/39,'.','.',true)
-		luatxt('txtleft','Left', 0,getProperty('txtup.x')-130,getProperty('txtup.y')+50,'other',screenWidth/39,'.','.',true)
-		luatxt('txtright','Right', 0,getProperty('txtup.x')+85,getProperty('txtup.y')+50,'other',screenWidth/39,'.','.',true)
-		luatxt('txtback','Back', 0,getProperty('txtup.x')-120,getProperty('txtup.y')-300,'other',screenWidth/39,'.','.',true)
-		luatxt('txtspace','Space', 0,getProperty('txtup.x')+75,getProperty('txtup.y')-300,'other',screenWidth/39,'.','.',true)
-		luatxt('txtcc','CC', 0,getProperty('txtup.x')-1003,getProperty('txtup.y')-150,'other',screenWidth/39,'.','.',true)
-		luatxt('txtinv','I', 0,getProperty('txtup.x')-995,getProperty('txtup.y')+100,'other',screenWidth/39,'.','.',true)
+		luatxt('txtup','Up', 0,(screenWidth/1.075)-100,(screenHeight/1.105)-210,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtdown','Down', 0,getProperty('txtup.x')-20,getProperty('txtup.y')+110,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtleft','Left', 0,getProperty('txtup.x')-130,getProperty('txtup.y')+50,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtright','Right', 0,getProperty('txtup.x')+85,getProperty('txtup.y')+50,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtback','Back', 0,getProperty('txtup.x')-120,getProperty('txtup.y')-300,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtspace','Shift', 0,getProperty('txtup.x')+75,getProperty('txtup.y')-300,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtcc','CC', 0,getProperty('txtup.x')-1003,getProperty('txtup.y')-150,'hud',screenWidth/39,'.','.',true)
+		luatxt('txtinv','I', 0,getProperty('txtup.x')-995,getProperty('txtup.y')+100,'hud',screenWidth/39,'.','.',true)
 	end
-	luatxt('keyy','PRESS C TO CHANGE', 0,((screenWidth/1.075)-100)-1040,((screenHeight/1.105)-210),'other',screenWidth/80,'00FFFF','.',true)
-	luatxt('keyyInv','PRESS I TO CHANGE', 0,((screenWidth/1.075)-100)-1040,((screenHeight/1.105)),'other',screenWidth/80,'00FFFF','.',true)
-	luatxt('ifso','(If applicable)', 0,((screenWidth/1.075)-100)-1040,((screenHeight/1.105)-210)-20,'other',screenWidth/80,'808080','.',true)
-	luatxt('captiontxt','Captions: true', 0,((screenWidth/1.075)-100)-1080,((screenHeight/1.105)-210)-50,'other',screenWidth/39,'00FF00','.',true)
-	luatxt('invertxt','Caption Placement: Opponent', 0,((screenWidth/1.075)-100)-1080,((screenHeight/1.105)-60)+30,'other',screenWidth/39,'00FF00','.',true)
+	luatxt('keyy','PRESS C TO CHANGE', 0,((screenWidth/1.075)-100)-1040,((screenHeight/1.105)-210),'hud',screenWidth/80,'00FFFF','.',true)
+	luatxt('keyyInv','PRESS I TO CHANGE', 0,((screenWidth/1.075)-100)-1040,((screenHeight/1.105)),'hud',screenWidth/80,'00FFFF','.',true)
+	luatxt('ifso','(If applicable)', 0,((screenWidth/1.075)-100)-1040,((screenHeight/1.105)-210)-20,'hud',screenWidth/80,'808080','.',true)
+	luatxt('captiontxt','Captions: true', 0,((screenWidth/1.075)-100)-1080,((screenHeight/1.105)-210)-50,'hud',screenWidth/39,'00FF00','.',true)
+	luatxt('invertxt','Caption Placement: Opponent', 0,((screenWidth/1.075)-100)-1080,((screenHeight/1.105)-60)+30,'hud',screenWidth/39,'00FF00','.',true)
 end
 end
 
@@ -151,7 +151,7 @@ function mouseOverlaps(tag, camera)
 end
 
 function buttonStuff()
-	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false
@@ -257,7 +257,7 @@ function onUpdate()
 	if not allowCountdown then
         buttonStuff()
 
-	if (keyPress('SPACE') or spc) and selectedBeginSong then
+	if (keyPress('SHIFT') or spc) and selectedBeginSong then
 		for _, value in pairs({'txtup','txtdown','txtleft','txtright','txtback','txtspace','txtcc','captiontxt','ifso','keyy','keyyInv','invertxt','txtinv'}) do
             removeLuaText(value)
         end
@@ -282,7 +282,7 @@ function onUpdate()
 		allowCountdown = true
 		startCountdown()
 
-	elseif (keyPress('SPACE') or spc) and allowVerticalScroll and selectedUnderlaySettings then
+	elseif (keyPress('SHIFT') or spc) and allowVerticalScroll and selectedUnderlaySettings then
 		selectedUnderlaySettings = false
 		selectedUnderlayTypeSettings = true
 		allowHorizontalScroll = true
@@ -397,7 +397,7 @@ function onUpdate()
 
 			elseif underlayTypeSettings == 'Player Only' then
 				for Strums = 4,7 do
-					simpleishGraphic('UnderLayPlayer'..Strums, getPropertyFromGroup('strumLineNotes', Strums, 'x'), 0, 112, screenHeight, '000000', 'HUD')
+					simpleishGraphic('UnderLayPlayer'..Strums, getPropertyFromGroup('strumLineNotes', Strums, 'x'), 0, 112, screenHeight, '000000', 'hud')
 					setProperty('UnderLayPlayer'..Strums..'.alpha', realLaneOpacity)
 				end
 				for Strums = 0,3 do
@@ -406,11 +406,11 @@ function onUpdate()
 
 			elseif underlayTypeSettings == 'Player and Opponent' then
 				for Strums = 0,3 do
-					simpleishGraphic('UnderLayOpponent'..Strums, getPropertyFromGroup('strumLineNotes', Strums, 'x'), 0, 112, screenHeight, '000000', 'HUD')
+					simpleishGraphic('UnderLayOpponent'..Strums, getPropertyFromGroup('strumLineNotes', Strums, 'x'), 0, 112, screenHeight, '000000', 'hud')
 					setProperty('UnderLayOpponent'..Strums..'.alpha', realLaneOpacity)
 				end
 				for Strums = 4,7 do
-					simpleishGraphic('UnderLayPlayer'..Strums, getPropertyFromGroup('strumLineNotes', Strums, 'x'), 0, 112, screenHeight, '000000', 'HUD')
+					simpleishGraphic('UnderLayPlayer'..Strums, getPropertyFromGroup('strumLineNotes', Strums, 'x'), 0, 112, screenHeight, '000000', 'hud')
 					setProperty('UnderLayPlayer'..Strums..'.alpha', realLaneOpacity)
 				end
 			end

@@ -22,7 +22,7 @@ function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to
 end
 
 function onSongStart()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false
@@ -51,7 +51,7 @@ end
 
 function onEvent(name, value1, value2)
     if name == "DodgeEvent" then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
             bugged = true
         else
             bugged = false
@@ -79,7 +79,7 @@ end
 
 function onUpdate()
     if allowCountdown then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
             bugged = true
         else
             bugged = false
@@ -97,13 +97,13 @@ function onUpdate()
                 setProperty('health', getProperty('health')-.8)
                 removeLuaSprite('dodge')
             end
-            if (canDodge == true and (keyJustPressed('space') or sdgd)) or (botPlay == true and canDodge == true) then
+            if (canDodge == true and (keyboardJustPressed('SPACE') or sdgd)) or (botPlay == true and canDodge == true) then
                 Dodged = true
                 twice = 0
                 removeLuaSprite('dodge')
                 canDodge = false
                 setProperty('health', getProperty('health')+.1)
-            elseif (canDodge == false and (keyJustPressed('space') or sdgd)) then
+            elseif (canDodge == false and (keyboardJustPressed('SPACE') or sdgd)) then
                 setProperty('health', getProperty('health')-.3)
             end
         end
@@ -113,7 +113,7 @@ end
 
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false

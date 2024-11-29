@@ -7,7 +7,7 @@ end
 
 function onEvent(name,value1,value2)
     if name == 'customDodgeKey' then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
             bugged = true
         else
             bugged = false
@@ -43,7 +43,7 @@ function onUpdate()
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false

@@ -43,6 +43,7 @@ end
 
 function onBeatHit()
    if camzoom == true then
-      triggerEvent('Add Camera Zoom', v1, v2);
+      setProperty('camGame.zoom',getProperty("camGame.zoom")+v2)
+      setProperty('camHUD.zoom',getProperty("camHUD.zoom")+v1)
    end
 end

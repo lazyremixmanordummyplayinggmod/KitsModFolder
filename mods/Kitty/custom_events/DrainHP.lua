@@ -3,7 +3,7 @@ function getVarr(hpd)
 end
 function onEvent(name, value1, value2)
 	if name == "DrainHP" then
-		if getPropertyFromClass('backend.ClientPrefs', 'data.healthDrain') == 'healthDrain' then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.healthDrain') == nil then
 			bugged = true
 		else
 			bugged = false

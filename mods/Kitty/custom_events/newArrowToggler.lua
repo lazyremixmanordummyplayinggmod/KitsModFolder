@@ -4,7 +4,7 @@ end
 
 function onCreatePost()
     script = false
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false
@@ -19,10 +19,10 @@ function onCreatePost()
 end
 
 function onSongStart()
-    if getPropertyFromClass("backend.ClientPrefs", "data.downScroll") == true or getPropertyFromClass("backend.ClientPrefs", "data.middleScroll") == true then
-        debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
-        debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
-        debugPrint('Hey bro, turn off downscroll or middlescroll in backend.ClientPrefs so you dont have visual bugs!')
+    if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
+        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
+        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
+        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
     end
     dosx0 = defaultOpponentStrumX0
     dosx1 = defaultOpponentStrumX1

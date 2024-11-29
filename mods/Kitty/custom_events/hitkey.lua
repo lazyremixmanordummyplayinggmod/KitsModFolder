@@ -10,7 +10,7 @@ function getVarr(mec2)
 end
 
 function onCreate()
-	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 		bugged = true
 	else
 		bugged = false
@@ -32,7 +32,7 @@ function onCreate()
 end
 
 function onUpdate()
-	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 		bugged = true
 	else
 		bugged = false
@@ -69,7 +69,7 @@ end
 
 function onEvent(name, value1, value2)
 	if name == 'hitkey' then
-		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 			bugged = true
 		else
 			bugged = false
@@ -94,7 +94,7 @@ end
 
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'hitkey' then
-		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 			bugged = true
 		else
 			bugged = false

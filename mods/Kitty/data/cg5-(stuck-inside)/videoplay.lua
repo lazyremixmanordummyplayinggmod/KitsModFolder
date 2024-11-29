@@ -9,6 +9,7 @@ end
 
 function onTimerCompleted(tag)
     if tag == 'vid' then
-        callScript('scripts/videoSprite', 'makeVideoSprite', {'stuck', 'stuck', 62, -191, 'camGame', 0.7404, 0.7408})
+        debugPrint('START VIDDEEEEOOEOOEOEO')
+        callScript('scripts/videoSprite', 'makeVideoSprite', {'stuck', 'stuck', 62, -191, 'game', 0.7404, 0.7408, 1})
     end
 end

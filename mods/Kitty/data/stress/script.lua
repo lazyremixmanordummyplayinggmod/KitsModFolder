@@ -1,6 +1,6 @@
 local allowCountdown = false
 function onCreate()
-	setPropertyFromClass('substates.GameOverSubstate', 'characterName', 'bf-holding-gf-dead'); --Character json file for the death animation
+	setPropertyFromClass('backend.GameOverSubstate', 'characterName', 'bf-holding-gf-dead'); --Character json file for the death animation
 	makeChart();
 end
 

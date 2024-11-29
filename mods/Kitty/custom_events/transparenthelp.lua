@@ -9,7 +9,7 @@ function onEvent(name, value1, value2)
         if botherme then
             debugPrint('Go to custom_events/transparenthelp.lua to use transparency events!')
         end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
             bugged = true
         else
             bugged = false

@@ -22,7 +22,7 @@ function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to
 end
 
 function onSongStart()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false
@@ -53,7 +53,7 @@ end
 
 function onEvent(name, value1, value2)
     if name == "DodgeForBF" then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
             bugged = true
         else
             bugged = false
@@ -80,7 +80,7 @@ end
 
 function onUpdate()
     if allowCountdown then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
             bugged = true
         else
             bugged = false
@@ -100,7 +100,7 @@ function onUpdate()
                 twice = 0
                 setProperty('health', getProperty('health')-.8)
             end
-            if (canDodge == true and (keyJustPressed('space') or sdgd)) or (botPlay == true and canDodge == true) then
+            if (canDodge == true and (keyboardJustPressed('SPACE') or sdgd)) or (botPlay == true and canDodge == true) then
                 Dodged = true
                 twice = 0
                 if song == 'run-run' and count < 3 then
@@ -110,7 +110,7 @@ function onUpdate()
                 end
                 setProperty('health', getProperty('health')+.1)
                 canDodge = false
-            elseif (canDodge == false and (keyJustPressed('space') or sdgd)) then
+            elseif (canDodge == false and (keyboardJustPressed('SPACE') or sdgd)) then
                 if songName == 'run-run' and count < 3 then
                     triggerEvent('Play Animation','hurt', 'bf')
                 elseif songName ~= 'run-run' then
@@ -127,7 +127,7 @@ end
 
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false

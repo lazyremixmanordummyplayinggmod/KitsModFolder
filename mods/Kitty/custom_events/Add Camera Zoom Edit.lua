@@ -29,6 +29,7 @@ function onEvent(name, value1, value2)
          v1 = (value1/3.8)
          v2 = (value2/3.8)
       end
-      triggerEvent('Add Camera Zoom', v1, v2);
+      setProperty('camGame.zoom',getProperty("camGame.zoom")+v2)
+      setProperty('camHUD.zoom',getProperty("camHUD.zoom")+v1)
    end
 end

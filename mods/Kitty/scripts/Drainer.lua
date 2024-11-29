@@ -3,7 +3,7 @@ function getVarr(hpd)
 end
 
 function triggZ(vs1, vs2)
-	if getPropertyFromClass('backend.ClientPrefs', 'data.healthDrain') == 'healthDrain' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.healthDrain') == nil then
 		bugged = true
 	else
 		bugged = false

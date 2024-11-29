@@ -4,7 +4,7 @@ end
 local movingX = false
 local movingY = false
 function onEvent(name, value1, value2)
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false

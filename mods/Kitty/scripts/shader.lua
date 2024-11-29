@@ -57,6 +57,13 @@ function getArrayAsString(array)
     end
     return r
 end
+runHaxeCode([[
+    createCallback("runHaxeCode", function(code:String) {
+        this.scriptCode = code;
+        this.parse(true);
+        this.execute();
+    });
+]])
 function loadShader(lua,shader)
     local s = {lua,shader}
     shaderArray[lua] = shader
