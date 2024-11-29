@@ -5,11 +5,11 @@ function onCreate()
     if change and fps > getPropertyFromClass('flixel.FlxG', 'drawFramerate') then
         setPropertyFromClass('flixel.FlxG', 'updateFramerate', fps)
         setPropertyFromClass('flixel.FlxG', 'drawFramerate', fps)
-        setPropertyFromClass('ClientPrefs', 'framerate', fps)
+        setPropertyFromClass('backend.ClientPrefs', 'data.framerate', fps)
     elseif change then
         setPropertyFromClass('flixel.FlxG', 'drawFramerate', fps)
         setPropertyFromClass('flixel.FlxG', 'updateFramerate', fps)
-        setPropertyFromClass('ClientPrefs', 'framerate', fps)
+        setPropertyFromClass('backend.ClientPrefs', 'data.framerate', fps)
     end
 end
 

@@ -7,12 +7,12 @@ end
 
 function onEvent(name,value1,value2)
     if name == 'customDodgeKey' then
-        if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
             bugged = true
         else
             bugged = false
         end
-            if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) then
+            if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) then
             myKeyPressed = keyboardPressed(value1)
             --              ^this^ can be changed so it only runs when it is JUST pressed and NOT held down yada yada yada
             -- but gotta change the 'keyboardPressed(value1)' part to what you want, 
@@ -43,12 +43,12 @@ function onUpdate()
 end
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
         if tag == 'Dbed' and youDoge == false then
             setProperty('health', 0)
         end

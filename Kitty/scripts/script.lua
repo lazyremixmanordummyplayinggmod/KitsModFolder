@@ -8,7 +8,7 @@ local penalizeanyway = false -- If you have a bad rating, this will penalize you
 
 local botherme = true -- Set to false to SHUT UP THE PRINT
 
-
+local NO = false
 local bugged = false
 local kadezoom = false
 local stopui = false
@@ -29,6 +29,10 @@ end
 
 
 function onCreatePost()
+    setPropertyFromClass("openfl.Lib", "application.window.borderless", false)
+    setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', true)
+    setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', true)
+    setProperty('camZoomingMult',1)
     callScript("scripts/LaneUnderlay", "getVarr", {force})
     callScript("custom_events/customDodgeKey", "getVarr", {mechanics2})
     callScript("custom_events/hitkey", "getVarr", {mechanics2})
@@ -82,26 +86,26 @@ function onSongStart()
         setTextSize("drawfps", 20)
         setObjectCamera("drawfps", 'other')
         addLuaText("drawfps")
-    offset = getPropertyFromClass('ClientPrefs','noteOffset')-changeOffset
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' and botherme then
+    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')-changeOffset
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil and botherme then
         debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? WILL NOT penalize player for bad ratings unless you change the setting to (local penalizeanyway = true) in mods/kitty/scripts/script.lua!')
         bugged = true
-    elseif not botherme and getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' then
+    elseif not botherme and getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil then
         bugged = true
     end
-    if getPropertyFromClass('ClientPrefs','assetMovement') == 'assetMovement' and botherme then
+    if getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == nil and botherme then
         debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? Modcharts will CONTINUE to be used unless you change the setting to (local visuals = false) in mods/kitty/scripts/script.lua!')        
         bugged = true
-    elseif not botherme and getPropertyFromClass('ClientPrefs','assetMovement') == 'assetMovement' then
+    elseif not botherme and getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == nil then
         bugged = true
     end
-    if getPropertyFromClass('ClientPrefs','mechanics') == 'mechanics' and botherme then
+    if getPropertyFromClass('backend.ClientPrefs','data.mechanics') == nil and botherme then
         debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? Mechanics will CONTINUE to be used unless you change the setting to (local mechanics = false) in mods/kitty/scripts/script.lua!')
         bugged = true
-    elseif not botherme and getPropertyFromClass('ClientPrefs','mechanics') == 'mechanics' then
+    elseif not botherme and getPropertyFromClass('backend.ClientPrefs','data.mechanics') == nil then
         bugged = true
     end
     debugPrint('- - -')
@@ -124,34 +128,31 @@ function onSongStart()
     callScript("custom_events/Add Camera Zoom Edit", "getVarr", {bugged})
 end
 
-function goodNoteHit()
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' then
+function goodNoteHit(id)
+    rt = getProperty('notes.members['..id..'].rating')
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == true or (bugged and penalizeanyway) then
-        if getProperty('ratingPercent') < 0.9 and getProperty('ratingPercent') > 0.85 then
-            setProperty('health', getProperty('health') + 0.01)
-        elseif getProperty('ratingPercent') < 0.85 and getProperty('ratingPercent') > 0.8 then
-            setProperty('health', getProperty('health') + 0.02)
-        elseif getProperty('ratingPercent') < 0.8 and getProperty('ratingPercent') > 0.75 then
-            setProperty('health', getProperty('health') + 0.03)
-        elseif getProperty('ratingPercent') < 0.7 and getProperty('ratingPercent') > 0.65 then
-            setProperty('health', getProperty('health') + 0.04)
-        elseif getProperty('ratingPercent') < 0.6 and getProperty('ratingPercent') > 0 then
-            setProperty('health', getProperty('health') + 0.05)
-        end
+    if rt == 'good' then
+        setProperty('health', getProperty('health') - 0.01)
+    end
+    if rt == 'bad' then
+        setProperty('health', getProperty('health') - 0.02)
+    end
+    if rt == 'shit' then
+        setProperty('health', getProperty('health') - 0.2)
     end
 end
 
 function noteMiss()
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == 'ratingPenalty' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'ratingPenalty') == true or (bugged and penalizeanyway) then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == true or (bugged and penalizeanyway) then
         if getProperty('ratingPercent') < 0.86 and getProperty('ratingPercent') > 0.8 then
             setProperty('health', getProperty('health') - 0.1)
         elseif getProperty('ratingPercent') < 0.78 and getProperty('ratingPercent') > 0.7 then
@@ -167,12 +168,12 @@ function noteMiss()
 end
 
 function onEvent(name, value1, value2)
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false
     end
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
         if name == 'newArrowToggler' then
             value1 = tonumber(value1)
             value2 = tonumber(value2)
@@ -257,11 +258,15 @@ function onEvent(name, value1, value2)
         if bugged then
             bugdone = false
         end
-        if value2 == '' then
-			doTweenZoom('camzz','camHUD',tonumber(value1),0.01,'sineInOut')
+        if value2 == '' or value2 < 0.02 then
+            setProperty('camHUD.zoom',tonumber(value1))
+			setProperty('defaultCamUIZoom',tonumber(value1))
 	    else
             doTweenZoom('camzz','camHUD',tonumber(value1),tonumber(value2),'sineInOut')
+            runTimer("WHY",value2)
+			NO = true
 	    end
+
     end
     if not bugged then
         if name == "kadezoomtoggle" then
@@ -283,25 +288,50 @@ function onEvent(name, value1, value2)
         if value1 == 1 then
             stopcam = true
             czmc = 0
-            setProperty('camZoomingMult', 0)
+            if bugged then
+                setProperty('camZoomingMult', 0)
+            else
+                setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', false)
+            end
         elseif value1 == 0 then
             stopcam = false
             czmc = 1
-            setProperty('camZoomingMult', 1)
+            if bugged then
+                setProperty('camZoomingMult', 1)
+            else
+                setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', true)
+            end
         end
         if value2 == 1 then
             stopui = true
             czmu = 0
-            setProperty('camZoomingMult', 0)
+            if bugged then
+                setProperty('camZoomingMult', 0)
+            else
+                setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', false)
+            end
         elseif value2 == 0 then
             stopui = false
             czmu = 1
-            setProperty('camZoomingMult', 1)
+            if bugged then
+                setProperty('camZoomingMult', 1)
+            else
+                setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', true)
+            end
         end
     end
 end
 
+function onTimerCompleted(tag, loops, loopsLeft)
+	if tag == 'WHY' then
+		NO = false
+	end
+end
+
 function onUpdate(elapsed)
+        if NO then
+            setProperty('defaultCamUIZoom',getProperty('camHUD.zoom'))
+        end
     drawf = getPropertyFromClass("Main", "fpsVar.text")
     setTextString("drawfps", drawf)
     el = elapsed
@@ -344,6 +374,9 @@ end
 
 function onDestroy()
     setPropertyFromClass("openfl.Lib", "application.window.borderless", false)
+    setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', true)
+    setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', true)
+    setProperty('camZoomingMult',1)
 end
 
 --This below makes the Health Bar move Smoothly

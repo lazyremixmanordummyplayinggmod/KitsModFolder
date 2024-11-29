@@ -59,12 +59,12 @@ function onEvent(name, value1, value2)
         end
     end
     run1time = false
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
            --Change downscroll/upscroll
            if value1 == 1 then
                if ran then

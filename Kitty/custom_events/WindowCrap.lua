@@ -4,12 +4,12 @@ end
 local movingX = false
 local movingY = false
 function onEvent(name, value1, value2)
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
     if name == "WindowCrap" then
         value1 = tonumber(value1);
         value2 = tonumber(value2);

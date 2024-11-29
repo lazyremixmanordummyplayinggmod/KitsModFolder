@@ -10,12 +10,12 @@ function getVarr(mec2)
 end
 
 function onCreate()
-	if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 		bugged = true
 	else
 		bugged = false
 	end
-		if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
 	makeLuaText('pressit', 'HIT THE KEY!', '300', 400,200)
 	addLuaText('pressit')
 	setTextSize('pressit', 40)
@@ -32,12 +32,12 @@ function onCreate()
 end
 
 function onUpdate()
-	if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 		bugged = true
 	else
 		bugged = false
 	end
-		if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
 	setTextString('key', keytopress)
 	setProperty('timer.x', (screenWidth/2)-(getProperty('timer.width')/2))
 	
@@ -69,12 +69,12 @@ end
 
 function onEvent(name, value1, value2)
 	if name == 'hitkey' then
-		if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 			bugged = true
 		else
 			bugged = false
 		end
-			if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+			if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
 		
 		setTextAlignment('pressit', 'center')
 
@@ -94,12 +94,12 @@ end
 
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'hitkey' then
-		if getPropertyFromClass('ClientPrefs', 'mechanics') == 'mechanics' then
+		if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
 			bugged = true
 		else
 			bugged = false
 		end
-			if getPropertyFromClass('ClientPrefs', 'mechanics') == true or (bugged and mechanics) == true then
+			if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
 		setTextString('timer', loopsLeft)
 		setTextString('timer', FinalBeat - curBeat)
 		end

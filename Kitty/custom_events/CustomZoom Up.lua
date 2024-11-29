@@ -44,7 +44,8 @@ end
 
 function onTimerCompleted(tag)
    if tag == 'zoomCam' then
-      triggerEvent('Add Camera Zoom', v1, v2);
+      setProperty('camGame.zoom',getProperty("camGame.zoom")+v2)
+      setProperty('camHUD.zoom',getProperty("camHUD.zoom")+v1)
       if camzoom then
          runTimer("zoomCam", 0.025)
       end

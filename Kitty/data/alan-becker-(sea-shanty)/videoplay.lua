@@ -49,7 +49,7 @@ function onSongStart()
     setProperty('timeTxt.visible', false)
     setProperty('showRating', false);
     setProperty('showComboNum', false);
-    offset = getPropertyFromClass('ClientPrefs','noteOffset')
+    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')
     setProperty('showComboNum', false)
     setProperty('showRating', false)
     runTimer('vid',offset/1000)
@@ -58,6 +58,6 @@ end
 
 function onTimerCompleted(tag)
     if tag == 'vid' then
-        callScript('scripts/videoSprite', 'makeVideoSprite', {'abss', 'abss', 475.5, -611.25, 'camGame', 0.4163, 0.4163})
+        callScript('scripts/videoSprite', 'makeVideoSprite', {'abss', 'abss', 475.5, -611.25, 'camGame', 0.4163, 0.4163, 0.3175})
     end
 end

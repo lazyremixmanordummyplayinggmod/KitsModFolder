@@ -11,12 +11,12 @@ local v1 = false
 local v2 = false
 function onEvent(name, value1, value2)
     if name == "TiltHudTimed" then
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
             bugged = true
         else
             bugged = false
         end
-            if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+            if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
         event = "TiltHudTimed"
         value1 = tonumber(value1);
         value2 = tonumber(value2);
@@ -66,12 +66,12 @@ end
 end
 
 function onBeatHit()
-    if getPropertyFromClass('ClientPrefs', 'assetMovement') == 'assetMovement' then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
         bugged = true
     else
         bugged = false
     end
-        if getPropertyFromClass('ClientPrefs', 'assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
         if v1 then
             thing2 = thing2 * -1
             doTweenAngle('rotate', 'camHUD', thing2 * 5, crochet / 1000, 'quadInOut')

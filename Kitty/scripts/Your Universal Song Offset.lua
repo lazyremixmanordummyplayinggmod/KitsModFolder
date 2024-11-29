@@ -1,28 +1,30 @@
-offset = 75
+offset = 90
 local newOff = 0
 local c = true -- set to True to use custom offsets
 
 function onCreate()
     if not c then
-        offset = getPropertyFromClass('ClientPrefs','noteOffset')
+        offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')
     elseif c then
-        setPropertyFromClass('ClientPrefs','noteOffset',offset) --Number is YOUR Song Offset
+        setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset) --Number is YOUR Song Offset
     end
     for _, curS in pairs({'marshmallow-(alone)','alan-becker-(sea-shanty-edit)','alan-becker-(sea-shanty)'}) do
         if songName == curS then
-            newOff = -75 --Number is YOUR Song Offset
-        elseif songName == 'sandstorm' or songName == 'anjer-remix-(manifest)' or songName == 'the-living-tombstone-(FNaF1)' then
             newOff = -25 --Number is YOUR Song Offset
+        elseif songName == 'sandstorm' or songName == 'the-living-tombstone-(FNaF1)' then
+            newOff = 0 --Number is YOUR Song Offset
         elseif songName == 'TON-GD-Level' or songName == 'alan-becker-(rush-e)' or songName == 'run-run' then
-            newOff = -50 --Number is YOUR Song Offset
+            newOff = -45 --Number is YOUR Song Offset
         elseif songName == 'cg5-(stuck-inside)' then
-            newOff = -75 --Number is YOUR Song Offset
+            newOff = -70 --Number is YOUR Song Offset
         elseif songName == 'Stress' or songName == 'Ugh' then
-            newOff = 50 --Number is YOUR Song Offset
+            newOff = 35 --Number is YOUR Song Offset
+        elseif songName == 'Octagon of Destiny' then
+            newOff = -10 --Number is YOUR Song Offset
         end
     end
     if newOff ~= 0 then
-        setPropertyFromClass('ClientPrefs','noteOffset',offset+newOff)
+        setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset+newOff)
     end
 end
 
@@ -36,6 +38,6 @@ end
 
 function onDestroy()
     if c then
-        setPropertyFromClass('ClientPrefs','noteOffset',offset)
+        setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset)
     end
 end

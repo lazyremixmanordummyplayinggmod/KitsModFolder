@@ -30,7 +30,7 @@ end
 
 function onUpdate()
 	if pawse then
-		setPropertyFromClass('Conductor', 'songPosition',currentpausepos)
+		setPropertyFromClass('backend.Condutor', 'songPosition',currentpausepos)
 		setPropertyFromClass('flixel.FlxG', 'sound.music.time',currentpausepos)
 		setProperty('vocals.time',currentpausepos)
 		--DO   NOT   DELETE   THIS--
@@ -48,7 +48,7 @@ function onPause()
 		return Function_Stop
 	else
 		if curBeat > 0	then
-			currentpausepos = getPropertyFromClass('Conductor', 'songPosition')
+			currentpausepos = getPropertyFromClass('backend.Condutor', 'songPosition')
 			cancelTween('bckgp')
 			setProperty('thingsy.alpha', 0)
 		end
