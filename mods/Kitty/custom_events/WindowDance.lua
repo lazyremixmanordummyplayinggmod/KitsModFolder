@@ -20,8 +20,8 @@ function onEvent(name, value1, value2)
             value1 = tonumber(value1);
             value2 = tonumber(value2);
             v2 = tonumber(value2);
-            x = screenWidth/2.5
-            y = screenHeight/2.5
+            x = screenWidth/3.75
+            y = screenHeight/3.5
             if value1 == 1 then
                 dance = true
                 fcc = true

@@ -23,6 +23,7 @@ function onEvent(name, value1, value2)
             if value1 == 00 then
                 doTweenAngle('GUItween', 'camHUD', 0, 0.3, 'bounceOut');
                 ran = false
+                v1 = false
             elseif value1 == 1 then
                 if ran then
                     doTweenAngle('GUI1tween', 'camHUD', 10, 0.3, 'bounceOut');
@@ -56,6 +57,7 @@ function onEvent(name, value1, value2)
             if value2 == 00 then
                 doTweenAngle('GUI4tween', 'camGame', 0, 0.3, 'bounceOut');
                 ran1 = false
+                v2 = false
             elseif value2 == 1 then
                 if ran1 then
                     doTweenAngle('GUI5tween', 'camGame', 10, 0.3, 'bounceOut');
