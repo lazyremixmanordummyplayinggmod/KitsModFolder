@@ -135,6 +135,7 @@ function goodNoteHit(id)
     else
         bugged = false
     end
+    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == true or (bugged and penalizeanyway) then
     if rt == 'good' then
         setProperty('health', getProperty('health') - 0.01)
     end
@@ -144,6 +145,7 @@ function goodNoteHit(id)
     if rt == 'shit' then
         setProperty('health', getProperty('health') - 0.2)
     end
+end
 end
 
 function noteMiss()
