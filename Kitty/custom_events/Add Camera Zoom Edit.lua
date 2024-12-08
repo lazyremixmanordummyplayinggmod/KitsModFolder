@@ -13,21 +13,9 @@ function onEvent(name, value1, value2)
          v2 = (value2/3.9)
       end
       fpss = getPropertyFromClass('flixel.FlxG', 'drawFramerate')
-      if not bugged and fpss > 230 then
+      if not bugged then
          v1 = value1
          v2 = value2
-      elseif not bugged and fpss > 178 and fpss < 210 then
-         v1 = (value1/1.3)
-         v2 = (value2/1.3)
-      elseif not bugged and fpss > 130 and fpss < 175 then
-         v1 = (value1/1.7)
-         v2 = (value2/1.7)
-      elseif not bugged and fpss > 90 and fpss < 130 then
-            v1 = (value1/2.7)
-            v2 = (value2/2.7)
-      elseif not bugged and fpss < 90 then
-         v1 = (value1/3.8)
-         v2 = (value2/3.8)
       end
       setProperty('camGame.zoom',getProperty("camGame.zoom")+v2)
       setProperty('camHUD.zoom',getProperty("camHUD.zoom")+v1)
