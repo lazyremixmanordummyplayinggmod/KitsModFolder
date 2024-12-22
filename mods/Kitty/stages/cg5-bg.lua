@@ -16,8 +16,8 @@ function onCreate()
 	addLuaSprite('extra', false);
 	addLuaSprite('bg1', true);
 
-	setObjectOrder("gfGroup", 15)
-    setObjectOrder("boyfriendGroup", 17)
-    setObjectOrder("dadGroup", 18)
+	setObjectOrder("gfGroup", getObjectOrder("bg1")-1)
+    setObjectOrder("boyfriendGroup", getObjectOrder("bg1")+1)
+    setObjectOrder("dadGroup", getObjectOrder("bg1")+2)
 	close(true); --For performance reasons, close this script once the stage is fully loaded, as this script won't be used anymore after loading the stage
 end
