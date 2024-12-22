@@ -88,25 +88,13 @@ function onSongStart()
         addLuaText("drawfps")
     offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')-changeOffset
     if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil and botherme then
-        debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? WILL NOT penalize player for bad ratings unless you change the setting to (local penalizeanyway = true) in mods/kitty/scripts/script.lua!')
-        bugged = true
-    elseif not botherme and getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil then
-        bugged = true
     end
     if getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == nil and botherme then
-        debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? Modcharts will CONTINUE to be used unless you change the setting to (local visuals = false) in mods/kitty/scripts/script.lua!')        
-        bugged = true
-    elseif not botherme and getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == nil then
-        bugged = true
     end
     if getPropertyFromClass('backend.ClientPrefs','data.mechanics') == nil and botherme then
-        debugPrint('-- You WILL continue to see this message unless you set (local botherme) in scripts/script.lua to false! --')
         debugPrint('Different engine recognized? Mechanics will CONTINUE to be used unless you change the setting to (local mechanics = false) in mods/kitty/scripts/script.lua!')
-        bugged = true
-    elseif not botherme and getPropertyFromClass('backend.ClientPrefs','data.mechanics') == nil then
-        bugged = true
     end
     debugPrint('- - -')
     debugPrint('Song Offset to Mains: '..'('..changeOffset..')')

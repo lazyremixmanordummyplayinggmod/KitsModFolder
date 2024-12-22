@@ -18,12 +18,21 @@
 	],
 	"songs": [
 		[
-			"run run",
-			"suitedAftonPanic",
+			"alan becker (sea shanty)",
+			"bf",
 			[
-				245,
-				123,
-				2
+				255,
+				136,
+				0
+			]
+		],
+		[
+			"alan becker (sea shanty edit)",
+			"bf",
+			[
+				255,
+				136,
+				0
 			]
 		],
 		[
@@ -54,12 +63,39 @@
 			]
 		],
 		[
+			"cg5-(drop-the-bass)",
+			"cg5-elika",
+			[
+				255,
+				36,
+				112
+			]
+		],
+		[
+			"cg5 (stuck inside)",
+			"bf",
+			[
+				255,
+				136,
+				0
+			]
+		],
+		[
 			"electroman-adventures",
 			"bf",
 			[
 				255,
 				36,
 				112
+			]
+		],
+		[
+			"homiecough",
+			"bf",
+			[
+				150,
+				150,
+				150
 			]
 		],
 		[
@@ -81,60 +117,6 @@
 		    ]
 		],
 		[
-			"sonicwave",
-			"bf",
-			[
-				0,
-				170,
-				255
-			]
-		],
-		[
-			"sandstorm",
-			"bf",
-			[
-				205,
-				189,
-				68
-			]
-		],
-		[
-			"alan becker (sea shanty)",
-			"bf",
-			[
-				255,
-				136,
-				0
-			]
-		],
-		[
-			"alan becker (sea shanty edit)",
-			"bf",
-			[
-				255,
-				136,
-				0
-			]
-		],
-		[
-			"cg5 (stuck inside)",
-			"bf",
-			[
-				255,
-				136,
-				0
-			]
-		],
-		[
-			"homiecough",
-			"bf",
-			[
-				150,
-				150,
-				150
-			]
-		],
-		[
 			"Octagon of Destiny",
 			"octoman",
 			[
@@ -150,6 +132,42 @@
 				255,
 				81,
 				0
+			]
+		],
+		[
+			"run run",
+			"suitedAftonPanic",
+			[
+				245,
+				123,
+				2
+			]
+		],
+		[
+			"sandstorm",
+			"bf",
+			[
+				205,
+				189,
+				68
+			]
+		],
+		[
+			"sonicwave",
+			"bf",
+			[
+				0,
+				170,
+				255
+			]
+		],
+		[
+			"spin-eternally",
+			"bf",
+			[
+				0,
+				229,
+				255
 			]
 		],
 		[
