@@ -1,3 +1,4 @@
+local pfs = 0
 local sks = 0
 local gds = 0
 local bds = 0
