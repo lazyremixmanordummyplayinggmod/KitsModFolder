@@ -1,20 +1,7 @@
-function getVarr(vis,bm)
-    visuals = vis
-    botherme = bm
-end
-
 function onEvent(name, value1, value2)
     value1 = tonumber(value1)
     if name == "transparenthelp" then
-        if botherme then
-            debugPrint('Go to custom_events/transparenthelp.lua to use transparency events!')
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
             if value1 == 1 then
                 setPropertyFromClass("openfl.Lib", "application.window.fullscreen", false)
                 setPropertyFromClass("openfl.Lib", "application.window.borderless", true)

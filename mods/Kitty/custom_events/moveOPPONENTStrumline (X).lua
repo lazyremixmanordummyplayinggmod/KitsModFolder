@@ -1,17 +1,9 @@
-function getVarr(vis)
-    visuals = vis
-end
 local r1t = true
 function onEvent(name, value1, value2)
     if name == 'moveOPPONENTStrumline (X)' then
         value1 = tonumber(value1)
         value2 = tonumber(value2)
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
             if r1t then
                 if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
                     debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')

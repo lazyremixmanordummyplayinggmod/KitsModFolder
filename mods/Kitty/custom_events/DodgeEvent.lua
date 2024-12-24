@@ -1,11 +1,8 @@
-function getVarr(mec,fo)
-    mechanics = mec
-    force = fo
-end
-
 function cdal(al)
     allowCountdown = al
 end
+
+local forceMobile = false
 
 function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to '.' for default or no value
     makeLuaSprite(tag,path,x,y)
@@ -22,12 +19,9 @@ function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to
 end
 
 function onSongStart()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if (bugged or force) and mechanics then
+    mechanics = getPropertyFromClass("backend.ClientPrefs", "data.mechanics")
+    forceMobile = getPropertyFromClass("backend.ClientPrefs", "data.mobileMechanics")
+    if forceMobile and mechanics then
         luasprite('ddgg','me/buttons/sbutton',0,580,'other',0.7,0.7,0,0,'.',true)
     end
 end
@@ -51,12 +45,7 @@ end
 
 function onEvent(name, value1, value2)
     if name == "DodgeEvent" then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-            if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
+            if mechanics == true then
             --Get Dodge time
             DodgeTime = (value1)
             Dodged = false
@@ -79,13 +68,8 @@ end
 
 function onUpdate()
     if allowCountdown then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) then
-            if bugged or force then
+        if mechanics then
+            if forceMobile then
                 if mouseOverlaps('ddgg', 'camOther') and mouseClicked("left") then
                     sdgd = true
                 else
@@ -113,21 +97,16 @@ end
 
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) == true then
-    if tag == 'Died' and Dodged == false then
-        setProperty('health', getProperty('health')-.8)
-        removeLuaSprite('dodge')
-        twice = 0
-    elseif tag == 'Died' and Dodged == true then
-        Dodged = false
-        removeLuaSprite('dodge')
-        twice = 0
+    if mechanics then
+        if tag == 'Died' and Dodged == false then
+            setProperty('health', getProperty('health')-.8)
+            removeLuaSprite('dodge')
+            twice = 0
+        elseif tag == 'Died' and Dodged == true then
+            Dodged = false
+            removeLuaSprite('dodge')
+            twice = 0
 
+        end
     end
-end
 end

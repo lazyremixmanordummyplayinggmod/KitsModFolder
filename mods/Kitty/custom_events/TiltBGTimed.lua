@@ -1,7 +1,3 @@
-function getVarr(vis)
-    visuals = vis
-end
-
 local ran = false
 local ran1 = false
 local thing = 1
@@ -11,12 +7,7 @@ local v1 = false
 local v2 = false
 function onEvent(name, value1, value2)
     if name == "TiltBGTimed" then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
+        if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
             event = "TiltBGTimed"
             value1 = tonumber(value1);
             value2 = tonumber(value2);
@@ -76,12 +67,7 @@ function onEvent(name, value1, value2)
 end
 
 function onBeatHit()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
         if v1 then
             thing2 = thing2 * -1
             doTweenAngle('rotate', 'camGame', thing2 * 5, crochet / 1000, 'quadInOut')
