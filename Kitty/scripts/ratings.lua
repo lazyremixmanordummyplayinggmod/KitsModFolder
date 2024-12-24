@@ -1,3 +1,4 @@
+local pfs = 0
 local sks = 0
 local gds = 0
 local bds = 0
@@ -7,6 +8,8 @@ local nr = 0
 local comb = 0
 local sizeee = 40
 local letter = '?'
+
+local died = 0
 
 function luatxt(tag,txt,w,x,y,cam,ts,tc,sc,ali,f) -- set certain values to '.' for default or no value
     makeLuaText(tag,txt,w,x,y)
@@ -34,17 +37,19 @@ function onCreate()
     nr = (math.floor(rating*10000)/100)
     --Text Basics!
 
+    luatxt("mainP", ("Perfects: "..pfs), 0, 0, 0,"other",20,'00FFFF','y','left','.')
     luatxt("mainS", ("Sicks: "..sks), 0, 0, 0,"other",20,'FF00FF','y','left','.')
     luatxt("mainG", ("Goods: "..gds), 0, 0, 0,"other",20,'00FF00','y','left','.')
     luatxt("mainB", ("Bads: "..bds), 0, 0, 0,"other",20,'FFFF00','y','left','.')
     luatxt("mainVB", ("Bruh: "..brs), 0, 0, 0,"other",20,'FF7500','y','left','.')
     luatxt("mainMss", ("Misses: "..misses), 0, 0, 0,"other",20,'FF0000','y','left','.')
-    luatxt("mainhp", ("Health: "..health), 0, 0, 0,"other",20,'00FFFF','y','left','.')
+    luatxt("mainhp", ("Health: "..health), 0, 0, 0,"other",20,'0000FF','y','left','.')
     luatxt("mainacc", (letter..' - '..nr.."%"), 1280, 0, 0,"other",30,'.','.','right','.')
     luatxt("mainsc", score, 1280, 0, 0,"other",20,'.','.','right','.')
     luatxt("maincom", comb, 0, 0, screenHeight-28,"other",30,'.','.','left','.')
 
     --Text Positioning
+    setProperty('mainP.y',getProperty('mainP.y')-80)
     setProperty('mainS.y',getProperty('mainS.y')-60)
     setProperty('mainG.y',getProperty('mainG.y')-40)
     setProperty('mainB.y',getProperty('mainB.y')-20)
@@ -77,6 +82,7 @@ end
 --This moves the rating text forward based on when the credits text show up, positions vary for the length of the credit names
 function onCountdownTick(counter)
     if counter == 2 then
+        doTweenX('mainxP','mainP',600,0.5,'expoOut')
         doTweenX('mainxS','mainS',600,0.5,'expoOut')
         doTweenX('mainxG','mainG',600,0.5,'expoOut')
         doTweenX('mainxB','mainB',600,0.5,'expoOut')
@@ -95,7 +101,10 @@ function customRatingThing(m)
         comb = comb+1
     end
     nr = (math.floor(rating*10000)/100)
-    if nr >= 95 then
+    if nr == 100 then
+        setTextColor("mainacc", "00FFFF")
+        letter = 'P'
+    elseif nr >= 95 and nr < 100 then
         setTextColor("mainacc", "FF00FF")
         letter = 'S'
     elseif nr >= 90 and nr < 95 then
@@ -121,6 +130,9 @@ function customRatingThing(m)
 end
 
 function goodNoteHit(id, noteData, noteType, isSustainNote)
+    if getPropertyFromGroup('notes',id,'rating') == 'perfect' then
+        pfs = pfs+1
+    end
     if getPropertyFromGroup('notes',id,'rating') == 'sick' then
         sks = sks+1
     end
@@ -133,6 +145,7 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
     if getPropertyFromGroup('notes',id,'rating') == 'shit' then
         brs = brs+1
     end
+    setTextString("mainP", ("Perfects: "..pfs))
     setTextString("mainS", ("Sicks: "..sks))
     setTextString("mainG", ("Goods: "..gds))
     setTextString("mainB", ("Bads: "..bds))
@@ -232,6 +245,7 @@ end
 --When using credits, This makes the text go back after the credits.lua normal time length.
 function onTimerCompleted(tag, loops, loopsLeft)
     if tag == 'mainlol' then
+        doTweenX('mainxP','mainP',0,0.5,'expoOut')
         doTweenX('mainxS','mainS',0,0.5,'expoOut')
         doTweenX('mainxG','mainG',0,0.5,'expoOut')
         doTweenX('mainxB','mainB',0,0.5,'expoOut')

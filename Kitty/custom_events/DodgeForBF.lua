@@ -1,11 +1,8 @@
-function getVarr(mec,fo)
-    mechanics = mec
-    force = fo
-end
-
 function cdal(al)
     allowCountdown = al
 end
+
+local forceMobile = false
 
 function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to '.' for default or no value
     makeLuaSprite(tag,path,x,y)
@@ -22,12 +19,9 @@ function luasprite(tag,path,x,y,cam,xs,ys,sfx,sfy,sc,f) -- set certain values to
 end
 
 function onSongStart()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if (bugged and mechanics) or force then
+    mechanics = getPropertyFromClass("backend.ClientPrefs", "data.mechanics")
+    forceMobile = getPropertyFromClass("backend.ClientPrefs", "data.mobileMechanics")
+    if mechanics and forceMobile then
         luasprite('ddgg','me/buttons/sbutton',0,580,'other',0.7,0.7,0,0,'.',true)
     end
 end
@@ -53,12 +47,7 @@ end
 
 function onEvent(name, value1, value2)
     if name == "DodgeForBF" then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) then
+        if mechanics then
             --Get Dodge time
             DodgeTime = (value1)
             Dodged = false
@@ -80,13 +69,8 @@ end
 
 function onUpdate()
     if allowCountdown then
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-            bugged = true
-        else
-            bugged = false
-        end
-        if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) then
-            if bugged or force then
+        if mechanics then
+            if forceMobile then
                 if mouseOverlaps('ddgg', 'camOther') and mouseClicked("left") then
                     sdgd = true
                 else
@@ -127,12 +111,7 @@ end
 
 
 function onTimerCompleted(tag, loops, loopsLeft)
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == true or (bugged and mechanics) then
+    if mechanics then
         if tag == 'bfff' then
             triggerEvent('Change Character', 'bf', 'bfghost')
         end

@@ -1,15 +1,7 @@
-function getVarr(vis)
-    visuals = vis
-end
 
+local script = false
 function onCreatePost()
-    script = false
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) == true then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
         dscrolm = getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')
         mscrolm = getPropertyFromClass('backend.ClientPrefs', 'data.middleScroll')
         dscrol = getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')

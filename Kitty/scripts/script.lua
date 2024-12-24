@@ -1,21 +1,6 @@
---CHECK THESE WHEN YOU CAN FOR CUSTOM OPTIONS WITHOUT MY ENGINE
-local force = false --Should mobile support be enabled at all times?
-local visuals = true --MOST arrow movements?
-local healthDrain = true
-local mechanics = true --Regular Dodge
-local mechanics2 = true -- Set to false if you dont want stuff like hitting custom keys to dodge to work no matter what(mobile user issues without a physical keyboard)
-local penalizeanyway = false -- If you have a bad rating, this will penalize you like in Kade Engine
-
-local botherme = true -- Set to false to SHUT UP THE PRINT
-
-local NO = false
-local bugged = false
-local kadezoom = false
+-- Script setup --
 local stopui = false
 local stopcam = false
-local czm = 1
-local czmu = 1
-local czmc = 1
 local mdsc = false
 local ls = false
 
@@ -29,33 +14,7 @@ end
 
 
 function onCreatePost()
-    setPropertyFromClass("openfl.Lib", "application.window.borderless", false)
-    setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', true)
-    setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', true)
     setProperty('camZoomingMult',1)
-    callScript("scripts/LaneUnderlay", "getVarr", {force})
-    callScript("custom_events/customDodgeKey", "getVarr", {mechanics2})
-    callScript("custom_events/hitkey", "getVarr", {mechanics2})
-    callScript("custom_events/DodgeEvent", "getVarr", {mechanics,force})
-    callScript("custom_events/DodgeForBF", "getVarr", {mechanics,force})
-    callScript("custom_events/DrainConstant", "getVarr", {healthDrain})
-    callScript("custom_events/DrainHP", "getVarr", {healthDrain})
-    callScript("scripts/Drainer", "getVarr", {healthDrain})
-    callScript("custom_events/DrainOnBeat", "getVarr", {healthDrain})
-    callScript("custom_events/DrainOnEvent", "getVarr", {healthDrain})
-    callScript("custom_events/DrainOnStep", "getVarr", {healthDrain})
-    callScript("custom_events/MoveArrow", "getVarr", {visuals})
-    callScript("custom_events/moveOPPONENTStrumline (X)", "getVarr", {visuals})
-    callScript("custom_events/moveOPPONENTStrumline (Y)", "getVarr", {visuals})
-    callScript("custom_events/movePLAYERStrumline (X)", "getVarr", {visuals})
-    callScript("custom_events/movePLAYERStrumline (Y)", "getVarr", {visuals})
-    callScript("custom_events/moveStrumline", "getVarr", {visuals})
-    callScript("custom_events/newArrowToggler", "getVarr", {visuals})
-    callScript("custom_events/Tilt", "getVarr", {visuals})
-    callScript("custom_events/TiltBGTimed", "getVarr", {visuals})
-    callScript("custom_events/TiltHudTimed", "getVarr", {visuals})
-    callScript("scripts/eventConvertScript", "getVarr", {visuals})
-    callScript("custom_events/transparenthelp", "getVarr", {visuals,botherme})
     callScript("scripts/makeCaption", "invt", {ls})
     callScript("scripts/makeCaption", "middcs", {mdsc})
     callScript("scripts/makeCaptionbystep", "invt", {ls})
@@ -65,6 +24,8 @@ function onCreatePost()
 end
 
 function onSongStart()
+    ls = false
+    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')-changeOffset
     dpsx0 = getPropertyFromGroup('playerStrums', 0, 'x')
     dpsx1 = getPropertyFromGroup('playerStrums', 1, 'x')
     dpsx2 = getPropertyFromGroup('playerStrums', 2, 'x')
@@ -81,80 +42,16 @@ function onSongStart()
     dosy1 = getPropertyFromGroup('opponentStrums', 1, 'y')
     dosy2 = getPropertyFromGroup('opponentStrums', 2, 'y')
     dosy3 = getPropertyFromGroup('opponentStrums', 3, 'y')
-    ls = false
-        makeLuaText("drawfps", drawf, 0, 0.0, 0.0)
-        setTextSize("drawfps", 20)
-        setObjectCamera("drawfps", 'other')
-        addLuaText("drawfps")
-    offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')-changeOffset
-    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil and botherme then
-        debugPrint('Different engine recognized? WILL NOT penalize player for bad ratings unless you change the setting to (local penalizeanyway = true) in mods/kitty/scripts/script.lua!')
-    end
-    if getPropertyFromClass('backend.ClientPrefs','data.assetMovement') == nil and botherme then
-        debugPrint('Different engine recognized? Modcharts will CONTINUE to be used unless you change the setting to (local visuals = false) in mods/kitty/scripts/script.lua!')        
-    end
-    if getPropertyFromClass('backend.ClientPrefs','data.mechanics') == nil and botherme then
-        debugPrint('Different engine recognized? Mechanics will CONTINUE to be used unless you change the setting to (local mechanics = false) in mods/kitty/scripts/script.lua!')
-    end
+    makeLuaText("drawfps", drawf, 0, 0.0, 0.0)
+    setTextSize("drawfps", 20)
+    setObjectCamera("drawfps", 'other')
+    addLuaText("drawfps")
     debugPrint('- - -')
     debugPrint('Song Offset to Mains: '..'('..changeOffset..')')
     debugPrint('Main Offset: '..'('..offset..')')
     debugPrint('- - -')
     debugPrint(' | ')
     debugPrint(' | ')
-    doTweenZoom('camz','camHUD',1,0.01,'sineInOut')
-    if not bugged then
-        setProperty("defaultCamUIZoom",getProperty('camHUD.zoom')) 
-    end
-    setPropertyFromClass("openfl.Lib", "application.window.title", songName)
-    if getProperty('defaultCamUIZoom') ~= 'defaultCamUIZoom' then
-        dcuiz = getProperty('defaultCamUIZoom')
-    end
-    dcgz = getProperty('defaultCamZoom')
-    czm = getProperty('camZoomingMult')
-    callScript("custom_events/CZoom Custom Toggle", "getVarr", {bugged})
-    callScript("custom_events/Add Camera Zoom Edit", "getVarr", {bugged})
-end
-
-function goodNoteHit(id)
-    rt = getProperty('notes.members['..id..'].rating')
-    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == true or (bugged and penalizeanyway) then
-    if rt == 'good' then
-        setProperty('health', getProperty('health') - 0.01)
-    end
-    if rt == 'bad' then
-        setProperty('health', getProperty('health') - 0.02)
-    end
-    if rt == 'shit' then
-        setProperty('health', getProperty('health') - 0.2)
-    end
-end
-end
-
-function noteMiss()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.ratingPenalty') == true or (bugged and penalizeanyway) then
-        if getProperty('ratingPercent') < 0.86 and getProperty('ratingPercent') > 0.8 then
-            setProperty('health', getProperty('health') - 0.1)
-        elseif getProperty('ratingPercent') < 0.78 and getProperty('ratingPercent') > 0.7 then
-            setProperty('health', getProperty('health') - 0.12)
-        elseif getProperty('ratingPercent') < 0.67 and getProperty('ratingPercent') > 0.63 then
-            setProperty('health', getProperty('health') - 0.16)
-        elseif getProperty('ratingPercent') < 0.6 and getProperty('ratingPercent') > 0.55 then
-            setProperty('health', getProperty('health') - 0.2)
-        elseif getProperty('ratingPercent') < 0.53 and getProperty('ratingPercent') > 0 then
-            setProperty('health', getProperty('health') - 0.23)
-        end
-    end
 end
 
 function onEvent(name, value1, value2)
@@ -166,12 +63,7 @@ function onEvent(name, value1, value2)
             setProperty('camGame.zoom',getProperty('camGame.zoom')+tonumber(value2))
         end
     end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == true or (bugged and visuals) then
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
         if name == 'newArrowToggler' then
             value1 = tonumber(value1)
             value2 = tonumber(value2)
@@ -253,128 +145,44 @@ function onEvent(name, value1, value2)
     if name == "hudzoom" then 
         value1 = tonumber(value1)
         value2 = tonumber(value2) 
-        if bugged then
-            bugdone = false
-        end
         if value2 == '' or value2 < 0.02 then
             setProperty('camHUD.zoom',tonumber(value1))
 			setProperty('defaultCamUIZoom',tonumber(value1))
 	    else
             doTweenZoom('camzz','camHUD',tonumber(value1),tonumber(value2),'sineInOut')
-            runTimer("WHY",value2)
-			NO = true
 	    end
 
-    end
-    if not bugged then
-        if name == "kadezoomtoggle" then
-            value1 = tonumber(value1)
-            value2 = tonumber(value2)
-            if value1 == 1 then
-                czm = 0
-                kadezoom = true
-            else
-                kadezoom = false
-                czm = 1
-            end
-            setProperty('camZoomingMult', czm)
-        end
     end
     if name == "nozoom" then
         value1 = tonumber(value1)
         value2 = tonumber(value2)
         if value1 == 1 then
             stopcam = true
-            czmc = 0
-            if bugged then
-                setProperty('camZoomingMult', 0)
-            else
-                setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', false)
-            end
+            setProperty('camZoomsBg', false)
         elseif value1 == 0 then
             stopcam = false
-            czmc = 1
-            if bugged then
-                setProperty('camZoomingMult', 1)
-            else
-                setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', true)
-            end
+            setProperty('camZoomsBg', true)
         end
         if value2 == 1 then
             stopui = true
-            czmu = 0
-            if bugged then
-                setProperty('camZoomingMult', 0)
-            else
-                setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', false)
-            end
+            setProperty('camZoomsHud', false)
         elseif value2 == 0 then
             stopui = false
-            czmu = 1
-            if bugged then
-                setProperty('camZoomingMult', 1)
-            else
-                setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', true)
-            end
+            setProperty('camZoomsHud', true)
         end
     end
-end
-
-function onTimerCompleted(tag, loops, loopsLeft)
-	if tag == 'WHY' then
-		NO = false
-	end
 end
 
 function onUpdate(elapsed)
-        if NO then
-            setProperty('defaultCamUIZoom',getProperty('camHUD.zoom'))
-        end
     drawf = getPropertyFromClass("Main", "fpsVar.text")
     setTextString("drawfps", drawf)
     el = elapsed
-    if kadezoom == true then
-        if stopui == false then
-            doTweenZoom('tweeningZoom', 'camHUD', dcuiz, 0.15, 'quadOut')
-        end
-        if stopcam == false then
-            doTweenZoom('tweeningZoomin', 'camGame', dcgz, 0.15, 'quadOut')
-        end
-    end
-    if bugdone then
-        setProperty("camHUD.zoom",lastZOOM)
-        doTweenZoom("tweeningZoom", "camHUD", lastZOOM, 0.0, "linear")
-    end
-end
-
-function onSectionHit()
-    if kadezoom == true then
-        if stopui == false then
-            doTweenZoom('tweeningZoom', 'camHUD', czmu+0.08, 0.06, 'quadOut')
-        end
-        if stopcam == false then
-            doTweenZoom('tweeningZoomin', 'camGame', czmc+0.08, 0.06, 'quadOut')
-        end
-    end
 end
 
 function onTweenCompleted(name)
     if name == 'camzz' then
-        if not bugged then
-            setProperty("defaultCamUIZoom",getProperty('camHUD.zoom'))
-        end
-        lastZOOM = getProperty('camHUD.zoom')
-        if bugged and lastZOOM ~= 1 then
-            bugdone = true
-        end
+        setProperty("defaultCamUIZoom",getProperty('camHUD.zoom'))
     end
-end
-
-function onDestroy()
-    setPropertyFromClass("openfl.Lib", "application.window.borderless", false)
-    setPropertyFromClass('backend.ClientPrefs','data.camZoomsBg', true)
-    setPropertyFromClass('backend.ClientPrefs','data.camZoomsHud', true)
-    setProperty('camZoomingMult',1)
 end
 
 --This below makes the Health Bar move Smoothly

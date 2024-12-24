@@ -6,7 +6,7 @@ allowVerticalScroll = true
 allowHorizontalScroll = false
 visualLaneOpacity = 1 * 100
 
-
+local forceMobile = false
 selectedBeginSong = true
 	beginSongConfirm = 'YES'
 
@@ -41,11 +41,9 @@ end
 --------------------------------------------------------------------------------------
 ---------------------------------Added by PringleKitten-------------------------------
 --------------------------------------------------------------------------------------
-function onCreate()
-run1 = true
-end
-function getVarr(fo)
-	force = fo
+function onCreatePost()
+	run1 = true
+    forceMobile = getPropertyFromClass("backend.ClientPrefs", "data.mobileMechanics")
 
 	if run1 then
 		run1 = false
@@ -64,14 +62,8 @@ function getVarr(fo)
 	setProperty('AssistText.alpha', 0.9)
 
 	simpleishText('NavigationText', 'CONTROLS: "SHIFT" to select | "BACKSPACE" to deselect | Arrow Keys to navigate', screenWidth, 0, 680, 25, 'center', 'hud')
-
-    if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
 	
-    if bugged or force then
+    if forceMobile then
 		luasprite('up','me/buttons/button',(screenWidth/1.085)-120,(screenHeight/1.1625)-210,'hud',0.5,0.5,0,0,'.',true)
 		luasprite('down','me/buttons/button',getProperty('up.x'),getProperty('up.y')+110,'hud',0.5,0.5,0,0,'.',true)
 		luasprite('left','me/buttons/button',getProperty('up.x')-110,getProperty('up.y')+50,'hud',0.5,0.5,0,0,'.',true)
@@ -151,12 +143,7 @@ function mouseOverlaps(tag, camera)
 end
 
 function buttonStuff()
-	if getPropertyFromClass('backend.ClientPrefs', 'data.mechanics') == nil then
-        bugged = true
-    else
-        bugged = false
-    end
-    if bugged or force then
+    if forceMobile then
     	if mouseOverlaps('space', 'camOther') and mouseClicked("left") then
     	    spc = true
     	end
@@ -192,7 +179,7 @@ function buttonStuff()
     	    bup = false
     	end
 	end
-	if bugged or force then
+	if forceMobile then
 		if ((mouseOverlaps('cc', 'camOther') and mouseClicked("left")) or keyPress('C')) and not captions then
 			captions = true
 			doTweenAlpha("intxta", "invertxt", 1, 0.2, "linear")
