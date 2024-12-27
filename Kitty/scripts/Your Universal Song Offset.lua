@@ -17,10 +17,12 @@ function onCreate()
             newOff = -45 --Number is YOUR Song Offset
         elseif songName == 'cg5-(stuck-inside)' then
             newOff = -70 --Number is YOUR Song Offset
-        elseif songName == 'Stress' or songName == 'Ugh' or songName == 'electroman-adventures' then
-            newOff = 35 --Number is YOUR Song Offset
+        elseif songName == 'Ugh' then
+            newOff = 75 --Number is YOUR Song Offset
         elseif songName == 'electroman-adventures' then
-            newOff = 25 --Number is YOUR Song Offset
+            newOff = 35 --Number is YOUR Song Offset
+        elseif songName == 'Stress' then
+            newOff = 60
         elseif songName == 'Octagon of Destiny' then
             newOff = -10 --Number is YOUR Song Offset
         end

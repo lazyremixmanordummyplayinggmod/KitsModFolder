@@ -7,3 +7,5 @@ V1 Variables:
 2 Toggles PLAYER Notes (22 hides)
 22 Toggle but shows PLAYER notes at half opacity (222 shows)
 **V2 Variables are the same**
+although if you type insta in a value, it will
+instantly set alpha to whatever for other value

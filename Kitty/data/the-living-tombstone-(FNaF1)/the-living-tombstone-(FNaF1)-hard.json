@@ -5700,14 +5700,14 @@
 				6990.29126213592,
 				[
 					[
-						"HideNotes",
-						"1",
-						""
-					],
-					[
 						"Hide_Hud",
 						"",
 						"1"
+					],
+					[
+						"HideNotes",
+						"1",
+						""
 					],
 					[
 						"newArrowToggler",
