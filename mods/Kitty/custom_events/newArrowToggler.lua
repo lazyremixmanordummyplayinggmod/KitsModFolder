@@ -279,10 +279,6 @@ function onEvent(name, value1, value2)
                         setPropertyFromGroup('playerStrums',2,'x',dpsx2);
                         setPropertyFromGroup('playerStrums',3,'x',dpsx3);
                     end
-                    noteTweenAlpha("nAo1",0,1,0.5,"quartInOut");
-                    noteTweenAlpha("nAo2",1,1,0.5,"quartInOut");
-                    noteTweenAlpha("nAo3",2,1,0.5,"quartInOut");
-                    noteTweenAlpha("nAo4",3,1,0.5,"quartInOut");
                     defaultPlayerStrumX0 = dpsx0
                     defaultPlayerStrumX1 = dpsx1
                     defaultPlayerStrumX2 = dpsx2
@@ -315,10 +311,6 @@ function onEvent(name, value1, value2)
                         setPropertyFromGroup('playerStrums',2,'x',dpsx2-323);
                         setPropertyFromGroup('playerStrums',3,'x',dpsx3-323);
                     end
-                    noteTweenAlpha("nAo1",0,0,0.5,"quartInOut");
-                    noteTweenAlpha("nAo2",1,0,0.5,"quartInOut");
-                    noteTweenAlpha("nAo3",2,0,0.5,"quartInOut");
-                    noteTweenAlpha("nAo4",3,0,0.5,"quartInOut");
                     defaultPlayerStrumX0 = dpsx0-323
                     defaultPlayerStrumX1 = dpsx1-323
                     defaultPlayerStrumX2 = dpsx2-323

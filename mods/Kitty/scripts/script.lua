@@ -55,14 +55,6 @@ function onSongStart()
 end
 
 function onEvent(name, value1, value2)
-    if name == 'Add Camera Zoom' then
-        if stopui then
-            setProperty('camHUD.zoom',getProperty('camHUD.zoom')+tonumber(value1))
-        end
-        if stopcam then
-            setProperty('camGame.zoom',getProperty('camGame.zoom')+tonumber(value2))
-        end
-    end
     if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
         if name == 'newArrowToggler' then
             value1 = tonumber(value1)
@@ -146,30 +138,14 @@ function onEvent(name, value1, value2)
         value1 = tonumber(value1)
         value2 = tonumber(value2) 
         if value2 == '' or value2 < 0.02 then
-            setProperty('camHUD.zoom',tonumber(value1))
-			setProperty('defaultCamUIZoom',tonumber(value1))
+            setProperty('camHUD.zoom',value1)
+			setProperty('defaultCamUIZoom',value1)
 	    else
-            doTweenZoom('camzz','camHUD',tonumber(value1),tonumber(value2),'sineInOut')
+            doTweenZoom('camzz','camHUD',value1,value2,'sineInOut')
+            setProperty('camZoomsHud', false)
+            buerbfgeriugberbge = true
 	    end
 
-    end
-    if name == "nozoom" then
-        value1 = tonumber(value1)
-        value2 = tonumber(value2)
-        if value1 == 1 then
-            stopcam = true
-            setProperty('camZoomsBg', false)
-        elseif value1 == 0 then
-            stopcam = false
-            setProperty('camZoomsBg', true)
-        end
-        if value2 == 1 then
-            stopui = true
-            setProperty('camZoomsHud', false)
-        elseif value2 == 0 then
-            stopui = false
-            setProperty('camZoomsHud', true)
-        end
     end
 end
 
@@ -177,11 +153,15 @@ function onUpdate(elapsed)
     drawf = getPropertyFromClass("Main", "fpsVar.text")
     setTextString("drawfps", drawf)
     el = elapsed
+    if buerbfgeriugberbge then
+        setProperty("defaultCamUIZoom",getProperty('camHUD.zoom'))
+    end
 end
 
 function onTweenCompleted(name)
     if name == 'camzz' then
         setProperty("defaultCamUIZoom",getProperty('camHUD.zoom'))
+        buerbfgeriugberbge = false
     end
 end
 
