@@ -9,3 +9,6 @@ function onStartCountdown()
 	end
 	return Function_Continue;
 end
+function onDestroy()
+    callMethod('remove', {instanceArg('videoCutscene'), true})
+end

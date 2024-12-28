@@ -9,6 +9,6 @@ end
 
 function onTimerCompleted(tag)
     if tag == 'vid' then
-        callScript('scripts/videoSprite', 'makeVideoSprite', {'homie', 'hc', 382, -11.2, 'camGame', 1.111, 1.1105, 1})
+        callScript('scripts/videoSprite', 'makeVideoSprite', {'homie', 'hc','camGame',1})
     end
 end

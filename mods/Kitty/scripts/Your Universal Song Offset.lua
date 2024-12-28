@@ -19,7 +19,7 @@ function onCreate()
             newOff = -70 --Number is YOUR Song Offset
         elseif songName == 'Ugh' then
             newOff = 75 --Number is YOUR Song Offset
-        elseif songName == 'electroman-adventures' then
+        elseif songName == 'electroman-adventures' or songName == 'everytime-we-touch' then
             newOff = 35 --Number is YOUR Song Offset
         elseif songName == 'Stress' then
             newOff = 60
