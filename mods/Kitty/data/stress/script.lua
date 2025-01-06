@@ -1,4 +1,9 @@
 local allowCountdown = false
+
+function laneScriptCS()
+	inacs = true
+end
+
 function onCreate()
 	setPropertyFromClass('backend.GameOverSubstate', 'characterName', 'bf-holding-gf-dead'); --Character json file for the death animation
 	makeChart();
@@ -7,17 +12,23 @@ end
 function onStartCountdown()
 	if not allowCountdown and not seenCutscene then --Block the first countdown
 		setProperty('inCutscene', true);
-		startVideo('stressCutscene');
+		startVideo('stressutscene');
+		setObjectCamera('videoCutscene','other')
+		setProperty('canPause', true)
 		allowCountdown = true;
 		return Function_Stop;
 	end
-
 	characterPlayAnim('gf', 'shoot1-loop', true);
 	return Function_Continue;
 end
-
-function onDestroy()
-    callMethod('remove', {instanceArg('videoCutscene'), true})
+function onCountdownTick(counter)
+	if counter == 0 then
+		setProperty('inCutscene', false);
+    	callMethod('remove', {instanceArg('videoCutscene'), true})
+		removeLuaSprite("videoCutscene")
+		setProperty('canPause', true)
+		close()
+	end
 end
 
 chartTankman = {}
