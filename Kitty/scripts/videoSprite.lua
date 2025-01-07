@@ -1,4 +1,4 @@
-function makeVideoSprite(tag, videoPath, x, y, camera, aa, bb, zoom)
+function makeVideoSprite(tag, videoPath,camera,zoom)
     startVideo(videoPath)
     setObjectCamera('videoCutscene',camera)
     screenCenter(videoPath)

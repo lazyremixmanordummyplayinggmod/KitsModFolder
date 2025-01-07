@@ -63,7 +63,7 @@
 			]
 		],
 		[
-			"cg5-(drop-the-bass)",
+			"cg5 (drop the bass)",
 			"cg5-elika",
 			[
 				255,
@@ -81,7 +81,25 @@
 			]
 		],
 		[
-			"electroman-adventures",
+			"electrodynamix",
+			"bf",
+			[
+				255,
+				36,
+				112
+			]
+		],
+		[
+			"electroman adventures",
+			"bf",
+			[
+				255,
+				36,
+				112
+			]
+		],
+		[
+			"everytime we touch",
 			"bf",
 			[
 				255,

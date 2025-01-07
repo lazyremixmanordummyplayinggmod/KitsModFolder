@@ -358,6 +358,7 @@ function buttonStuff()
 end
 
 function onUpdate()
+	if not (getProperty('inCutscene') or (getProperty('videoCutscene') or getProperty('videoCutscene.isPlaying'))) then
 	if not allowCountdown then
         buttonStuff()
 
@@ -563,6 +564,7 @@ function onUpdate()
 		spc = false
 		bbck = false
 	end
+end
 end
 
 function onSongStart()
