@@ -178,7 +178,7 @@ end
 function onBeatHit()
 	local bpm = getPropertyFromClass('backend.Conductor','bpm')
     local beatDur = 60 / bpm
-    local tweenTime = beatDur * 0.5
+    local tweenTime = beatDur * 0.3
     setProperty("mainbeat.color", getColorFromHex('00FF00'))
     doTweenColor("mainbcst", "mainbeat", "FF0000", tweenTime, "bounceIn")
     setProperty('mainbeat.scale.x',0.3)
@@ -219,7 +219,6 @@ function onCountdownTick(counter)
         setProperty('scoreTxt.alpha', 0);
     end
 end
-
 function customRatingThing(m)
     comb = m and 0 or comb + 1
     nr = math.floor(rating * 10000) / 100
@@ -265,6 +264,13 @@ function updHP()
 end
 
 function onUpdate()
+    if not showUiBru and (getProperty('iconP1.alpha') == 1 or getProperty('healthBarBG.alpha') == 1) then
+        setProperty('healthBar.alpha', 0);
+        setProperty('healthBarBG.alpha', 0);
+        setProperty('iconP1.alpha', 0);
+        setProperty('iconP2.alpha', 0);
+        setProperty('scoreTxt.alpha', 0);
+    end
     if allowCountdown then
         updHP()
     end

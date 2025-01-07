@@ -12,7 +12,7 @@ end
 function onStartCountdown()
 	if not allowCountdown and not seenCutscene then --Block the first countdown
 		setProperty('inCutscene', true);
-		startVideo('stressutscene');
+		startVideo('stressCutscene');
 		setObjectCamera('videoCutscene','other')
 		setProperty('canPause', true)
 		allowCountdown = true;
@@ -27,7 +27,6 @@ function onCountdownTick(counter)
     	callMethod('remove', {instanceArg('videoCutscene'), true})
 		removeLuaSprite("videoCutscene")
 		setProperty('canPause', true)
-		close()
 	end
 end
 
