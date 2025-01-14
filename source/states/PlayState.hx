@@ -203,6 +203,8 @@ class PlayState extends MusicBeatState
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
+	public var practiceSine:Float = 0;
+	public var practiceTxt:FlxText;
 
 	public var iconP1:HealthIcon;
 	public var iconP2:HealthIcon;
@@ -581,6 +583,15 @@ class PlayState extends MusicBeatState
 		uiGroup.add(botplayTxt);
 		if(ClientPrefs.data.downScroll)
 			botplayTxt.y = healthBar.y + 70;
+
+		practiceTxt = new FlxText(400, healthBar.y - 110, FlxG.width - 800, Language.getPhrase("Practice").toUpperCase(), 32);
+		practiceTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		practiceTxt.scrollFactor.set();
+		practiceTxt.borderSize = 1.25;
+		practiceTxt.visible = practiceMode;
+		uiGroup.add(practiceTxt);
+		if(ClientPrefs.data.downScroll)
+			practiceTxt.y = healthBar.y + 50;
 
 		uiGroup.cameras = [camHUD];
 		noteGroup.cameras = [camHUD];
@@ -2600,7 +2611,6 @@ class PlayState extends MusicBeatState
 		if(daRating.noteSplash && !note.noteSplashData.disabled)
 			spawnNoteSplashOnNote(note);
 
-		if(!practiceMode && !cpuControlled) {
 			songScore += score;
 			if(!note.ratingDisabled)
 			{
@@ -2608,7 +2618,6 @@ class PlayState extends MusicBeatState
 				totalPlayed++;
 				RecalculateRating(false);
 			}
-		}
 
 		var uiFolder:String = "";
 		var antialias:Bool = ClientPrefs.data.antialiasing;
