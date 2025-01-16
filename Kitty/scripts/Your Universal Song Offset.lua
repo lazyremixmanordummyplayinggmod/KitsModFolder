@@ -8,25 +8,52 @@ function onCreate()
     elseif c then
         setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset) --Number is YOUR Song Offset
     end
-    for _, curS in pairs({'marshmallow-(alone)','alan-becker-(sea-shanty-edit)','alan-becker-(sea-shanty)'}) do
+    for _, curS in pairs({'alan-becker-(sea-shanty-edit)','alan-becker-(sea-shanty)'}) do
         if songName == curS then
             newOff = -25 --Number is YOUR Song Offset
-        elseif songName == 'sandstorm' or songName == 'the-living-tombstone-(FNaF1)' then
+        end
+    end
+    for _, curS in pairs({'TON-GD-Level','alan-becker-(rush-e)','run-run'}) do
+        if songName == curS then
+            newOff = -25 --Number is YOUR Song Offset
+        end
+    end
+    for _, curS in pairs({'marshmallow-(alone)',}) do
+        if songName == curS then
+            newOff = -50 --Number is YOUR Song Offset
+        end
+    end
+    for _, curS in pairs({'sandstorm','the-living-tombstone-(FNaF1)'}) do
+        if songName == curS then
             newOff = 0 --Number is YOUR Song Offset
-        elseif songName == 'TON-GD-Level' or songName == 'alan-becker-(rush-e)' or songName == 'run-run' then
-            newOff = -45 --Number is YOUR Song Offset
-        elseif songName == 'cg5-(stuck-inside)' then
+        end
+    end
+    for _, curS in pairs({'cg5-(stuck-inside)'}) do
+        if songName == curS then
             newOff = -70 --Number is YOUR Song Offset
-        elseif songName == 'Ugh' then
+        end
+    end
+    for _, curS in pairs({'Ugh'}) do
+        if songName == curS then
             newOff = 75 --Number is YOUR Song Offset
-        elseif songName == 'electroman-adventures' or songName == 'everytime-we-touch' then
+        end
+    end
+    for _, curS in pairs({'electroman-adventures','everytime-we-touch'}) do
+        if songName == curS then
             newOff = 35 --Number is YOUR Song Offset
-        elseif songName == 'Stress' then
-            newOff = 60
-        elseif songName == 'Octagon of Destiny' then
+        end
+    end
+    for _, curS in pairs({'Stress'}) do
+        if songName == curS then
+            newOff = 60 --Number is YOUR Song Offset
+        end
+    end
+    for _, curS in pairs({'Octagon of Destiny'}) do
+        if songName == curS then
             newOff = -10 --Number is YOUR Song Offset
         end
     end
+
     if newOff ~= 0 then
         setPropertyFromClass('backend.ClientPrefs','data.noteOffset',offset+newOff)
     end

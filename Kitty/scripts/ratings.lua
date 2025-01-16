@@ -13,6 +13,7 @@ local nr = 0
 local comb = 0
 local sizeee = 40
 local letter = '?'
+local showUiBru = true
 
 local died = 0
 
@@ -264,7 +265,7 @@ function updHP()
 end
 
 function onUpdate()
-    if not showUiBru and (getProperty('iconP1.alpha') == 1 or getProperty('healthBarBG.alpha') == 1) then
+    if (not showUiBru and (getProperty('iconP1.alpha') == 1 or getProperty('healthBarBG.alpha') == 1)) then
         setProperty('healthBar.alpha', 0);
         setProperty('healthBarBG.alpha', 0);
         setProperty('iconP1.alpha', 0);
