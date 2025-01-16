@@ -215,6 +215,8 @@ class PlayState extends MusicBeatState
 	public var cameraSpeed:Float = 1;
 
 	public var songScore:Int = 0;
+	public var songCheated:Int = -1;
+	public var cheatMult:Float = 1;
 	public var songHits:Int = 0;
 	public var songMisses:Int = 0;
 	public var scoreTxt:FlxText;
@@ -1302,6 +1304,27 @@ class PlayState extends MusicBeatState
 			FlxG.sound.music.pause();
 			vocals.pause();
 			opponentVocals.pause();
+		}
+
+		if(!practiceMode && !cpuControlled)
+		{
+			songCheated = -1;
+			cheatMult = 1;
+		}
+		if(!practiceMode && cpuControlled)
+		{
+			songCheated = 1;
+			cheatMult = 0.1;
+		}
+		if(practiceMode && !cpuControlled)
+		{
+			songCheated = 1;
+			cheatMult = 0.1;
+		}
+		if(practiceMode && cpuControlled)
+		{
+			songCheated = 1;
+			cheatMult = 0.1;
 		}
 
 		stagesFunc(function(stage:BaseStage) stage.startSong());
@@ -2471,7 +2494,7 @@ class PlayState extends MusicBeatState
 			#if !switch
 			var percent:Float = ratingPercent;
 			if(Math.isNaN(percent)) percent = 0;
-			Highscore.saveScore(Song.loadedSongName, songScore, storyDifficulty, percent);
+			Highscore.saveScore(Song.loadedSongName, songCheated, songScore, storyDifficulty, percent);
 			#end
 			playbackRate = 1;
 
@@ -2500,7 +2523,7 @@ class PlayState extends MusicBeatState
 					// if ()
 					if(!ClientPrefs.getGameplaySetting('practice') && !ClientPrefs.getGameplaySetting('botplay')) {
 						StoryMenuState.weekCompleted.set(WeekData.weeksList[storyWeek], true);
-						Highscore.saveWeekScore(WeekData.getWeekFileName(), campaignScore, storyDifficulty);
+						Highscore.saveWeekScore(WeekData.getWeekFileName(), songCheated, campaignScore, storyDifficulty);
 
 						FlxG.save.data.weekCompleted = StoryMenuState.weekCompleted;
 						FlxG.save.flush();
@@ -2611,7 +2634,7 @@ class PlayState extends MusicBeatState
 		if(daRating.noteSplash && !note.noteSplashData.disabled)
 			spawnNoteSplashOnNote(note);
 
-			songScore += score;
+			songScore += Std.int(score*cheatMult);
 			if(!note.ratingDisabled)
 			{
 				songHits++;
@@ -3024,7 +3047,7 @@ class PlayState extends MusicBeatState
 		combo = 0;
 
 		health -= subtract * healthLoss;
-		if(!practiceMode) songScore -= 10;
+		songScore -= 30;
 		if(!endingSong) songMisses++;
 		totalPlayed++;
 		RecalculateRating(true);
