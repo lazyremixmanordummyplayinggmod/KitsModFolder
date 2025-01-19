@@ -1205,8 +1205,24 @@ class PlayState extends MusicBeatState
 		}
 
 		var tempScore:String;
-		if(!instakillOnMiss) tempScore = Language.getPhrase('score_text', 'Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
-		else tempScore = Language.getPhrase('score_text_instakill', 'Score: {1} | Rating: {2}', [songScore, str]);
+		tempScore = Language.getPhrase('score_text', 'Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(!instakillOnMiss && !practiceMode && !cpuControlled) tempScore = Language.getPhrase('score_text', 'Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(instakillOnMiss && !practiceMode && !cpuControlled) tempScore = Language.getPhrase('score_text_instakill', 'Score: {1} | Rating: {2}', [songScore, str]);
+
+		if(!instakillOnMiss && practiceMode && !cpuControlled) tempScore = Language.getPhrase('score_text12', 'Practice - Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(!instakillOnMiss && cpuControlled && !practiceMode) tempScore = Language.getPhrase('score_text13', 'BotPlay - Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(!instakillOnMiss && practiceMode && cpuControlled) tempScore = Language.getPhrase('score_text14', 'Practice/BotPlay - Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(instakillOnMiss && practiceMode && !cpuControlled) tempScore = Language.getPhrase('score_text22', 'Practice - Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(instakillOnMiss && cpuControlled && !practiceMode) tempScore = Language.getPhrase('score_text23', 'BotPlay - Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
+		if(instakillOnMiss && practiceMode && cpuControlled) tempScore = Language.getPhrase('score_text24', 'Practice/BotPlay - Score: {1} | Misses: {2} | Rating: {3}', [songScore, songMisses, str]);
+
 		scoreTxt.text = tempScore;
 	}
 
@@ -2494,7 +2510,7 @@ class PlayState extends MusicBeatState
 			#if !switch
 			var percent:Float = ratingPercent;
 			if(Math.isNaN(percent)) percent = 0;
-			Highscore.saveScore(Song.loadedSongName, songCheated, songScore, storyDifficulty, percent);
+			Highscore.saveScore(Song.loadedSongName, songCheated, songScore, storyDifficulty, percent, songScore, percent);
 			#end
 			playbackRate = 1;
 
