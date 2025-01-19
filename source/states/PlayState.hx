@@ -736,6 +736,7 @@ class PlayState extends MusicBeatState
 		FlxG.animationTimeScale = value;
 		Conductor.safeZoneOffset = (ClientPrefs.data.safeFrames / 60) * 1000 * value;
 		setOnScripts('playbackRate', playbackRate);
+		if(videoCutscene != null) videoCutscene.videoSprite.bitmap.rate = playbackRate;
 		#else
 		playbackRate = 1.0; // ensuring -Crow
 		#end
@@ -920,6 +921,8 @@ class PlayState extends MusicBeatState
 				videoCutscene.onSkip = onVideoEnd;
 			}
 			add(videoCutscene);
+
+			if(videoCutscene != null) videoCutscene.videoSprite.bitmap.rate = playbackRate;
 
 			if (playOnLoad)
 				videoCutscene.videoSprite.play();
