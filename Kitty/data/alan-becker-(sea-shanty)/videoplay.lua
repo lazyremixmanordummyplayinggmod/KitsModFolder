@@ -59,5 +59,6 @@ end
 function onTimerCompleted(tag)
     if tag == 'vid' then
         callScript('scripts/videoSprite', 'makeVideoSprite', {'abss', 'abss','camGame',0.3175})
+        close(true)
     end
 end

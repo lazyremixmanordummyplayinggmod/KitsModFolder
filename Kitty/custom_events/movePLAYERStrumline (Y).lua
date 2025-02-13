@@ -1,4 +1,10 @@
 local r1t = true
+function onCreatePost()
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == false then
+        close(true)
+    end
+end
+
 function onEvent(name, value1, value2)
     if name == 'movePLAYERStrumline (Y)' then
         value1 = tonumber(value1)

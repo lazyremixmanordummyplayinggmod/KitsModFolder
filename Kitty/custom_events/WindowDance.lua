@@ -4,6 +4,13 @@ local x = 0
 local y = 0
 local dance = false
 local v2 = 0
+
+function onCreatePost()
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == false then
+        close(true)
+    end
+end
+
 function onEvent(name, value1, value2)
     if name == "WindowDance" then
         a = true

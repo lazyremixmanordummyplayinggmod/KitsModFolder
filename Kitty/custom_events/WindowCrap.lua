@@ -1,6 +1,12 @@
 local movingX = false
 local movingY = false
 
+function onCreatePost()
+    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == false then
+        close(true)
+    end
+end
+
 function onSongStart()
     setPropertyFromClass('openfl.Lib', 'application.window.fullscreen', false)
     runTimer("waiter",0.05)

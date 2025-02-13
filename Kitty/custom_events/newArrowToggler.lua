@@ -7,14 +7,16 @@ function onCreatePost()
         dscrol = getPropertyFromClass('backend.ClientPrefs', 'data.downScroll')
         mscrol = getPropertyFromClass('backend.ClientPrefs', 'data.middleScroll')
         script = true
+    else
+        close(true)
     end
 end
 
 function onSongStart()
-    if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
-        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
-        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
-        debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
+    if dscrolm or mscrolm then
+        debugPrint('TURN OFF MIDDLESCROLL IF YOU GET VISUAL BUGS. IF STILL PERSISTS TURN OFF DOWNSCROLL. SORRY!')
+        debugPrint('TURN OFF MIDDLESCROLL IF YOU GET VISUAL BUGS. IF STILL PERSISTS TURN OFF DOWNSCROLL. SORRY!')
+        debugPrint('TURN OFF MIDDLESCROLL IF YOU GET VISUAL BUGS. IF STILL PERSISTS TURN OFF DOWNSCROLL. SORRY!')
     end
     dosx0 = defaultOpponentStrumX0
     dosx1 = defaultOpponentStrumX1

@@ -1,7 +1,7 @@
 {
-	"name": "PringleKitten 1.0",
+	"name": "PringleKitten 3.11",
 	"description": "Anything you want to play I'll add",
-	"restart":false,
+	"restart":true,
 	"runsGlobally": true,
 	"color": [251, 77, 155]
 }

@@ -1,0 +1,1 @@
+v1 = size(this shows it automatically, bigger = less)v1/2 "hide" hides it

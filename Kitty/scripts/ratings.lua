@@ -13,7 +13,7 @@ local nr = 0
 local comb = 0
 local sizeee = 40
 local letter = '?'
-local showUiBru = true
+local uiType = 0
 
 local died = 0
 
@@ -69,7 +69,8 @@ function rtsSetup(cam,ui)
     setObjectCamera("maincom", cam)
     setObjectCamera("mainhp", cam)
     setObjectCamera("mainbeat", cam)
-    showUibru = ui
+    gCam = cam
+    uiType = ui
     ratingPosFunc()
 end
 
@@ -149,6 +150,8 @@ function onCreatePost()
     setObjectOrder("mainacc", 107)
     setObjectOrder("mainsc", 108)
     setObjectOrder("maincom", 109)
+    setObjectOrder("timeLeftText", 110)
+    tTy = getProperty('timeTxt.y')
     txtShit()
 end
 
@@ -192,32 +195,63 @@ end
 function onCountdownTick(counter)
     cancelTimer("disappearlol")
     allowCountdown = true
-    if position == 1 then
-        if counter == 2 then
-            local objects = {'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainMss', 'mainhp', 'mainbeat'}
-            for _, obj in ipairs(objects) do
-                doTweenX('mainx' .. obj, obj, 600, 0.5, 'expoOut')
+    local objects = {'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainMss', 'mainhp', 'mainbeat'}
+    if uiType ~= 0 then
+        if position == 1 then
+            if counter == 2 then
+                for _, obj in ipairs(objects) do
+                    doTweenX('mainx' .. obj, obj, 600, 0.5, 'expoOut')
+                end
+            elseif counter == 3 then
+                runTimer('mainend4', 1.5, 1)
             end
-        elseif counter == 3 then
-            runTimer('mainend4', 1.5, 1)
         end
     end
-    local objects = {'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainMss', 'mainhp', 'mainbeat'}
-    for _, obj in ipairs(objects) do
-        setProperty(obj .. ".alpha", 1)
-    end
-    if showUibru then
-        setProperty('healthBar.alpha', 1);
-        setProperty('healthBarBG.alpha', 1);
-        setProperty('iconP1.alpha', 1);
-        setProperty('iconP2.alpha', 1);
-        setProperty('scoreTxt.alpha', 1);
-    else
-        setProperty('healthBar.alpha', 0);
-        setProperty('healthBarBG.alpha', 0);
-        setProperty('iconP1.alpha', 0);
-        setProperty('iconP2.alpha', 0);
-        setProperty('scoreTxt.alpha', 0);
+    if counter == 0 then
+        if uiType == 0 then
+            setProperty('healthBar.alpha', 1);
+            setProperty('healthBarBG.alpha', 1);
+            setProperty('iconP1.alpha', 1);
+            setProperty('iconP2.alpha', 1);
+            setProperty('scoreTxt.alpha', 1);
+            setProperty('timeBar.visible', true)
+            setProperty('timeTxt.y', tTy)
+            setObjectCamera("timeTxt", 'hud')
+            for _, obj in pairs({'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainMss', 'mainhp', 'mainacc', 'mainsc', 'maincom'}) do
+                removeLuaText(obj)
+            end
+            removeLuaSprite("mainbeat")
+        elseif uiType == 1 then
+            setProperty('healthBar.alpha', 0);
+            setProperty('healthBarBG.alpha', 0);
+            setProperty('iconP1.alpha', 0);
+            setProperty('iconP2.alpha', 0);
+            setProperty('scoreTxt.alpha', 0);
+            setProperty('timeBar.visible', false)
+            setObjectCamera("timeTxt", gCam)
+            setObjectOrder("timeTxt", 100)
+            setProperty('timeTxt.y', getProperty('timeTxt.y')-20)
+            for _, obj in ipairs(objects) do
+                setProperty(obj .. ".alpha", 1)
+            end
+            luatxt("timeLeftText", "0:00", 100, 0, 5, 'other', 32, 'FF00FF', '.', 'center', '.')
+            screenCenter("timeLeftText", 'x')
+            setObjectCamera("timeLeftText", gCam)
+            setProperty("timeLeftText.x", getProperty('timeLeftText.x')-8)
+        elseif uiType == 2 then
+            setProperty('healthBar.alpha', 1);
+            setProperty('healthBarBG.alpha', 1);
+            setProperty('iconP1.alpha', 1);
+            setProperty('iconP2.alpha', 1);
+            setProperty('scoreTxt.alpha', 1);
+            setProperty('timeBar.visible', true)
+            setProperty('timeTxt.visible', true)
+            setObjectCamera("timeTxt", 'hud')
+            setProperty('timeTxt.y', tTy)
+            for _, obj in ipairs(objects) do
+                setProperty(obj .. ".alpha", 1)
+            end
+        end
     end
 end
 function customRatingThing(m)
@@ -263,19 +297,47 @@ function updHP()
         end
     end
 end
+ function onUpdate()
+     if (uiType == 1 and (getProperty('iconP1.alpha') == 1 or getProperty('healthBarBG.alpha') == 1 or getProperty('timeBar.visible') == true)) then
+         setProperty('healthBar.alpha', 0);
+         setProperty('healthBarBG.alpha', 0);
+         setProperty('iconP1.alpha', 0);
+         setProperty('iconP2.alpha', 0);
+         setProperty('scoreTxt.alpha', 0);
+         setProperty('timeBar.visible', false)
+         setProperty('timeTxt.visible', false)
+     end
+     if allowCountdown then
+         updHP()
+     end
+     updateTimeLeftText()
 
-function onUpdate()
-    if (not showUiBru and (getProperty('iconP1.alpha') == 1 or getProperty('healthBarBG.alpha') == 1)) then
-        setProperty('healthBar.alpha', 0);
-        setProperty('healthBarBG.alpha', 0);
-        setProperty('iconP1.alpha', 0);
-        setProperty('iconP2.alpha', 0);
-        setProperty('scoreTxt.alpha', 0);
+     -- Ensure timeLeftText is always visible
+     setProperty("timeLeftText.alpha", 1)
+     setProperty("timeLeftText.visible", true)
+ end
+
+function updateTimeLeftText()
+    local songLength = getProperty('songLength')
+    local currentTime = getPropertyFromClass('backend.Conductor', 'songPosition')
+    local timeLeft = songLength - currentTime
+
+    if timeLeft < 0 then
+        timeLeft = 0
     end
-    if allowCountdown then
-        updHP()
-    end
+
+    local minutes = math.floor(timeLeft / 60000)
+    local seconds = math.floor((timeLeft % 60000) / 1000)
+
+    local timeLeftString = string.format("%d:%02d", minutes, seconds)
+
+    setTextString("timeLeftText", timeLeftString)
+    setProperty("timeLeftText.alpha", 1)
+    setProperty("timeLeftText.visible", true)
 end
+
+
+
 
 function goodNoteHit(id, noteData, noteType, isSustainNote)
     if getPropertyFromGroup('notes',id,'rating') == 'perfect' then
