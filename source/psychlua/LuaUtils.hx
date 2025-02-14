@@ -306,7 +306,7 @@ class LuaUtils
 			}
 
 			if(prefix != null) obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
-			else obj.animation.addByIndices(name, prefix, indices, '', framerate, loop);
+			else obj.animation.add(name, indices, framerate, loop);
 
 			if(obj.animation.curAnim == null)
 			{
@@ -417,7 +417,7 @@ class LuaUtils
 		return 'air';
 		#elseif flash
 		return 'flash';
-		#elseif (ios || iphonesim)
+		#elseif (ios || iphone || iphonesim)
 		return 'ios';
 		#elseif neko
 		return 'neko';

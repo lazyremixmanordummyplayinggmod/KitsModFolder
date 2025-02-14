@@ -83,6 +83,61 @@ class Paths
 		#if !html5 openfl.Assets.cache.clear("songs"); #end
 	}
 
+	public static function freeGraphicsFromMemory()
+	{
+		var protectedGfx:Array<FlxGraphic> = [];
+		function checkForGraphics(spr:Dynamic)
+		{
+			try
+			{
+				var grp:Array<Dynamic> = Reflect.getProperty(spr, 'members');
+				if(grp != null)
+				{
+					//trace('is actually a group');
+					for (member in grp)
+					{
+						checkForGraphics(member);
+					}
+					return;
+				}
+			}
+
+			//trace('check...');
+			try
+			{
+				var gfx:FlxGraphic = Reflect.getProperty(spr, 'graphic');
+				if(gfx != null)
+				{
+					protectedGfx.push(gfx);
+					//trace('gfx added to the list successfully!');
+				}
+			}
+			//catch(haxe.Exception) {}
+		}
+
+		for (member in FlxG.state.members)
+			checkForGraphics(member);
+
+		if(FlxG.state.subState != null)
+			for (member in FlxG.state.subState.members)
+				checkForGraphics(member);
+
+		for (key in currentTrackedAssets.keys())
+		{
+			// if it is not currently contained within the used local assets
+			if (!dumpExclusions.contains(key))
+			{
+				var graphic:FlxGraphic = currentTrackedAssets.get(key);
+				if(!protectedGfx.contains(graphic))
+				{
+					destroyGraphic(graphic); // get rid of the graphic
+					currentTrackedAssets.remove(key); // and remove the key from local cache map
+					//trace('deleted $key');
+				}
+			}
+		}
+	}
+
 	inline static function destroyGraphic(graphic:FlxGraphic)
 	{
 		// free some gpu memory
@@ -261,9 +316,17 @@ class Paths
 			for(mod in Mods.getGlobalMods())
 				if (FileSystem.exists(mods('$mod/$modKey')))
 					return true;
+				#if (android || linux)
+				else if (FileSystem.exists(findFile('$mod/$modKey')))
+					return true;
+				#end
 
 			if (FileSystem.exists(mods(Mods.currentModDirectory + '/' + modKey)) || FileSystem.exists(mods(modKey)))
 				return true;
+			#if (android || linux)
+			else if (FileSystem.exists(findFile(modKey)))
+				return true;
+			#end
 		}
 		#end
 		return (OpenFlAssets.exists(getPath(key, type, parentFolder, false)));
@@ -428,7 +491,7 @@ class Paths
 			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
 			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
-			#if linux
+			#if (android || linux)
 			else
 			{
 				var newPath:String = findFile(key);
@@ -443,7 +506,7 @@ class Paths
 			var fileToCheck:String = mods(mod + '/' + key);
 			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
-			#if linux
+			#if (android || linux)
 			else
 			{
 				var newPath:String = findFile(key);
@@ -455,48 +518,54 @@ class Paths
 		return #if mobile Sys.getCwd() + #end ('mods/' + key);
 	}
 
-	#if linux
-	static function findFile(key:String):String // used above ^^^^
-	{ 
-		var targetDir:Array<String> = key.replace('\\','/').split('/');
-		var searchDir:String = mods(Mods.currentModDirectory + '/' + targetDir[0]);
-		targetDir.remove(targetDir[0]);
+	#if (android || linux)
+	static function findFile(key:String):String {
+		var targetParts:Array<String> = key.replace('\\', '/').split('/');
+		if (targetParts.length == 0) return null;
 
-		for (x in targetDir)
-		{
-			if(x == '') continue;
-			var newPart:String = findNode(searchDir, x);
-			if (newPart != null)
-			{
-				searchDir += '/' + newPart;
+		var baseDir:String = targetParts.shift();
+		var searchDirs:Array<String> = [
+			mods(Mods.currentModDirectory + '/' + baseDir),
+			mods(baseDir)
+		];
+
+		for (part in targetParts) {
+			if (part == '') continue;
+
+			var nextDir:String = findNodeInDirs(searchDirs, part);
+			if (nextDir == null) {
+				return null;
 			}
-			else return null;
+
+			searchDirs = [nextDir];
 		}
-		//trace('MATCH WITH $key! RETURNING $searchDir');
-		return searchDir;
+
+		return searchDirs[0];
 	}
 
-	static function findNode(dir:String, key:String):String
-	{
-		var allFiles:Array<String> = null;
-		try
-		{
-			allFiles = Paths.readDirectory(dir);
-		}
-		catch (e)
-		{
-			return null;
-		}
-
-		var allSearchies:Array<String> = allFiles.map(s -> s.toLowerCase());
-		for (i => name in allSearchies)
-		{
-			if (key.toLowerCase() == name)
-			{
-				return allFiles[i];
+	static function findNodeInDirs(dirs:Array<String>, key:String):String {
+		for (dir in dirs) {
+			var node:String = findNode(dir, key);
+			if (node != null) {
+				return dir + '/' + node;
 			}
 		}
 		return null;
+	}
+
+	static function findNode(dir:String, key:String):String {
+		try {
+			var allFiles:Array<String> = Paths.readDirectory(dir);
+			var fileMap:Map<String, String> = new Map();
+
+			for (file in allFiles) {
+				fileMap.set(file.toLowerCase(), file);
+			}
+
+			return fileMap.get(key.toLowerCase());
+		} catch (e:Dynamic) {
+			return null;
+		}
 	}
 	#end
 	#end

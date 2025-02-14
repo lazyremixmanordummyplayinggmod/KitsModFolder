@@ -109,7 +109,6 @@ class MobileOptionsSubState extends BaseOptionsMenu
 
 		try
 		{
-			if (ClientPrefs.data.storageType != "EXTERNAL")
 				Sys.command('rm', ['-rf', lastStoragePath]);
 		}
 		catch (e:haxe.Exception)
