@@ -1,1 +1,1 @@
-v1 = size(this shows it automatically, bigger = less)v1/2 "hide" hides it
+v1 = size(bigger = less -> 2 is default)v1/2 "hide" hides itv2: type "first" and put in very start of songv2: then type "second" when you want to show itv2: dont need to do it anymore afterwardsv2: 'black' 'blacktween' 'noblack' 'noblacktween' v1: time

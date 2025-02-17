@@ -1,4 +1,5 @@
-local position = 1
+local position = 1 -- 1 is Left | 2 is Right
+local uiType = 0 -- 0 is IFE UI | 1 is Psych UI | 2 is a Mix of both | 3 Is both but doesn't show "Perfects" and uses only health bar
 
 local posXR = 0
 local posYR = 0
@@ -13,7 +14,6 @@ local nr = 0
 local comb = 0
 local sizeee = 40
 local letter = '?'
-local uiType = 0
 
 local died = 0
 
@@ -200,10 +200,14 @@ function onCountdownTick(counter)
         if position == 1 then
             if counter == 2 then
                 for _, obj in ipairs(objects) do
-                    doTweenX('mainx' .. obj, obj, 600, 0.5, 'expoOut')
+                    if uiType == 1 or uiType == 2 then
+                        doTweenX('mainx' .. obj, obj, 600, 0.5, 'expoOut')
+                    end
                 end
             elseif counter == 3 then
-                runTimer('mainend4', 1.5, 1)
+                if uiType == 1 or uiType == 2 then
+                    runTimer('mainend4', 1.5, 1)
+                end
             end
         end
     end
@@ -237,7 +241,7 @@ function onCountdownTick(counter)
             luatxt("timeLeftText", "0:00", 100, 0, 5, 'other', 32, 'FF00FF', '.', 'center', '.')
             screenCenter("timeLeftText", 'x')
             setObjectCamera("timeLeftText", gCam)
-            setProperty("timeLeftText.x", getProperty('timeLeftText.x')-8)
+            setProperty("timeLeftText.x", getProperty('timeLeftText.x'))
         elseif uiType == 2 then
             setProperty('healthBar.alpha', 1);
             setProperty('healthBarBG.alpha', 1);
@@ -246,11 +250,31 @@ function onCountdownTick(counter)
             setProperty('scoreTxt.alpha', 1);
             setProperty('timeBar.visible', true)
             setProperty('timeTxt.visible', true)
-            setObjectCamera("timeTxt", 'hud')
+            setObjectCamera("timeTxt", gCam)
             setProperty('timeTxt.y', tTy)
             for _, obj in ipairs(objects) do
                 setProperty(obj .. ".alpha", 1)
             end
+        elseif uiType == 3 then
+            setProperty('healthBar.alpha', 1);
+            setProperty('healthBarBG.alpha', 1);
+            setProperty('iconP1.alpha', 1);
+            setProperty('iconP2.alpha', 1);
+            setProperty('scoreTxt.alpha', 0);
+            setProperty('timeBar.visible', false)
+            setProperty('timeTxt.visible', false)
+            for _, obj in pairs({'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainhp'}) do
+                removeLuaText(obj)
+            end
+            luatxt("timeLeftText", "0:00", 100, 0, 5, 'other', 32, 'FF00FF', '.', 'center', '.')
+            screenCenter("timeLeftText", 'x')
+            setObjectCamera("timeLeftText", gCam)
+            setProperty("timeLeftText.x", getProperty('timeLeftText.x'))
+            removeLuaSprite("mainbeat")
+            setProperty('mainMss.y',getProperty('timeLeftText.y')+30)
+            setObjectCamera("mainMss", gCam)
+            screenCenter("mainMss", 'x')
+            setProperty('mainMss.x',getProperty('mainMss.x')-7)
         end
     end
 end
@@ -297,7 +321,36 @@ function updHP()
         end
     end
 end
- function onUpdate()
+
+function onUpdate()
+    if getProperty('inCutscene') and not doneIt then
+        setProperty("mainP.alpha", 0)
+        setProperty("mainS.alpha", 0)
+        setProperty("mainG.alpha", 0)
+        setProperty("mainB.alpha", 0)
+        setProperty("mainVB.alpha", 0)
+        setProperty("mainMss.alpha", 0)
+        setProperty("mainhp.alpha", 0)
+        setProperty("mainsc.alpha", 0)
+        setProperty("mainacc.alpha", 0)
+        setProperty("maincom.alpha", 0)
+        setProperty("mainbeat.alpha", 0)
+        doneIt = true
+    end
+    if not getProperty('inCutscene') and doneIt then
+        setProperty("mainP.alpha", 1)
+        setProperty("mainS.alpha", 1)
+        setProperty("mainG.alpha", 1)
+        setProperty("mainB.alpha", 1)
+        setProperty("mainVB.alpha", 1)
+        setProperty("mainMss.alpha", 1)
+        setProperty("mainhp.alpha", 1)
+        setProperty("mainsc.alpha", 1)
+        setProperty("mainacc.alpha", 1)
+        setProperty("maincom.alpha", 1)
+        setProperty("mainbeat.alpha", 1)
+        doneIt = false
+    end
      if (uiType == 1 and (getProperty('iconP1.alpha') == 1 or getProperty('healthBarBG.alpha') == 1 or getProperty('timeBar.visible') == true)) then
          setProperty('healthBar.alpha', 0);
          setProperty('healthBarBG.alpha', 0);
@@ -306,6 +359,14 @@ end
          setProperty('scoreTxt.alpha', 0);
          setProperty('timeBar.visible', false)
          setProperty('timeTxt.visible', false)
+     elseif uiType == 3 and getProperty('scoreTxt.alpha') > 0 then
+        setProperty('healthBar.alpha', 1);
+        setProperty('healthBarBG.alpha', 1);
+        setProperty('iconP1.alpha', 1);
+        setProperty('iconP2.alpha', 1);
+        setProperty('scoreTxt.alpha', 0);
+        setProperty('timeBar.visible', false)
+        setProperty('timeTxt.visible', false)
      end
      if allowCountdown then
          updHP()

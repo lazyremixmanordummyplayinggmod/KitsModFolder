@@ -343,6 +343,9 @@ function buttonStuff()
 			ui = 2
 			setTextString('uiStatement','UI: Psych+IFE')
 		elseif keyPress('U') and ui == 2 then
+			ui = 3
+			setTextString('uiStatement','UI: Psych+IFE V2')
+		elseif keyPress('U') and ui == 3 then
 			ui = 0
 			setTextString('uiStatement','UI: Psych')
 		end
@@ -363,6 +366,14 @@ function buttonStuff()
 end
 
 function onUpdate()
+	if getProperty('inCutscene') and not doneIt2 then
+		setProperty("testCaption.alpha", 0)
+        doneIt2 = true
+    end
+    if not getProperty('inCutscene') and doneIt2 then
+		setProperty("testCaption.alpha", 1)
+        doneIt2 = false
+    end
 	if not (getProperty('inCutscene') or (getProperty('videoCutscene') or getProperty('videoCutscene.isPlaying'))) then
 	if not allowCountdown then
         buttonStuff()

@@ -1,6 +1,6 @@
 function makeVideoSprite(tag, videoPath,camera,zoom)
     amieven = getProperty('camZooming')
-    startVideo(videoPath, false, true, false)
+    startVideo(videoPath, false, true)
     setObjectCamera('videoCutscene',camera)
     screenCenter(videoPath)
     setProperty("camZooming", true)
@@ -10,10 +10,7 @@ function makeVideoSprite(tag, videoPath,camera,zoom)
 end
 
 function onDestroy()
-    setProperty('inCutscene', false);
-    callMethod('remove', {instanceArg('videoCutscene'), true})
-    removeLuaSprite("videoCutscene")
-    setProperty('canPause', true)
+    close()
 end
 function onPause()
     callMethod('videoCutscene.pause')
