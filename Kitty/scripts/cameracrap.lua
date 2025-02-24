@@ -30,7 +30,7 @@ function onEvent(name, value1, value2)
         end        
     elseif name == "Set_Cam_Zoom" or name == "setcamzoomb" then
         local isSetCamZoom = name == "Set_Cam_Zoom"
-        if not value2 or value2 < 0.012 then
+        if value2 == nil or value2 < 0.012 then
             setProperty('camGame.zoom', value1)
             setProperty('defaultCamZoom', value1)
         else

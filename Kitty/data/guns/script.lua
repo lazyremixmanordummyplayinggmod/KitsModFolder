@@ -9,6 +9,6 @@ function onStartCountdown()
 	return Function_Continue;
 end
 
-function onStartCountdown()
+function onSongStart()
 	close()
 end

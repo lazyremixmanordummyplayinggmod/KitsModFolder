@@ -13,6 +13,10 @@ function onSongStart()
     Y5 = getPropertyFromGroup('playerStrums', 1, 'y')
     Y6 = getPropertyFromGroup('playerStrums', 2, 'y')
     Y7 = getPropertyFromGroup('playerStrums', 3, 'y')
+
+    --setPropertyFromGroup('opponentStrums', 1, 'x', getPropertyFromClass("opponentStrums", 0, 'x')+0.5)
+    --setPropertyFromGroup('opponentStrums', 2, 'x', getPropertyFromClass("opponentStrums", 1, 'x')+0.5)
+    --setPropertyFromGroup('opponentStrums', 3, 'x', getPropertyFromClass("opponentStrums", 2, 'x')+0.5)
 end
 
 function tweenXN(d)

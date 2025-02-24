@@ -2,12 +2,6 @@
 	"player1": "bf-holding-gf",
 	"events": [
 		[
-			0,
-			[
-				["vpgk", "12", "first"]
-			]
-		],
-		[
 			1011.23595505618,
 			[
 				["setcamzoomb", "1.5", "4"]

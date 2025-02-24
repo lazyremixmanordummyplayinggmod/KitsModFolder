@@ -123,8 +123,8 @@ function onEvent(name, value1, value2)
                         setPropertyFromGroup('opponentStrums',i,'downScroll',false);
                         setPropertyFromGroup('playerStrums',i,'downScroll',false);
                         setProperty('timeTxt.y', 19);
-                        setProperty('timeBar.y', 31.25);
-                        setProperty('timeBarBG.y', 27.25);
+                        setProperty('timeBar.y', 27);
+                        setProperty('timeBarBG.y', 23);
                         defaultOpponentStrumY0 = dosy0
                         defaultOpponentStrumY1 = dosy1
                         defaultOpponentStrumY2 = dosy2
@@ -139,22 +139,22 @@ function onEvent(name, value1, value2)
                 else
                     for i=0,7 do
                         if value2 > 0.012 then
-                            noteTweenY("nAy1",0,550,value2,curtwm);
-                            noteTweenY("nAy2",1,550,value2,curtwm);
-                            noteTweenY("nAy3",2,550,value2,curtwm);
-                            noteTweenY("nAy4",3,550,value2,curtwm);
-                            noteTweenY("nAy5",4,550,value2,curtwm);
-                            noteTweenY("nAy6",5,550,value2,curtwm);
-                            noteTweenY("nAy7",6,550,value2,curtwm);
-                            noteTweenY("nAy8",7,550,value2,curtwm);
+                            noteTweenY("nAy1",0,560,value2,curtwm);
+                            noteTweenY("nAy2",1,560,value2,curtwm);
+                            noteTweenY("nAy3",2,560,value2,curtwm);
+                            noteTweenY("nAy4",3,560,value2,curtwm);
+                            noteTweenY("nAy5",4,560,value2,curtwm);
+                            noteTweenY("nAy6",5,560,value2,curtwm);
+                            noteTweenY("nAy7",6,560,value2,curtwm);
+                            noteTweenY("nAy8",7,560,value2,curtwm);
                             setProperty('healthBar.y',80);
                             setProperty('healthBarBG.y',80);
                             setProperty('iconP1.y',10);
                             setProperty('iconP2.y',10);
                             doTweenY('nAscoretxt', 'scoreTxt',120, 0.001, curtwm);
                         elseif value2 < 0.012 or value2 == 0 then
-                            setPropertyFromGroup('opponentStrums',i,'y',550);
-                            setPropertyFromGroup('playerStrums',i,'y',550);
+                            setPropertyFromGroup('opponentStrums',i,'y',560);
+                            setPropertyFromGroup('playerStrums',i,'y',560);
                             setProperty('healthBar.y',80);
                             setProperty('healthBarBG.y',80);
                             setProperty('iconP1.y',10);
@@ -163,17 +163,17 @@ function onEvent(name, value1, value2)
                         end
                         setPropertyFromGroup('opponentStrums',i,'downScroll',true);
                         setPropertyFromGroup('playerStrums',i,'downScroll',true);
-                        setProperty('timeTxt.y', 680);
-                        setProperty('timeBar.y', 692.25);
-                        setProperty('timeBarBG.y', 688.25);
-                        defaultOpponentStrumY0 = 550
-                        defaultOpponentStrumY1 = 550
-                        defaultOpponentStrumY2 = 550
-                        defaultOpponentStrumY3 = 550
-                        defaultPlayerStrumY0 = 550
-                        defaultPlayerStrumY1 = 550
-                        defaultPlayerStrumY2 = 550
-                        defaultPlayerStrumY3 = 550
+                        setProperty('timeTxt.y', 668);
+                        setProperty('timeBar.y', 676);
+                        setProperty('timeBarBG.y', 684);
+                        defaultOpponentStrumY0 = 560
+                        defaultOpponentStrumY1 = 560
+                        defaultOpponentStrumY2 = 560
+                        defaultOpponentStrumY3 = 560
+                        defaultPlayerStrumY0 = 560
+                        defaultPlayerStrumY1 = 560
+                        defaultPlayerStrumY2 = 560
+                        defaultPlayerStrumY3 = 560
                         ran = true
                         dscrol = true
                     end
@@ -418,8 +418,8 @@ function onEvent(name, value1, value2)
                         doTweenY('nAhpI2', 'iconP2', 570, value2, curtwm);
                         doTweenY('nAscoretxt', 'scoreTxt', 680, 0.001, curtwm);
                         setProperty('timeTxt.y', 19);
-                        setProperty('timeBar.y', 31.25);
-                        setProperty('timeBarBG.y', 27.25);
+                        setProperty('timeBar.y', 27);
+                        setProperty('timeBarBG.y', 23);
                     else
                         setPropertyFromGroup('opponentStrums',i,'downScroll',true);
                         setPropertyFromGroup('playerStrums',i,'downScroll',true);
@@ -427,9 +427,9 @@ function onEvent(name, value1, value2)
                         doTweenY('nAhpI1', 'iconP1', 10, value2, curtwm);
                         doTweenY('nAhpI2', 'iconP2', 10, value2, curtwm);
                         doTweenY('nAscoretxt', 'scoreTxt',120, value2, curtwm);
-                        setProperty('timeTxt.y', 680);
-                        setProperty('timeBar.y', 692.25);
-                        setProperty('timeBarBG.y', 688.25);
+                        setProperty('timeTxt.y', 668);
+                        setProperty('timeBar.y', 676);
+                        setProperty('timeBarBG.y', 684);
                     end
                     if value2 > 0.012 then
                         noteTweenY("nAy1",0,dosy0,value2,curtwm);

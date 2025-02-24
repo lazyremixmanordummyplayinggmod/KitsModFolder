@@ -901,7 +901,7 @@
 			0,
 			[
 				["HideNotes", "12", ""],
-				["nozoom", "1", "0"],
+				["nozoom", "2", "0"],
 				["newArrowToggler", "3", "5"]
 			]
 		],
