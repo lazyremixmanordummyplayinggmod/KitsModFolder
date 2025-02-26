@@ -1,6 +1,6 @@
 local people = {
     'PringleKitten', -- Gameplay
-    'Rukkus' -- Composer
+    'F-777' -- Composer
 }
 
 local credits = {

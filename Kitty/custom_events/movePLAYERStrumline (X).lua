@@ -23,10 +23,17 @@ function onEvent(name, value1, value2)
             pX3 = getPropertyFromGroup('playerStrums', 2, 'x')
             pX4 = getPropertyFromGroup('playerStrums', 3, 'x')
             if value1 ~= 0 then
-                noteTweenX("pX",4,pX1+value1,value2,"quartInOut");
-                noteTweenX("pX1",5,pX2+value1,value2,"quartInOut");
-                noteTweenX("pX2",6,pX3+value1,value2,"quartInOut");
-                noteTweenX("pX3",7,pX4+value1,value2,"quartInOut");
+                if value2 > 0.012 then
+                    noteTweenX("pX",4,pX1+value1,value2,"quartInOut");
+                    noteTweenX("pX1",5,pX2+value1,value2,"quartInOut");
+                    noteTweenX("pX2",6,pX3+value1,value2,"quartInOut");
+                    noteTweenX("pX3",7,pX4+value1,value2,"quartInOut");
+                elseif value2 < 0.012 then
+                    setPropertyFromGroup('playerStrums',0,'y',pY1+value1);
+                    setPropertyFromGroup('playerStrums',1,'y',pY2+value1);
+                    setPropertyFromGroup('playerStrums',2,'y',pY3+value1);
+                    setPropertyFromGroup('playerStrums',3,'y',pY4+value1);
+                end
             end
         end
     end

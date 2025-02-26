@@ -1,5 +1,4 @@
---Made by RamenDominoes
---Hope you like it! <3
+--Made by RamenDominoes edited by PringleKitten
 
 allowCountdown = false
 allowVerticalScroll = true
@@ -271,12 +270,18 @@ function buttonStuff()
 			screenCenter("testCaption", 'x')
 			setProperty("testCaption.alpha", 1)
 			runTimer('disprCap',2)
-		elseif ((mouseOverlaps('uiBn', 'camOther') and mouseClicked("left")) or keyPress('U')) and ui then
-			ui = false
+		elseif ((mouseOverlaps('uiBn', 'camOther') and mouseClicked("left")) or keyPress('U')) and ui == 0 then
+			ui = 1
 			setTextString('uiStatement','UI: IFE')
-		elseif ((mouseOverlaps('uiBn', 'camOther') and mouseClicked("left")) or keyPress('U')) and not ui then
-			ui = true
+		elseif ((mouseOverlaps('uiBn', 'camOther') and mouseClicked("left")) or keyPress('U')) and ui == 1 then
+			ui = 2
 			setTextString('uiStatement','UI: Psych+IFE')
+		elseif ((mouseOverlaps('uiBn', 'camOther') and mouseClicked("left")) or keyPress('U')) and ui == 2 then
+			ui = 3
+			setTextString('uiStatement','UI: Psych+IFE V2')
+		elseif ((mouseOverlaps('uiBn', 'camOther') and mouseClicked("left")) or keyPress('U')) and ui == 3 then
+			ui = 0
+			setTextString('uiStatement','UI: Psych')
 		elseif ((mouseOverlaps('camBn', 'camOther') and mouseClicked("left")) or keyPress('O')) and cam == 'other' then
 			cam = 'game'
 			setTextString("txtcamBn", cam)

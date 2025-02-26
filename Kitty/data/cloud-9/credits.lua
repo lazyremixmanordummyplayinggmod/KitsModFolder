@@ -22,7 +22,7 @@ function onCreate()
     setObjectOrder("gameplaytext", 3)
     setObjectOrder("gameplayperson", 4)
 
-    luaText('composerperson', 5, 685, 23, 'ffffff', '000000', people[3])
+    luaText('composerperson', 5, 685, 23, 'ffffff', '000000', people[2])
     luaText('composertext', 5, 655, 23, 'ff0000', '000000', 'Composer')
     if getProperty("composertext.width") < getProperty("composerperson.width") then
         setProperty("composertext.x", getProperty("composerperson.x")+(getProperty("composerperson.width")-(getProperty("composerperson.width")/2)-(getProperty("composertext.width")/2)))

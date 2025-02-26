@@ -1,10 +1,11 @@
 local people = {
     'PringleKitten', -- Gameplay
-    'Rukkus' -- Composer
+    'CK9C', -- Art
+    'Jorge Aguilar II' -- Composer
 }
 
 local credits = {
-    'gameplayborder', 'gameplaybg', 'gameplaytext', 'gameplayperson', 'composerborder', 'composerbg', 'composertext', 'composerperson'
+    'gameplayborder', 'gameplaybg', 'gameplaytext', 'gameplayperson', 'Artborder', 'Artbg', 'Arttext', 'Artperson', 'composerborder', 'composerbg', 'composertext', 'composerperson'
 }
 
 function onCreate()
@@ -22,15 +23,29 @@ function onCreate()
     setObjectOrder("gameplaytext", 3)
     setObjectOrder("gameplayperson", 4)
 
-    luaText('composerperson', 5, 685, 23, 'ffffff', '000000', people[2])
-    luaText('composertext', 5, 655, 23, 'ff0000', '000000', 'Composer')
+    luaText('Artperson', 5, 685, 23, 'ffffff', '000000', people[2])
+    luaText('Arttext', 5, 655, 23, '00ffff', '000000', 'Art')
+    if getProperty("Arttext.width") < getProperty("Artperson.width") then
+        setProperty("Arttext.x", getProperty("Artperson.x")+(getProperty("Artperson.width")-(getProperty("Artperson.width")/2)-(getProperty("Arttext.width")/2)))
+        luaGraphic('Artbg', 5, 655, getTextWidth("Artperson"), 60, '000000')
+    else
+        luaGraphic('Artbg', 5, 655, getTextWidth("Arttext"), 60, '000000')
+    end
+    luaGraphic('Artborder', 0, 650, getProperty("Artbg.width")+10, 70, 'ffff00')
+    setObjectOrder("Artborder", 1)
+    setObjectOrder("Artbg", 2)
+    setObjectOrder("Arttext", 3)
+    setObjectOrder("Artperson", 4)
+
+    luaText('composerperson', 5, 615, 23, 'ffffff', '000000', people[3])
+    luaText('composertext', 5, 585, 23, 'ff0000', '000000', 'Composer')
     if getProperty("composertext.width") < getProperty("composerperson.width") then
         setProperty("composertext.x", getProperty("composerperson.x")+(getProperty("composerperson.width")-(getProperty("composerperson.width")/2)-(getProperty("composertext.width")/2)))
-        luaGraphic('composerbg', 5, 655, getTextWidth("composerperson"), 60, '000000')
+        luaGraphic('composerbg', 5, 585, getTextWidth("composerperson"), 60, '000000')
     else
-        luaGraphic('composerbg', 5, 655, getTextWidth("composertext"), 60, '000000')
+        luaGraphic('composerbg', 5, 585, getTextWidth("composertext"), 60, '000000')
     end
-    luaGraphic('composerborder', 0, 650, getProperty("composerbg.width")+10, 70, '0000ff')
+    luaGraphic('composerborder', 0, 580, getProperty("composerbg.width")+10, 70, '0000ff')
     setObjectOrder("composerborder", 1)
     setObjectOrder("composerbg", 2)
     setObjectOrder("composertext", 3)

@@ -1,5 +1,10 @@
 local position = 1 -- 1 is Left | 2 is Right
-local uiType = 0 -- 0 is IFE UI | 1 is Psych UI | 2 is a Mix of both | 3 Is both but doesn't show "Perfects" and uses only health bar
+local uiType = 0 -- 0 is Psych UI | 1 is IFE UI | 2 is a Mix of both | 3 Is both but doesn't show "Perfects" and uses only health bar
+local uiFollowsHideUIEvent = false -- For separate songs, make a lua script that calls this script to change this to true
+
+function ifeUIJoin(uifhuie) -- Call this function in your call script
+    uiFollowsHideUIEvent = uifhuie
+end
 
 local posXR = 0
 local posYR = 0
@@ -14,6 +19,7 @@ local nr = 0
 local comb = 0
 local sizeee = 40
 local letter = '?'
+local wholeUI = {"mainP", "mainS", "mainG", "mainB", "mainVB", "mainMss", "mainhp", "mainbeat", "timeLeftText", "maincom", "mainsc", "mainacc"}
 
 local died = 0
 
@@ -26,6 +32,47 @@ local combSettings = {
     {max = 1000000, scaleX = 2, x = 56}
 }
 
+function onEvent(name, value1, value2)
+    if name == "Hide_Hud" then
+        if uiFollowsHideUIEvent then
+            value1 = tonumber(value1)
+            value2 = tonumber(value2)
+            for _, obj in ipairs(wholeUI) do
+                if value1 == 1 or value1 == 22 or value1 == 222 then
+                    cancelTween("mainbcst")
+                    cancelTween("mainbtsy")
+                    cancelTween("mainbtsx")
+                    setProperty(obj .. ".alpha", 0)
+                    hidingUI = true
+                elseif value1 == 2 or value1 == 0 then
+                    setProperty(obj .. ".alpha", 1)
+                    hidingUI = false
+                end
+                if value2 == 1 or value2 == 12 or value2 == 122 or value2 == 2 or value2 == 22 or value2 == 222 or value2 == 3 then
+                    cancelTween("mainbcst")
+                    cancelTween("mainbtsy")
+                    cancelTween("mainbtsx")
+                    setProperty(obj .. ".alpha", 0)
+                    hidingUI = true
+                end
+            end
+        end
+    end
+end
+
+function onBeatHit()
+    if not hidingUI then
+	    local bpm = getPropertyFromClass('backend.Conductor','bpm')
+        local beatDur = 60 / bpm
+        local tweenTime = beatDur * 0.3
+        setProperty("mainbeat.color", getColorFromHex('00FF00'))
+        doTweenColor("mainbcst", "mainbeat", "FF0000", tweenTime, "bounceIn")
+        setProperty('mainbeat.scale.x',0.3)
+        setProperty('mainbeat.scale.y',0.3)
+        doTweenX('mainbtsx','mainbeat.scale',0.15,0.4,'expoOut')
+        doTweenY('mainbtsy','mainbeat.scale',0.15,0.4,'expoOut')
+    end
+end
 
 local function applyCombSettings(settings)
     setProperty('maincom.scale.x', settings.scaleX)
@@ -58,32 +105,40 @@ function ratingPosFunc(butnnP)
 end
 
 function rtsSetup(cam,ui)
-    setObjectCamera("mainP", cam)
-    setObjectCamera("mainS", cam)
-    setObjectCamera("mainG", cam)
-    setObjectCamera("mainB", cam)
-    setObjectCamera("mainVB", cam)
-    setObjectCamera("mainMss", cam)
-    setObjectCamera("mainsc", cam)
-    setObjectCamera("mainacc", cam)
-    setObjectCamera("maincom", cam)
-    setObjectCamera("mainhp", cam)
-    setObjectCamera("mainbeat", cam)
+    for _, obj in ipairs(wholeUI) do
+        setObjectCamera(obj, cam)
+    end
     gCam = cam
     uiType = ui
     ratingPosFunc()
 end
 
 function aPpearE()
-    setProperty("mainP.alpha", 1)
-    setProperty("mainS.alpha", 1)
-    setProperty("mainG.alpha", 1)
-    setProperty("mainB.alpha", 1)
-    setProperty("mainVB.alpha", 1)
-    setProperty("mainMss.alpha", 1)
-    setProperty("mainhp.alpha", 1)
-    setProperty("mainbeat.alpha", 1)
-    runTimer("disappearlol",2)
+    for _, obj in pairs({"mainP", "mainS", "mainG", "mainB", "mainVB", "mainMss", "mainhp", "mainbeat"}) do
+        for _, objUI in pairs({'mainacc', 'mainsc', 'maincom', 'timeLeftText'}) do
+            if uiType == 1 or uiType == 2 then
+                setProperty(obj..'.alpha', 1)
+                setProperty(objUI..'.alpha', 1)
+                setProperty('mainMss.y',getProperty('mainVB.y')+20)
+                setProperty('mainMss.x',0)
+                if uiType == 2 then
+                    setProperty("timeLeftText.y", getProperty("timeBar.y")-9)
+                end
+            elseif uiType == 0 then
+                setProperty(obj..'.alpha', 0)
+                setProperty(objUI..'.alpha', 0)
+                setProperty("timeLeftText.y", -2)
+            elseif uiType == 3 then
+                setProperty(obj..'.alpha', 0)
+                setProperty("mainMss.alpha", 1)
+                setProperty(objUI..'.alpha', 1)
+                setProperty('mainMss.y',getProperty('timeLeftText.y')+30)
+                screenCenter("mainMss", 'x')
+                setProperty('mainMss.x',getProperty('mainMss.x')-7)
+                setProperty("timeLeftText.y", -2)
+            end
+        end
+    end
 end
 
 function luatxt(tag,txt,w,x,y,cam,ts,tc,sc,ali,f) -- set certain values to '.' for default or no value
@@ -132,6 +187,7 @@ function onCreatePost()
     luatxt("mainacc", (letter..' - '..nr.."%"), 1280, 0, 0,'other',30,'.','.','right','.')
     luatxt("mainsc", score, 1280, 0, 0,'other',20,'.','.','right','.')
     luatxt("maincom", comb, 0, 0, screenHeight-29,'other',30,'.','.','left','.')
+    luatxt("timeLeftText", "0:00", 100, 0, -2, 'other', 32, 'FF00FF', '.', 'center', '.')
     --Text Positioning
     setProperty("mainVB.y",getProperty("mainVB.y")+20)
     setProperty('mainP.y',getProperty('mainVB.y')-80)
@@ -143,14 +199,18 @@ function onCreatePost()
     setProperty('mainacc.y',0)
     setProperty('mainsc.y',30)
     setProperty('maincom.y',screenHeight-29)
+
     makeLuaSprite('mainbeat', 'me/popup/beatthing',40,getProperty('mainP.y')-60)
     setObjectCamera("mainbeat", 'other')
     scaleObject("mainbeat", 0.15, 0.15)
     addLuaSprite("mainbeat")
+
     setObjectOrder("mainacc", 107)
     setObjectOrder("mainsc", 108)
     setObjectOrder("maincom", 109)
     setObjectOrder("timeLeftText", 110)
+    screenCenter("timeLeftText", 'x')
+    setProperty("timeLeftText.x", getProperty("timeLeftText.x")-7)
     tTy = getProperty('timeTxt.y')
     txtShit()
 end
@@ -179,38 +239,10 @@ function txtShit()
     end
 end
 
-function onBeatHit()
-	local bpm = getPropertyFromClass('backend.Conductor','bpm')
-    local beatDur = 60 / bpm
-    local tweenTime = beatDur * 0.3
-    setProperty("mainbeat.color", getColorFromHex('00FF00'))
-    doTweenColor("mainbcst", "mainbeat", "FF0000", tweenTime, "bounceIn")
-    setProperty('mainbeat.scale.x',0.3)
-    setProperty('mainbeat.scale.y',0.3)
-    doTweenX('mainbtsx','mainbeat.scale',0.15,0.4,'expoOut')
-    doTweenY('mainbtsy','mainbeat.scale',0.15,0.4,'expoOut')
-end
-
 --This moves the rating text forward based on when the credits text show up, positions vary for the length of the credit names
 function onCountdownTick(counter)
-    cancelTimer("disappearlol")
     allowCountdown = true
     local objects = {'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainMss', 'mainhp', 'mainbeat'}
-    if uiType ~= 0 then
-        if position == 1 then
-            if counter == 2 then
-                for _, obj in ipairs(objects) do
-                    if uiType == 1 or uiType == 2 then
-                        doTweenX('mainx' .. obj, obj, 600, 0.5, 'expoOut')
-                    end
-                end
-            elseif counter == 3 then
-                if uiType == 1 or uiType == 2 then
-                    runTimer('mainend4', 1.5, 1)
-                end
-            end
-        end
-    end
     if counter == 0 then
         if uiType == 0 then
             setProperty('healthBar.alpha', 1);
@@ -221,10 +253,11 @@ function onCountdownTick(counter)
             setProperty('timeBar.visible', true)
             setProperty('timeTxt.y', tTy)
             setObjectCamera("timeTxt", 'hud')
-            for _, obj in pairs({'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainMss', 'mainhp', 'mainacc', 'mainsc', 'maincom'}) do
+
+            for _, obj in ipairs(wholeUI) do
                 removeLuaText(obj)
+                removeLuaSprite(obj)
             end
-            removeLuaSprite("mainbeat")
         elseif uiType == 1 then
             setProperty('healthBar.alpha', 0);
             setProperty('healthBarBG.alpha', 0);
@@ -232,16 +265,10 @@ function onCountdownTick(counter)
             setProperty('iconP2.alpha', 0);
             setProperty('scoreTxt.alpha', 0);
             setProperty('timeBar.visible', false)
-            setObjectCamera("timeTxt", gCam)
-            setObjectOrder("timeTxt", 100)
-            setProperty('timeTxt.y', getProperty('timeTxt.y')-20)
+
             for _, obj in ipairs(objects) do
                 setProperty(obj .. ".alpha", 1)
             end
-            luatxt("timeLeftText", "0:00", 100, 0, 5, 'other', 32, 'FF00FF', '.', 'center', '.')
-            screenCenter("timeLeftText", 'x')
-            setObjectCamera("timeLeftText", gCam)
-            setProperty("timeLeftText.x", getProperty('timeLeftText.x'))
         elseif uiType == 2 then
             setProperty('healthBar.alpha', 1);
             setProperty('healthBarBG.alpha', 1);
@@ -250,11 +277,11 @@ function onCountdownTick(counter)
             setProperty('scoreTxt.alpha', 1);
             setProperty('timeBar.visible', true)
             setProperty('timeTxt.visible', true)
-            setObjectCamera("timeTxt", gCam)
             setProperty('timeTxt.y', tTy)
             for _, obj in ipairs(objects) do
                 setProperty(obj .. ".alpha", 1)
             end
+            setObjectCamera("timeLeftText", 'hud')
         elseif uiType == 3 then
             setProperty('healthBar.alpha', 1);
             setProperty('healthBarBG.alpha', 1);
@@ -266,15 +293,7 @@ function onCountdownTick(counter)
             for _, obj in pairs({'mainP', 'mainS', 'mainG', 'mainB', 'mainVB', 'mainhp'}) do
                 removeLuaText(obj)
             end
-            luatxt("timeLeftText", "0:00", 100, 0, 5, 'other', 32, 'FF00FF', '.', 'center', '.')
-            screenCenter("timeLeftText", 'x')
-            setObjectCamera("timeLeftText", gCam)
-            setProperty("timeLeftText.x", getProperty('timeLeftText.x'))
             removeLuaSprite("mainbeat")
-            setProperty('mainMss.y',getProperty('timeLeftText.y')+30)
-            setObjectCamera("mainMss", gCam)
-            screenCenter("mainMss", 'x')
-            setProperty('mainMss.x',getProperty('mainMss.x')-7)
         end
     end
 end
@@ -367,16 +386,19 @@ function onUpdate()
         setProperty('scoreTxt.alpha', 0);
         setProperty('timeBar.visible', false)
         setProperty('timeTxt.visible', false)
+     elseif uiType == 2 then
+        if not (getProperty("timeLeftText.y") == (getProperty("timeBar.y")-9)) then
+            setProperty("timeLeftText.y", getProperty("timeBar.y")-9)
+        end
+        if getProperty("timeTxt.visible") then
+            setProperty("timeTxt.visible", false)
+        end
      end
      if allowCountdown then
          updHP()
      end
      updateTimeLeftText()
-
-     -- Ensure timeLeftText is always visible
-     setProperty("timeLeftText.alpha", 1)
-     setProperty("timeLeftText.visible", true)
- end
+ end        
 
 function updateTimeLeftText()
     local songLength = getProperty('songLength')
@@ -393,8 +415,6 @@ function updateTimeLeftText()
     local timeLeftString = string.format("%d:%02d", minutes, seconds)
 
     setTextString("timeLeftText", timeLeftString)
-    setProperty("timeLeftText.alpha", 1)
-    setProperty("timeLeftText.visible", true)
 end
 
 
@@ -423,7 +443,7 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
         setProperty("msText.x", getProperty('msText.x')+posXR)
         setProperty("msText.y", getProperty('msText.y')+posYR)
         setTextString("msText", ms..'ms')
-        runTimer('hideMS',2)
+        runTimer('hideMS',1.5)
         for _, value in pairs({'mainmtxtsx','mainmtxtsy','mainmtxtx','mainmtxty','maintxtsx','maintxtsy','maintxtx','maintxty'}) do
             cancelTween(value)
         end
@@ -460,21 +480,8 @@ end
 
 --When using credits, This makes the text go back after the credits.lua normal time length.
 function onTimerCompleted(tag, loops, loopsLeft)
-    if tag == 'disappearlol' then
-        local objects = {"mainP", "mainS", "mainG", "mainB", "mainVB", "mainMss", "mainhp", "mainbeat"}
-        for _, obj in ipairs(objects) do
-            setProperty(obj .. ".alpha", 0)
-        end
-    elseif tag == 'hideMS' then
+    if tag == 'hideMS' then
         setProperty("msText.alpha", 0)
-    elseif tag == 'mainlol' then
-        local objects = {"mainP", "mainS", "mainG", "mainB", "mainVB", "mainMss", "mainhp"}
-        for _, obj in ipairs(objects) do
-            doTweenX('mainx' .. obj, obj, 0, 0.5, 'expoOut')
-        end
-        doTweenX('mainxbeat', 'mainbeat', mBeatX, 0.5, 'expoOut')
-    elseif tag == 'mainend4' then
-        runTimer("mainlol", 0.2)
     end
 end
 

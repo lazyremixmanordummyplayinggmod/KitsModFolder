@@ -24,7 +24,7 @@ function onCreate()
     setObjectOrder("gameplayperson", 4)
 
     luaText('animationperson', 5, 685, 23, 'ffffff', '000000', people[2])
-    luaText('animationtext', 5, 655, 23, '00ffff', '000000', 'animation')
+    luaText('animationtext', 5, 655, 23, '00ffff', '000000', 'Animation')
     if getProperty("animationtext.width") < getProperty("animationperson.width") then
         setProperty("animationtext.x", getProperty("animationperson.x")+(getProperty("animationperson.width")-(getProperty("animationperson.width")/2)-(getProperty("animationtext.width")/2)))
         luaGraphic('animationbg', 5, 655, getTextWidth("animationperson"), 60, '000000')

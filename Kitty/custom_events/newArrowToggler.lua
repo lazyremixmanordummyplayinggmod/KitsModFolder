@@ -448,7 +448,7 @@ function onEvent(name, value1, value2)
                         noteTweenX("nAx6",5,defaultPlayerStrumX1,value2,curtwm);
                         noteTweenX("nAx7",6,defaultPlayerStrumX2,value2,curtwm);
                         noteTweenX("nAx8",7,defaultPlayerStrumX3,value2,curtwm);
-                    elseif value2 < 0.012 or value2 == 0 then
+                    elseif value2 < 0.012 then
                         setPropertyFromGroup('opponentStrums',0,'y',dosy0);
                         setPropertyFromGroup('opponentStrums',1,'y',dosy1);
                         setPropertyFromGroup('opponentStrums',2,'y',dosy2);
