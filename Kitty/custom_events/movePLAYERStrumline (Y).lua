@@ -11,7 +11,7 @@ function onEvent(name, value1, value2)
         value2 = tonumber(value2)
         if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
             if r1t then
-                if getPropertyFromClass("ClientPrefs", "downScroll") == true or getPropertyFromClass("ClientPrefs", "middleScroll") == true then
+                if getPropertyFromClass("backend.ClientPrefs", "data.downScroll") == true or getPropertyFromClass("backend.ClientPrefs", "data.middleScroll") == true then
                     debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
                     debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')
                     debugPrint('Hey bro, turn off downscroll or middlescroll in ClientPrefs so you dont have visual bugs!')

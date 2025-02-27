@@ -12,13 +12,13 @@
 		[
 			264.705882352941,
 			[
-				["nozoom", "1", ""]
+				["nozoom", "1", "2"]
 			]
 		],
 		[
 			352.941176470588,
 			[
-				["HideNotes", "1", ""]
+				["HideNotes", "0", ""]
 			]
 		],
 		[
@@ -71,21 +71,21 @@
 			]
 		],
 		[
-			5047.94117647059,
+			5048.77450980392,
 			[
 				["newArrowToggler", "0", "0"]
 			]
 		],
 		[
-			5055.44117647059,
+			5057.10784313726,
 			[
-				["newArrowToggler", "2", "0.2"]
+				["newArrowToggler", "2", "0.14"]
 			]
 		],
 		[
 			5252.94117647059,
 			[
-				["movePLAYERStrumline (X)", "-400", "0.2"]
+				["movePLAYERStrumline (X)", "-400", "0.15"]
 			]
 		],
 		[
@@ -544,13 +544,13 @@
 		[
 			60142.2268907563,
 			[
-				["TiltHudTimed", "00", "0.01"]
+				["TiltHudTimed", "0", "0.01"]
 			]
 		],
 		[
 			60160.9768907563,
 			[
-				["TiltHudTimed", "10", "0.1"]
+				["TiltHudTimed", "-10", "0.1"]
 			]
 		],
 		[
@@ -570,7 +570,7 @@
 		[
 			61060.9768907563,
 			[
-				["TiltHudTimed", "00", "0.01"]
+				["TiltHudTimed", "0", "0.01"]
 			]
 		],
 		[
@@ -638,7 +638,7 @@
 		[
 			64060.0840336135,
 			[
-				["TiltHudTimed", "10", "0.1"]
+				["TiltHudTimed", "-11", "0.1"]
 			]
 		],
 		[
@@ -650,19 +650,13 @@
 		[
 			64095.7983193278,
 			[
-				["movePLAYERStrumline (Y)", "100", "0.4"]
-			]
-		],
-		[
-			64482.8518907564,
-			[
-				["TiltHudTimed", "00", "0.001"]
+				["movePLAYERStrumline (Y)", "100", "0.37"]
 			]
 		],
 		[
 			64488.6554621849,
 			[
-				["TiltHudTimed", "-10", "0.1"]
+				["TiltHudTimed", "-11", "0.1"]
 			]
 		],
 		[
@@ -680,7 +674,7 @@
 		[
 			64917.2268907564,
 			[
-				["TiltHudTimed", "00", "0.1"]
+				["TiltHudTimed", "0", "0.1"]
 			]
 		],
 		[
@@ -717,7 +711,7 @@
 		[
 			65774.3697478992,
 			[
-				["TiltHudTimed", "-10", "0.1"]
+				["TiltHudTimed", "10", "0.1"]
 			]
 		],
 		[
@@ -729,13 +723,7 @@
 		[
 			65810.0840336135,
 			[
-				["movePLAYERStrumline (Y)", "100", "0.4"]
-			]
-		],
-		[
-			66197.1376050421,
-			[
-				["TiltHudTimed", "00", "0.001"]
+				["movePLAYERStrumline (Y)", "100", "0.38"]
 			]
 		],
 		[
@@ -759,7 +747,7 @@
 		[
 			66631.5126050421,
 			[
-				["TiltHudTimed", "00", "0.1"]
+				["TiltHudTimed", "0", "0.1"]
 			]
 		],
 		[
@@ -802,7 +790,7 @@
 		[
 			67524.3697478992,
 			[
-				["movePLAYERStrumline (Y)", "100", "0.4"]
+				["movePLAYERStrumline (Y)", "100", "0.36"]
 			]
 		],
 		[
@@ -840,7 +828,7 @@
 		[
 			70560.8660982642,
 			[
-				["TiltHudTimed", "00", "0.01"],
+				["TiltHudTimed", "0", "0.01"],
 				["hudzoom", "1", "2.2"]
 			]
 		],
@@ -865,7 +853,7 @@
 		[
 			72258.4025946145,
 			[
-				["TiltHudTimed", "00", "0.001"]
+				["TiltHudTimed", "0", "0.001"]
 			]
 		],
 		[
@@ -1147,7 +1135,7 @@
 		[
 			137345.413279612,
 			[
-				["TiltHudTimed", "00", "0.01"]
+				["TiltHudTimed", "0", "0.01"]
 			]
 		],
 		[
@@ -1274,25 +1262,25 @@
 		[
 			154316.061678832,
 			[
-				["movePLAYERStrumline (Y)", "800", "0.16"]
+				["movePLAYERStrumline (Y)", "800", "0.14"]
 			]
 		],
 		[
 			154481.970769741,
 			[
-				["movePLAYERStrumline (Y)", "-1200", "0.001"]
+				["movePLAYERStrumline (Y)", "-1200", "0.01"]
+			]
+		],
+		[
+			154494.091981862,
+			[
+				["movePLAYERStrumline (Y)", "400", "0.1"]
 			]
 		],
 		[
 			154497.87986065,
 			[
 				["newArrowToggler", "33", "0.1"]
-			]
-		],
-		[
-			154497.87986065,
-			[
-				["movePLAYERStrumline (Y)", "400", "0.1"]
 			]
 		],
 		[
@@ -1478,7 +1466,7 @@
 		[
 			188629.471089956,
 			[
-				["movePLAYERStrumline (Y)", "800", "0.4"]
+				["movePLAYERStrumline (Y)", "800", "0.34"]
 			]
 		],
 		[
@@ -1998,7 +1986,7 @@
 		[
 			268601.640012605,
 			[
-				["CZoom Custom Toggle", "", "0.1"]
+				["CZoom Custom Toggle", "0.1", ""]
 			]
 		],
 		[
@@ -2010,13 +1998,13 @@
 		[
 			286028.765518678,
 			[
-				["CZoom Custom Toggle", "", "0.1"]
+				["CZoom Custom Toggle", "0.1", ""]
 			]
 		],
 		[
 			288430.688595602,
 			[
-				["CZoom Custom Toggle", "", "0.1"]
+				["CZoom Custom Toggle", "0.1", ""]
 			]
 		],
 		[
@@ -2110,7 +2098,7 @@
 		[
 			307105.688595602,
 			[
-				["TiltHudTimed", "00", "0.2"]
+				["TiltHudTimed", "0", "0.2"]
 			]
 		],
 		[
@@ -2140,7 +2128,7 @@
 		[
 			314911.313595602,
 			[
-				["newArrowToggler", "0", "0.3"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2152,7 +2140,7 @@
 		[
 			315205.688595602,
 			[
-				["newArrowToggler", "0", "0.3"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2164,7 +2152,7 @@
 		[
 			315505.688595602,
 			[
-				["newArrowToggler", "0", "0.3"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2176,7 +2164,7 @@
 		[
 			315805.688595602,
 			[
-				["newArrowToggler", "0", "0.3"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2188,7 +2176,7 @@
 		[
 			316111.313595602,
 			[
-				["newArrowToggler", "0", "0.29"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2200,7 +2188,7 @@
 		[
 			316405.688595602,
 			[
-				["newArrowToggler", "0", "0.29"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2212,7 +2200,7 @@
 		[
 			316705.688595602,
 			[
-				["newArrowToggler", "0", "0.29"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2224,7 +2212,7 @@
 		[
 			317005.688595602,
 			[
-				["newArrowToggler", "0", "0.29"]
+				["newArrowToggler", "0", "0.27"]
 			]
 		],
 		[
@@ -2236,7 +2224,7 @@
 		[
 			317311.938595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2248,7 +2236,7 @@
 		[
 			317605.688595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2260,7 +2248,7 @@
 		[
 			317905.688595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2272,7 +2260,7 @@
 		[
 			318205.688595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2284,7 +2272,7 @@
 		[
 			318511.938595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2296,7 +2284,7 @@
 		[
 			318805.688595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2308,7 +2296,7 @@
 		[
 			319105.688595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2320,7 +2308,7 @@
 		[
 			319405.688595602,
 			[
-				["newArrowToggler", "2", "0.29"]
+				["newArrowToggler", "2", "0.28"]
 			]
 		],
 		[
@@ -2554,7 +2542,7 @@
 		[
 			356680.688595601,
 			[
-				["TiltHudTimed", "00", "0.5"]
+				["TiltHudTimed", "0", "0.5"]
 			]
 		],
 		[
@@ -3169,9 +3157,9 @@
 				[1552.94117647059, 3, 200]
 			],
 			"sectionBeats": 4,
+			"mustHitSection": true,
 			"bpm": 150,
-			"changeBPM": true,
-			"mustHitSection": true
+			"changeBPM": true
 		},
 		{
 			"sectionNotes": [
@@ -3201,6 +3189,7 @@
 				[4652.94117647059, 0, 0],
 				[4752.94117647059, 3, 100],
 				[4952.94117647059, 3, 0],
+				[5044.60784313726, 6, 0],
 				[5052.94117647059, 3, 0]
 			],
 			"sectionBeats": 4,
@@ -3395,9 +3384,9 @@
 				[27560.0840336134, 1, 0]
 			],
 			"sectionBeats": 4,
+			"mustHitSection": true,
 			"changeBPM": true,
-			"bpm": 140,
-			"mustHitSection": true
+			"bpm": 140
 		},
 		{
 			"sectionNotes": [
@@ -3686,9 +3675,9 @@
 				[56488.6554621849, 2, 214.285714285714]
 			],
 			"sectionBeats": 4,
+			"bpm": 710,
 			"changeBPM": false,
-			"mustHitSection": true,
-			"bpm": 710
+			"mustHitSection": true
 		},
 		{
 			"sectionNotes": [
@@ -3945,9 +3934,9 @@
 				[71838.2383610379, 0, 218.978102189781]
 			],
 			"sectionBeats": 4,
+			"mustHitSection": true,
 			"changeBPM": true,
-			"bpm": 137,
-			"mustHitSection": true
+			"bpm": 137
 		},
 		{
 			"sectionNotes": [
@@ -4209,9 +4198,9 @@
 				[99830.1625728721, 3, 106.382978723404]
 			],
 			"sectionBeats": 4,
+			"bpm": 141,
 			"mustHitSection": true,
-			"changeBPM": true,
-			"bpm": 141
+			"changeBPM": true
 		},
 		{
 			"sectionNotes": [
