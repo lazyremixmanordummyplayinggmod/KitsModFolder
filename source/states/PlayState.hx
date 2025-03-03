@@ -455,7 +455,7 @@ class PlayState extends MusicBeatState
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		// "SCRIPTS FOLDER" SCRIPTS
 		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'scripts/'))
-			#if (android || linux)
+			#if linux
 			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
 			#else
 			for (file in Paths.readDirectory(folder))
@@ -626,7 +626,7 @@ class PlayState extends MusicBeatState
 		// SONG SPECIFIC SCRIPTS
 		#if (LUA_ALLOWED || HSCRIPT_ALLOWED)
 		for (folder in Mods.directoriesWithFile(Paths.getSharedPath(), 'data/$songName/'))
-			#if (android || linux)
+			#if linux
 			for (file in CoolUtil.sortAlphabetically(Paths.readDirectory(folder)))
 			#else
 			for (file in Paths.readDirectory(folder))
@@ -3240,6 +3240,13 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 			}
+			
+			if (note.isSustainNote)
+				{
+					sustainEndTimes.set(leData, note.strumTime);
+					sustainNotesHeld.set(leData, true);
+				}
+
 			var gainHealth:Bool = true; // prevent health gain, *if* sustains are treated as a singular note
 			if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
 			if (gainHealth) health += note.hitHealth * healthGain;
@@ -3283,6 +3290,37 @@ class PlayState extends MusicBeatState
 		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('goodNoteHit', [note]);
 		if(!note.isSustainNote) invalidateNote(note);
 	}
+
+	override function onUpdatePost(elapsed:Float) {
+		if (ClientPrefs.data.osuSustainInput)
+		{
+			super.onUpdatePost(elapsed);
+		
+			var currentTime:Float = Conductor.songPosition - 5;
+			
+			for (key in sustainEndTimes.keys())
+			{
+				var endTime:Float = sustainEndTimes.get(key);
+				
+				if (sustainNotesHeld.get(key)) // Check if the sustain note is still held
+				{
+					var keyArray:Array<String> = ['left', 'down', 'up', 'right'];
+					var keyPressed:Bool = Reflect.field(FlxG.keys.pressed, keyArray[key]);
+		
+					if (!keyPressed) // If the key is released before sustain ends
+					{
+						sustainNotesHeld.set(key, false); // Mark note as released
+					}
+				}
+				
+				if (!sustainNotesHeld.get(key) && currentTime >= (endTime + 200)) // 200ms hit window
+				{
+					noteMiss(daNote);
+					sustainEndTimes.remove(key);
+					sustainNotesHeld.remove(key);
+				}
+			}
+		}}
 
 	public function invalidateNote(note:Note):Void {
 		//if(!ClientPrefs.data.lowQuality || !cpuControlled) note.kill();
