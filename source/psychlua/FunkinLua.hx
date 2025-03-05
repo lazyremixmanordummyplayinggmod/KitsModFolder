@@ -513,6 +513,7 @@ class FunkinLua {
 		// gay ass tweens
 		Lua_helper.add_callback(lua, "startTween", function(tag:String, vars:String, values:Any = null, duration:Float, ?options:Any = null) {
 			var penisExam:Dynamic = LuaUtils.tweenPrepare(tag, vars);
+			duration = duration/divideVal;
 			if(penisExam != null)
 			{
 				if(values != null)
