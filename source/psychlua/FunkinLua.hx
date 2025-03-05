@@ -194,6 +194,7 @@ class FunkinLua {
 		set('assetMovement', ClientPrefs.data.assetMovement);
 		set('healthDrain', ClientPrefs.data.healthDrain);
 		set('ratingPenalty', ClientPrefs.data.ratingPenalty);
+		set('osuSustainInput', ClientPrefs.data.osuSustainInput);
 		set('mechanics', ClientPrefs.data.mechanics);
 		set('mechanicsAgain', ClientPrefs.data.mechanicsAgain);
 		set('mobileMechanics', ClientPrefs.data.mobileMechanics);
