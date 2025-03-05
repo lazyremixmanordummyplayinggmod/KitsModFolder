@@ -24,12 +24,9 @@ class OptionsState extends MusicBeatState
     private static var curSelected:Int = 3;
     public static var onPlayState:Bool = false;
 
+	// IFE Custom
     private var optionMap:StringMap<() -> Void>;
     private var scrollMenuSelected:Bool = true;
-
-    var selectorLeft:Alphabet;
-    var selectorRight:Alphabet;
-    
     var scrollMenuText:FlxText;
     var scrollMenuCheckbox:FlxSprite;
 
@@ -40,6 +37,9 @@ class OptionsState extends MusicBeatState
 		}
         optionMap.get(label)();
     }
+
+	var selectorLeft:Alphabet;
+	var selectorRight:Alphabet;
 
 	override function create()
 	{
@@ -87,11 +87,11 @@ class OptionsState extends MusicBeatState
         add(selectorLeft);
         selectorRight = new Alphabet(0, 0, '<', true);
         add(selectorRight);
-		
-		addTouchPad('UP_DOWN', 'A_B');
 
         changeSelection();
         ClientPrefs.saveSettings();
+
+		addTouchPad('UP_DOWN', 'A_B');
 
 		super.create();
 	}
@@ -133,17 +133,16 @@ class OptionsState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-			if(onPlayState) {
+				if(onPlayState)
+				{
 				StageData.loadDirectory(PlayState.SONG);
 				LoadingState.loadAndSwitchState(new PlayState());
 				FlxG.sound.music.volume = 0;
-			} else {
-				MusicBeatState.switchState(new MainMenuState());
+				}
+				else MusicBeatState.switchState(new MainMenuState());
 			}
-		} else if (controls.ACCEPT) {
-			openSelectedSubstate(options[curSelected]);
+			else if (controls.ACCEPT) openSelectedSubstate(options[curSelected]);
 		}
-	}
 	
 	function changeSelection(change:Int = 0) {
 		var baseY:Float = (FlxG.height / 2) - 50;

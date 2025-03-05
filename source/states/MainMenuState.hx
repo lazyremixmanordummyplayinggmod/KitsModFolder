@@ -15,7 +15,7 @@ enum MainMenuColumn {
 class MainMenuState extends MusicBeatState
 {
 	public static var psychEngineVersion:String = '1.0.3'; // This is also used for Discord RPC
-	public static var internetFavsVersion:String = '3.12.2 Android(1.0.3 MY Fixed Mobile Port)'; // This is also used for Discord RPC
+	public static var internetFavsVersion:String = '3.12.3 Android(1.0.3 (v1))'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 	public static var curColumn:MainMenuColumn = CENTER;
 	var allowMouse:Bool = true; //Turn this off to block mouse movement in menus
@@ -40,6 +40,8 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		super.create();
+
 		#if MODS_ALLOWED
 		Mods.pushGlobalMods();
 		#end
@@ -115,10 +117,6 @@ class MainMenuState extends MusicBeatState
 		Achievements.reloadList();
 		#end
 		#end
-
-		addTouchPad('NONE', 'E');
-
-		super.create();
 
 		FlxG.camera.follow(camFollow, null, 0.15);
 

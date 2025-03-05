@@ -26,11 +26,11 @@ package states;
 import states.TitleState;
 import lime.utils.Assets as LimeAssets;
 import openfl.utils.Assets as OpenFLAssets;
-import flixel.addons.util.FlxAsyncLoop;
 import openfl.utils.ByteArray;
 import haxe.io.Path;
 import flixel.ui.FlxBar;
 import flixel.ui.FlxBar.FlxBarFillDirection;
+import lime.system.ThreadPool;
 
 /**
  * ...
@@ -47,7 +47,7 @@ class CopyState extends MusicBeatState
 	public var loadingImage:FlxSprite;
 	public var loadingBar:FlxBar;
 	public var loadedText:FlxText;
-	public var copyLoop:FlxAsyncLoop;
+	public var thread:ThreadPool;
 
 	var failedFilesStack:Array<String> = [];
 	var failedFiles:Array<String> = [];
@@ -86,23 +86,25 @@ class CopyState extends MusicBeatState
 		loadedText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER);
 		add(loadedText);
 
-		var ticks:Int = 15;
-		if (maxLoopTimes <= 15)
-			ticks = 1;
-
-		copyLoop = new FlxAsyncLoop(maxLoopTimes, copyAsset, ticks);
-		add(copyLoop);
-		copyLoop.start();
+		thread = new ThreadPool(0, CoolUtil.getCPUThreadsCount(), MULTI_THREADED);
+		new FlxTimer().start(0.5, (tmr) -> {
+			thread.run(function(poop, shit) {
+				for (file in locatedFiles)
+				{
+					loopTimes++;
+					copyAsset(file);
+				}
+			}, null);
+		});
 
 		super.create();
 	}
 
 	override function update(elapsed:Float)
 	{
-		if (shouldCopy && copyLoop != null)
+		if (shouldCopy)
 		{
-			loadingBar.percent = loopTimes / maxLoopTimes * 100;
-			if (copyLoop.finished && canUpdate)
+			if (loopTimes >= maxLoopTimes && canUpdate)
 			{
 				if (failedFiles.length > 0)
 				{
@@ -111,25 +113,27 @@ class CopyState extends MusicBeatState
 						FileSystem.createDirectory('logs');
 					File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '-CopyState' + '.txt', failedFilesStack.join('\n'));
 				}
-				canUpdate = false;
+				
 				FlxG.sound.play(Paths.sound('confirmMenu')).onComplete = () ->
 				{
 					MusicBeatState.switchState(new TitleState());
 				};
+		
+				canUpdate = false;
 			}
 
-			if (loopTimes == maxLoopTimes)
+			if (loopTimes >= maxLoopTimes)
 				loadedText.text = "Completed!";
 			else
 				loadedText.text = '$loopTimes/$maxLoopTimes';
+
+			loadingBar.percent = Math.min((loopTimes / maxLoopTimes) * 100, 100);
 		}
 		super.update(elapsed);
 	}
 
-	public function copyAsset()
+	public function copyAsset(file:String)
 	{
-		var file = locatedFiles[loopTimes];
-		loopTimes++;
 		if (!FileSystem.exists(file))
 		{
 			var directory = Path.directory(file);
