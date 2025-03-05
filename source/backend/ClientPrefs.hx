@@ -42,7 +42,7 @@ import states.TitleState;
 		public var osuSustainInput:Bool = true;
 		public var mechanics:Bool = true;
 		public var mechanicsAgain:Bool = true;
-		public var mobileMechanics:Bool = false;
+		public var mobileMechanics:Bool = true;
 		public var mobileChoice:Int = 2;
 		//end
 	public var hideHud:Bool = false;
