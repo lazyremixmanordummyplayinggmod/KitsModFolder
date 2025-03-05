@@ -1,25 +1,3 @@
-/*
- * Copyright (C) 2025 Mobile Porting Team
- *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- */
-
 package mobile.objects;
 
 import flixel.input.FlxInput;
@@ -30,40 +8,14 @@ import flixel.util.FlxDestroyUtil.IFlxDestroyable;
 import flixel.input.mouse.FlxMouseButton;
 #end
 
-/**
- * A simple button class that calls a function when clicked by the touch.
- * @author: Karim Akra and Lily Ross (mcagabe19)
- */
 class TouchButton extends TypedTouchButton<FlxSprite>
 {
-	/**
-	 * Used with public variable status, means not highlighted or pressed.
-	 */
 	public static inline var NORMAL:Int = 0;
-
-	/**
-	 * Used with public variable status, means highlighted (usually from touch over).
-	 */
 	public static inline var HIGHLIGHT:Int = 1;
-
-	/**
-	 * Used with public variable status, means pressed (usually from touch click).
-	 */
 	public static inline var PRESSED:Int = 2;
 
-	/**
-	 * A simple tag that returns the button's graphic name in upper case.
-	**/
 	public var tag:String;
-
-	/**
-	 * The `MobileInputID` that are assigned to this button.
-	**/
 	public var IDs:Array<MobileInputID> = [];
-
-	/**
-	 * A Small invisible bounds used for colision
-	**/
 	public var bounds:FlxSprite = new FlxSprite();
 
 	/**
@@ -100,20 +52,13 @@ class TouchButton extends TypedTouchButton<FlxSprite>
 #end
 class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 {
-	/**
-	 * The label that appears on the button. Can be any `FlxSprite`.
-	 */
+	// Button label
 	public var label(default, set):T;
 
-	/**
-	 * Whether you can press the button simply by releasing the touch button over it (default).
-	 * If false, the input has to be pressed while hovering over the button.
-	 */
+	// Swipe across the screen?
 	public var allowSwiping:Bool = true;
 
-	/**
-	 * Whether the button can use multiple fingers on it.
-	 */
+	// Multiple Fingers on one button
 	public var multiTouch:Bool = false;
 
 	/**
@@ -123,50 +68,25 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	 */
 	public var maxInputMovement:Float = Math.POSITIVE_INFINITY;
 
-	/**
-	 * The properties of this button's `onUp` event (callback function, sound).
-	 */
 	public var onUp(default, null):TouchButtonEvent;
-
-	/**
-	 * The properties of this button's `onDown` event (callback function, sound).
-	 */
 	public var onDown(default, null):TouchButtonEvent;
-
-	/**
-	 * The properties of this button's `onOver` event (callback function, sound).
-	 */
 	public var onOver(default, null):TouchButtonEvent;
-
-	/**
-	 * The properties of this button's `onOut` event (callback function, sound).
-	 */
 	public var onOut(default, null):TouchButtonEvent;
 
-	/**
-	 * Shows the current state of the button, either `TouchButton.NORMAL`,
-	 * `TouchButton.HIGHLIGHT` or `TouchButton.PRESSED`.
-	 */
+	 // Shows the current state of the button, either `TouchButton.NORMAL`,
+	 // `TouchButton.HIGHLIGHT` or `TouchButton.PRESSED`.
 	public var status(default, set):Int;
 
-	/**
-	 * The alpha's the button should use depednging on the status.
-	**/
+	// The alpha's the button should use depednging on the status.
 	public var statusAlphas:Array<Float> = [1.0, 1.0, 0.6];
 
-	/**
-	 * The brightness the button should use depednging on the status.
-	**/
+	// Button Brightness based on status
 	public var statusBrightness:Array<Float> = [1.0, 0.95, 0.7];
 
-	/**
-	 * How much to add/substract from the current indicator value for the label.
-	**/
+	// Indicator value for label add/sub
 	public var labelStatusDiff:Float = 0.05;
 
-	/**
-	 * IF YOU'RE USING SPRITE GROUPS YOU MUST SET THIS TO THE GROUP'S ALPHA LIKE IN TouchPad.
-	**/
+	// IF YOU'RE USING SPRITE GROUPS YOU MUST SET THIS TO THE GROUP'S ALPHA LIKE IN TouchPad.
 	public var parentAlpha(default, set):Float = 1;
 
 	public var statusIndicatorType(default, set):StatusIndicators = ALPHA;
@@ -178,26 +98,16 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	public var pressed(get, never):Bool;
 	public var justPressed(get, never):Bool;
 
-	/**
-	 * We cast label to a `FlxSprite` for internal operations to avoid Dynamic casts in C++
-	 */
 	var _spriteLabel:FlxSprite;
-
-	/** 
-	 * We don't need an ID here, so let's just use `Int` as the type.
-	 */
 	var input:FlxInput<Int>;
 
-	/**
-	 * The input currently pressing this button, if none, it's `null`. Needed to check for its release.
-	 */
+	 // The input currently pressing this button, if none, it's `null`. Needed to check for its release.
 	var currentInput:IFlxInput;
 
 	public var canChangeLabelAlpha:Bool = true;
 
 	/**
 	 * Creates a new `FlxTypedButton` object with a gray background.
-	 *
 	 * @param   X         The x position of the button.
 	 * @param   Y         The y position of the button.
 	 */
@@ -221,9 +131,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		input = new FlxInput(0);
 	}
 
-	/**
-	 * Called by the game state when state is changed (if this object belongs to the state)
-	 */
+	//Called by the game state when state is changed (if this object belongs to the state)
 	override public function destroy():Void
 	{
 		label = FlxDestroyUtil.destroy(label);
@@ -240,9 +148,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		super.destroy();
 	}
 
-	/**
-	 * Called by the game loop automatically, handles touch over and click detection.
-	 */
+	// Called by the game loop automatically, handles touch over and click detection.
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
@@ -258,9 +164,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		input.update();
 	}
 
-	/**
-	 * Just draws the button graphic and text label to the screen.
-	 */
+	// Just draws the button graphic and text label to the screen.
 	override public function draw():Void
 	{
 		super.draw();
@@ -274,9 +178,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	}
 
 	#if FLX_DEBUG
-	/**
-	 * Helper function to draw the debug graphic for the label as well.
-	 */
+	// Helper function to draw the debug graphic for the label as well.
 	override public function drawDebug():Void
 	{
 		super.drawDebug();
@@ -286,10 +188,8 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	}
 	#end
 
-	/**
-	 * Basic button update logic - searches for overlaps with touches and
-	 * the touch and calls `updateStatus()`.
-	 */
+	// Basic button update logic - searches for overlaps with touches and
+	// the touch, and calls `updateStatus()`.
 	function updateButton():Void
 	{
 		var overlapFound = checkTouchOverlap();
@@ -337,9 +237,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return false;
 	}
 
-	/**
-	 * Updates the button status by calling the respective event handler function.
-	 */
+	// Updates the button status by calling the respective event handler function.
 	function updateStatus(input:IFlxInput):Void
 	{
 		if (input.justPressed)
@@ -384,9 +282,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		}
 	}
 
-	/**
-	 * Internal function that handles the onUp event.
-	 */
+	// Internal function that handles the onUp event.
 	function onUpHandler():Void
 	{
 		status = TouchButton.NORMAL;
@@ -395,9 +291,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		onUp.fire(); // Order matters here, because onUp.fire() could cause a state change and destroy this object.
 	}
 
-	/**
-	 * Internal function that handles the onDown event.
-	 */
+	// Internal function that handles the onDown event.
 	function onDownHandler():Void
 	{
 		status = TouchButton.PRESSED;
@@ -405,18 +299,14 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		onDown.fire(); // Order matters here, because onDown.fire() could cause a state change and destroy this object.
 	}
 
-	/**
-	 * Internal function that handles the onOver event.
-	 */
+	// Internal function that handles the onOver event.
 	function onOverHandler():Void
 	{
 		status = TouchButton.HIGHLIGHT;
 		onOver.fire(); // Order matters here, because onOver.fire() could cause a state change and destroy this object.
 	}
 
-	/**
-	 * Internal function that handles the onOut event.
-	 */
+	// Internal function that handles the onOut event.
 	function onOutHandler():Void
 	{
 		status = TouchButton.NORMAL;
@@ -553,21 +443,15 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	inline function get_justPressed():Bool
 		return input.justPressed;
 }
-
-/** 
- * Helper function for `TouchButton` which handles its events.
- */
+ 
+// Helper function for `TouchButton` which handles its events.
 private class TouchButtonEvent implements IFlxDestroyable
 {
-	/**
-	 * The callback function to call when this even fires.
-	 */
+	// The callback function to call when this even fires.
 	public var callback:Void->Void;
 
 	#if FLX_SOUND_SYSTEM
-	/**
-	 * The sound to play when this event fires.
-	 */
+	// The sound to play when this event fires.
 	public var sound:FlxSound;
 	#end
 
@@ -584,9 +468,6 @@ private class TouchButtonEvent implements IFlxDestroyable
 		#end
 	}
 
-	/**
-	 * Cleans up memory.
-	 */
 	public inline function destroy():Void
 	{
 		callback = null;
@@ -596,9 +477,7 @@ private class TouchButtonEvent implements IFlxDestroyable
 		#end
 	}
 
-	/**
-	 * Fires this event (calls the callback and plays the sound)
-	 */
+	// Fires this event (calls the callback and plays the sound)
 	public inline function fire():Void
 	{
 		if (callback != null)

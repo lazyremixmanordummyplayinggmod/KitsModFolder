@@ -1,5 +1,6 @@
 package states;
 
+import sys.thread.Thread;
 import backend.Highscore;
 import backend.StageData;
 import backend.WeekData;
@@ -276,6 +277,11 @@ class PlayState extends MusicBeatState
 	// Callbacks for stages
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
+
+	private var shutdownThread:Bool = false;
+	private var gameFroze:Bool = false;
+	private var requiresSyncing:Bool = false;
+	private var lastCorrectSongPos:Float = -1.0;
 
 	private static var _lastLoadedModDirectory:String = '';
 	public static var nextReloadAll:Bool = false;
@@ -1370,6 +1376,8 @@ class PlayState extends MusicBeatState
 		#end
 		setOnScripts('songLength', songLength);
 		callOnScripts('onSongStart');
+
+		runSongSyncThread();
 	}
 
 	private var noteTypes:Array<String> = [];
@@ -1708,6 +1716,7 @@ class PlayState extends MusicBeatState
 			paused = false;
 			callOnScripts('onResume');
 			resetRPC(startTimer != null && startTimer.finished);
+			runSongSyncThread();
 		}
 	}
 
@@ -1719,6 +1728,8 @@ class PlayState extends MusicBeatState
 		{
 			resetRPC(Conductor.songPosition > 0.0);
 		}
+		shutdownThread = false;
+		runSongSyncThread();
 	}
 
 	override public function onFocusLost():Void
@@ -1728,6 +1739,7 @@ class PlayState extends MusicBeatState
 		{
 			DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 	}
+		shutdownThread = true;
 	}
 	#end
 
@@ -3240,13 +3252,6 @@ class PlayState extends MusicBeatState
 				if(combo > 9999) combo = 9999;
 				popUpScore(note);
 			}
-			
-			if (note.isSustainNote)
-				{
-					sustainEndTimes.set(leData, note.strumTime);
-					sustainNotesHeld.set(leData, true);
-				}
-
 			var gainHealth:Bool = true; // prevent health gain, *if* sustains are treated as a singular note
 			if (guitarHeroSustains && note.isSustainNote) gainHealth = false;
 			if (gainHealth) health += note.hitHealth * healthGain;
@@ -3290,37 +3295,6 @@ class PlayState extends MusicBeatState
 		if(result != LuaUtils.Function_Stop && result != LuaUtils.Function_StopHScript && result != LuaUtils.Function_StopAll) callOnHScript('goodNoteHit', [note]);
 		if(!note.isSustainNote) invalidateNote(note);
 	}
-
-	override function onUpdatePost(elapsed:Float) {
-		if (ClientPrefs.data.osuSustainInput)
-		{
-			super.onUpdatePost(elapsed);
-		
-			var currentTime:Float = Conductor.songPosition - 5;
-			
-			for (key in sustainEndTimes.keys())
-			{
-				var endTime:Float = sustainEndTimes.get(key);
-				
-				if (sustainNotesHeld.get(key)) // Check if the sustain note is still held
-				{
-					var keyArray:Array<String> = ['left', 'down', 'up', 'right'];
-					var keyPressed:Bool = Reflect.field(FlxG.keys.pressed, keyArray[key]);
-		
-					if (!keyPressed) // If the key is released before sustain ends
-					{
-						sustainNotesHeld.set(key, false); // Mark note as released
-					}
-				}
-				
-				if (!sustainNotesHeld.get(key) && currentTime >= (endTime + 200)) // 200ms hit window
-				{
-					noteMiss(daNote);
-					sustainEndTimes.remove(key);
-					sustainNotesHeld.remove(key);
-				}
-			}
-		}}
 
 	public function invalidateNote(note:Note):Void {
 		//if(!ClientPrefs.data.lowQuality || !cpuControlled) note.kill();
@@ -3393,6 +3367,8 @@ class PlayState extends MusicBeatState
 
 		NoteSplash.configs.clear();
 		instance = null;
+		shutdownThread = true;
+		FlxG.signals.preUpdate.remove(checkForResync);
 		super.destroy();
 	}
 
@@ -3938,5 +3914,44 @@ class PlayState extends MusicBeatState
 				return false;
 		}
 		return false;
+	}
+
+	function checkForResync()
+	{
+		if (endingSong || paused || shutdownThread)
+			return;
+
+		if (requiresSyncing)
+		{
+			requiresSyncing = false;
+			setSongTime(lastCorrectSongPos);
+		}
+
+		gameFroze = false;
+	}
+
+	public function runSongSyncThread()
+	{
+		Thread.create(function()
+		{
+			while (!endingSong && !paused && !shutdownThread)
+			{
+				if (requiresSyncing)
+					continue;
+
+				if (gameFroze)
+				{
+					lastCorrectSongPos = Conductor.songPosition;
+					requiresSyncing = true;
+					continue;
+				}
+				gameFroze = true;
+
+				Sys.sleep(0.25);
+			}
+		});
+
+		if (!FlxG.signals.preUpdate.has(checkForResync))
+			FlxG.signals.preUpdate.add(checkForResync);
 	}
 }

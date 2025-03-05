@@ -42,7 +42,7 @@ import states.TitleState;
 		public var osuSustainInput:Bool = true;
 		public var mechanics:Bool = true;
 		public var mechanicsAgain:Bool = true;
-		public var mobileMechanics:Bool = true;
+		public var mobileMechanics:Bool = false;
 		public var mobileChoice:Int = 2;
 		//end
 	public var hideHud:Bool = false;
@@ -235,15 +235,13 @@ class ClientPrefs {
 		}
 		#end
 
-		if(data.framerate > FlxG.drawFramerate)
+		if(data.framerate > FlxG.stage.window.frameRate)
 		{
-			FlxG.updateFramerate = data.framerate;
-			FlxG.drawFramerate = data.framerate;
+			FlxG.stage.window.frameRate = data.framerate;
 		}
 		else
 		{
-			FlxG.drawFramerate = data.framerate;
-			FlxG.updateFramerate = data.framerate;
+			FlxG.stage.window.frameRate = data.framerate;
 		}
 
 		if(FlxG.save.data.gameplaySettings != null)
