@@ -14,8 +14,8 @@ enum MainMenuColumn {
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '1.0.3'; // This is also used for Discord RPC
-	public static var internetFavsVersion:String = '3.12.2 Android(1.0.3 MY Fixed Mobile Port)'; // This is also used for Discord RPC
+	public static var psychEngineVersion:String = '1.0.1'; // This is also used for Discord RPC
+	public static var internetFavsVersion:String = '3.11 Android(1.0.1)'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 	public static var curColumn:MainMenuColumn = CENTER;
 	var allowMouse:Bool = true; //Turn this off to block mouse movement in menus
@@ -121,8 +121,6 @@ class MainMenuState extends MusicBeatState
 		super.create();
 
 		FlxG.camera.follow(camFollow, null, 0.15);
-
-		addTouchPad('NONE', 'E');
 	}
 
 	function createMenuItem(name:String, x:Float, y:Float):FlxSprite
@@ -265,6 +263,8 @@ class MainMenuState extends MusicBeatState
 			if (controls.ACCEPT || (FlxG.mouse.overlaps(menuItems, FlxG.camera) && FlxG.mouse.justPressed && allowMouse))
 			{
 				FlxG.sound.play(Paths.sound('confirmMenu'));
+				if (optionShit[curSelected] != 'donate')
+				{
 					selectedSomethin = true;
 					FlxG.mouse.visible = false;
 
@@ -318,14 +318,6 @@ class MainMenuState extends MusicBeatState
 									PlayState.SONG.splashSkin = null;
 									PlayState.stageUI = 'normal';
 								}
-						case 'donate':
-							CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
-							selectedSomethin = false;
-							item.visible = true;
-						default:
-							trace('Menu Item ${option} doesn\'t do anything');
-							selectedSomethin = false;
-							item.visible = true;
 						}
 					});
 					
@@ -336,6 +328,8 @@ class MainMenuState extends MusicBeatState
 
 						FlxTween.tween(memb, {alpha: 0}, 0.4, {ease: FlxEase.quadOut});
 					}
+				}
+				else CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 			}
 			else if (controls.justPressed('debug_1') || touchPad.buttonE.justPressed)
 			{

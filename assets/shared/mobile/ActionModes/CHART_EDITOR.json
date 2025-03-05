@@ -59,14 +59,14 @@
     {
       "button": "buttonUp2",
       "graphic": "up",
-      "x": 340,
+      "x": 660,
       "y": 463,
       "color": "0xFF12FA05"
     },
     {
       "button": "buttonDown2",
       "graphic": "down",
-      "x": 340,
+      "x": 660,
       "y": 596,
       "color": "0xFF00FFFF"
     },

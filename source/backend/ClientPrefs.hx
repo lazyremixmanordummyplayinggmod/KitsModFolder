@@ -15,6 +15,9 @@ import states.TitleState;
 	public var controlsAlpha:Float = FlxG.onMobile ? 0.6 : 0;
 	public var screensaver:Bool = false;
 	public var wideScreen:Bool = false;
+	#if android
+	public var storageType:String = "EXTERNAL";
+	#end
 	public var hitboxType:String = "Gradient";
 	public var popUpRating:Bool = true;
 	public var vsync:Bool = false;
@@ -32,17 +35,16 @@ import states.TitleState;
 	public var splashAlpha:Float = 0.6;
 	public var lowQuality:Bool = false;
 	public var shaders:Bool = true;
-	public var cacheOnGPU:Bool = #if !switch false #else true #end; // GPU Caching made by Raltyro
+	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
 	public var framerate:Int = 60;
 	public var camZooms:Bool = true;
 		// IFE CUSTOMS
 		public var assetMovement:Bool = true;
 		public var healthDrain:Bool = true;
 		public var ratingPenalty:Bool = true;
-		public var osuSustainInput:Bool = true;
 		public var mechanics:Bool = true;
 		public var mechanicsAgain:Bool = true;
-		public var mobileMechanics:Bool = false;
+		public var mobileMechanics:Bool = true;
 		public var mobileChoice:Int = 2;
 		//end
 	public var hideHud:Bool = false;
@@ -165,9 +167,9 @@ class ClientPrefs {
 		'pause'			=> [#if android NONE #else P #end],
 		'reset'			=> [NONE]
 	];
+	public static var defaultMobileBinds:Map<String, Array<MobileInputID>> = null;
 	public static var defaultKeys:Map<String, Array<FlxKey>> = null;
 	public static var defaultButtons:Map<String, Array<FlxGamepadInputID>> = null;
-	public static var defaultMobileBinds:Map<String, Array<MobileInputID>> = null;
 
 	public static function resetKeys(controller:Null<Bool> = null) //Null = both, False = Keyboard, True = Controller
 	{
@@ -235,13 +237,15 @@ class ClientPrefs {
 		}
 		#end
 
-		if(data.framerate > FlxG.stage.window.frameRate)
+		if(data.framerate > FlxG.drawFramerate)
 		{
-			FlxG.stage.window.frameRate = data.framerate;
+			FlxG.updateFramerate = data.framerate;
+			FlxG.drawFramerate = data.framerate;
 		}
 		else
 		{
-			FlxG.stage.window.frameRate = data.framerate;
+			FlxG.drawFramerate = data.framerate;
+			FlxG.updateFramerate = data.framerate;
 		}
 
 		if(FlxG.save.data.gameplaySettings != null)

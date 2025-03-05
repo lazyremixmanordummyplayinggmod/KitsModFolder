@@ -1,8 +1,6 @@
 package debug;
 
 import flixel.FlxG;
-import openfl.Lib;
-import haxe.Timer;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
 import openfl.system.System as OpenFlSystem;
@@ -33,10 +31,7 @@ class FPSCounter extends TextField
 	**/
 	public var memoryMegas(get, never):Float;
 
-	@:noCompletion private var lastFramerateUpdateTime:Float;
-	@:noCompletion private var updateTime:Int;
-	@:noCompletion private var framesCount:Int;
-	@:noCompletion private var prevTime:Int;
+	@:noCompletion private var times:Array<Float>;
 
 	public var os:String = '';
 
@@ -61,9 +56,7 @@ class FPSCounter extends TextField
 		multiline = true;
 		text = "FPS: ";
 
-		lastFramerateUpdateTime = Timer.stamp();
-		prevTime = Lib.getTimer();
-		updateTime = prevTime + 500;
+		times = [];
 	}
 
 	var deltaTimeout:Float = 0.0;
@@ -71,31 +64,16 @@ class FPSCounter extends TextField
 	// Event Handlers
 	private override function __enterFrame(deltaTime:Float):Void
 	{
-		// Flixel keeps reseting this to 60 on focus gained
-		if (FlxG.stage.window.frameRate != ClientPrefs.data.framerate && FlxG.stage.window.frameRate != FlxG.game.focusLostFramerate)
-			FlxG.stage.window.frameRate = ClientPrefs.data.framerate;
-
-		var currentTime = openfl.Lib.getTimer();
-		framesCount++;
-
-		if (currentTime >= updateTime)
-		{
-			var elapsed = currentTime - prevTime;
-			currentFPS = Math.ceil((framesCount * 1000) / elapsed);
-			framesCount = 0;
-			prevTime = currentTime;
-			updateTime = currentTime + 500;
+		final now:Float = haxe.Timer.stamp() * 1000;
+		times.push(now);
+		while (times[0] < now - 1000) times.shift();
+		// prevents the overlay from updating every frame, why would you need to anyways @crowplexus
+		if (deltaTimeout < 50) {
+			deltaTimeout += deltaTime;
+			return;
 		}
 
-		// Set Update and Draw framerate to the current FPS every 1.5 second to prevent "slowness" issue
-		if ((FlxG.updateFramerate >= currentFPS + 5 || FlxG.updateFramerate <= currentFPS - 5)
-			&& haxe.Timer.stamp() - lastFramerateUpdateTime >= 1.5
-			&& currentFPS >= 30)
-		{
-			FlxG.updateFramerate = FlxG.drawFramerate = currentFPS;
-			lastFramerateUpdateTime = haxe.Timer.stamp();
-		}
-
+		currentFPS = times.length < FlxG.updateFramerate ? times.length : FlxG.updateFramerate;		
 		updateText();
 		deltaTimeout = 0.0;
 	}
