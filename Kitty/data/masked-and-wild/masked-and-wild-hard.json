@@ -303,7 +303,7 @@
 	],
 	"player3": null,
 	"song": "masked-and-wild",
-	"stage": "black",
+	"stage": "no-bg",
 	"needsVoices": false,
 	"validScore": true,
 	"format": "psych_v1_convert",

@@ -10022,7 +10022,7 @@
 		]
 	],
 	"gfVersion": "bf-full-invis",
-	"stage": "black",
+	"stage": "no-bg",
 	"sections": 0,
 	"needsVoices": false,
 	"bpm": 235

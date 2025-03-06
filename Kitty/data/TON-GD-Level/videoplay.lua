@@ -4,7 +4,7 @@ local videoName = 'tongd'
 local offset = 0
 function onCountdownStarted()
     startVideo(videoName, false, true, false, false)
-    debugPrint('Loaded Video I hope?')
+    
 end
 function onSongStart()
     offset = getPropertyFromClass('backend.ClientPrefs','data.noteOffset')

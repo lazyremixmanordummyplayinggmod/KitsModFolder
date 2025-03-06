@@ -11,7 +11,7 @@ end
 
 function onEvent(name, value1, value2)
     if name == "TiltHudTimed" and getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
-        value1 = tonumber(value1)
+        value1 = tonumber(-value1)
         value2 = tonumber(value2)
 
         if value1 == 1234 then
@@ -23,14 +23,21 @@ function onEvent(name, value1, value2)
             else
                 setProperty('camHUD.angle', 0)
             end
-        elseif value2 < 0.011 then
-            if value1 == newV then
-                setProperty('camHUD.angle', -value1)
-            else
+        end
+        if value2 < 0.011 then
+            if whar ~= value1 then
+                lopping = false
+            end
+            if (value1 == newV) or lopping then
+                lopping = true
+                newV = -newV
+                whar = value1
+                setProperty('camHUD.angle', newV)
+            end
+            if not lopping then
+                newV = value1
                 setProperty('camHUD.angle', value1)
             end
-            ran = not ran
-            newV = value1
         elseif value2 > 0.011 then
             if value1 == 0 then
                 angle = 0

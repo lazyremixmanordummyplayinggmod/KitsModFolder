@@ -1,6 +1,3 @@
---local size = 0
---local lerpedSize = 0
---local firstTime = true
 local hiding = true
 function onCreate()
     makeLuaSprite("vignet", 'me/popup/vignettepgk',0,0)
@@ -12,11 +9,10 @@ function onCreate()
     setProperty("vignet.alpha", 0)
 
     makeLuaSprite("blackSc", 'me/popup/blackScreen',0,0)
-    screenCenter("blackSc", 'xy')
     setObjectCamera("blackSc", 'other')
     setScrollFactor("blackSc", 0, 0)
-    setObjectOrder("blackSc", 120)
-    scaleObject("blackSc", 2,2)
+    setObjectOrder("blackSc", 200)
+    scaleObject("blackSc", 4,4)
     setProperty("blackSc.alpha", 0)
 end
 
@@ -30,13 +26,15 @@ function onEvent(name, value1, value2)
             hiding = true
             doTweenAlpha("stpoo", "vignet", 0, 1, "circOut")
             screenCenter("vignet", 'xy')
-            startTween("sizerTw", "vignet.scale", {x = sizea, y = sizea}, 1, {ease = 'expoOut'})
+            doTweenX("sizerTwx", "vignet.scale", sizea, 1, 'expoOut')
+            doTweenY("sizerTwy", "vignet.scale", sizea, 1, 'expoOut')
         end
         if value2 ~= 'hide' then
             hiding = false
             screenCenter("vignet", 'xy')
             setProperty('vignet.alpha', 1)
-            startTween("sizerTw", "vignet.scale", {x = sizea, y = sizea}, 1, {ease = 'expoOut'})
+            doTweenX("sizerTwx", "vignet.scale", sizea, 1, 'expoOut')
+            doTweenY("sizerTwy", "vignet.scale", sizea, 1, 'expoOut')
         end
         if value2 == 'black' then
             setProperty('blackSc.alpha', 1)

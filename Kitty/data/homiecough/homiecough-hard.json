@@ -1215,7 +1215,7 @@
 	"player3": null,
 	"song": "homiecough",
 	"ghostTapping": true,
-	"stage": "void",
+	"stage": "no-bg",
 	"needsVoices": false,
 	"validScore": true,
 	"format": "psych_v1_convert",
