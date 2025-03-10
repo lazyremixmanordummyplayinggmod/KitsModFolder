@@ -168,8 +168,8 @@ function hideUI(kPNa,kONa,hB)
 	if kPN or kON then
 		hudHideN()
 	end
-	setProperty('healthBar.alpha', 0);
-	setProperty('healthBarBG.alpha', 0);
+	setProperty('healthBar.alpha', hB);
+	setProperty('healthBarBG.alpha', hB);
 	setProperty('iconP1.alpha', 0);
 	setProperty('iconP2.alpha', 0);
 	setProperty('scoreTxt.alpha', 0);
