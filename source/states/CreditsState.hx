@@ -38,6 +38,12 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			["Internet Favorites Engine"],
+			["PringleKitten",	"pringlekitten", 	"I did this entire modification of Psych Engine",	"https://pringlekitten.carrd.co",	"000075"],
+			["Snowflake",		"snowflake",				"He made the new Background AND my Icon!",		"https://kumeno.carrd.co",		"89CFF0"],
+			["Psych Engine Server",	"discord",	"People on the Psych Engine Server, they\'re the reason I was able to know what I was doing!",	"https://discord.gg/2ka77eMXDv",	"550000"],
+			["Internet Favorites Server!", "discord", "", "https://discord.com/invite/qH6bu42nrw", "AA00AA"],
+			[""],
 			['Mobile Porting Team'],
 			['mcagabe19',			'lily',             'Head Porter of Psych Engine and Author of linc_luajit-rewriten',                       'https://youtube.com/@mcagabe19',		'FFE7C0'],
 			['Karim Akra',			'karim',			'Second Porter of Psych Engine',						'https://youtube.com/@Karim0690',		'FFB4F0'],

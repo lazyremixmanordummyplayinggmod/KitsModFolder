@@ -46,7 +46,7 @@ import states.TitleState;
 		public var mobileChoice:Int = 2;
 		//end
 	public var hideHud:Bool = false;
-	public var noteOffset:Int = 0;
+	public var noteOffset:Int = 90;
 	public var arrowRGB:Array<Array<FlxColor>> = [
 		[0xFFC24B99, 0xFFFFFFFF, 0xFF3C1F56],
 		[0xFF00FFFF, 0xFFFFFFFF, 0xFF1542B7],
@@ -65,7 +65,7 @@ import states.TitleState;
 	public var healthBarAlpha:Float = 1;
 	public var hitsoundVolume:Float = 0;
 	public var pauseMusic:String = 'Tea Time';
-	public var checkForUpdates:Bool = true;
+	public var checkForUpdates:Bool = false;
 	public var comboStacking:Bool = true;
 	public var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
