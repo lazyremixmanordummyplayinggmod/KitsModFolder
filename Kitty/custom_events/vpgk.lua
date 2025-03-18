@@ -10,7 +10,7 @@ function onCreate()
         luaGraphic('vignetOuterRight', 0, getProperty('lS-vignettepgk.y')-1000, 3400, 5000, '000000')
         luaGraphic('vignetOuterBottom', getProperty('lS-vignettepgk.x')-1500, 0, 7500, 2500, '000000')
     else
-        close(true)
+        close()
     end
 end
 

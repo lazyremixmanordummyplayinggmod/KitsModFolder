@@ -490,5 +490,5 @@ function sPFGa(tween,stl,bit,num)
 end
 
 function onDestroy()
-    close(true)
+    close()
 end

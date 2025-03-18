@@ -1,7 +1,12 @@
-
-local ffi = require("ffi")
-local fS, maxxed = false, false
 local script = false
+if buildTarget ~= 'android' then
+    ffi = require("ffi")
+elseif not getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement')
+    close()
+else
+    script = true
+end
+local fS, maxxed = false, false
 local mkT = false
 local mk2 = false
 local fP = false
@@ -13,21 +18,7 @@ local x = 320
 local y = 180
 local mx = 0
 local my = 0
-
 local colorT = 0x00000000
-
-function onCreatePost()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == false then
-        close(true)
-    else
-        script = true
-        if buildTarget == 'android' then
-            onDestroy = function () end
-            ffi, fS, maxxed = nil, nil, nil
-            return
-        end
-    end
-end
 
 function onEvent(name, value1, value2)
     if name == "transparentWindow" then
@@ -35,7 +26,6 @@ function onEvent(name, value1, value2)
             value1 = tonumber(value1)
             value2 = tonumber(value2)
             colorT = value2
-
             if value1 == 1 then
                 mkT = true
                 mk2 = false
@@ -122,6 +112,6 @@ function onDestroy()
         setPropertyFromClass("openfl.Lib", "application.window.height", ht)
         setPropertyFromClass("openfl.Lib", "application.window.x", x)
         setPropertyFromClass("openfl.Lib", "application.window.y", y)
-        close(true)
+        close()
     end
 end

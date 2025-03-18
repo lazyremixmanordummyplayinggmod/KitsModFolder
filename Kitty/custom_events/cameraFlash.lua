@@ -3,7 +3,7 @@ s = 0.8
 
 function onCreate()
     if not flashingLights then
-        close(true)
+        close()
     end
 end
 

@@ -1,3 +1,6 @@
+if not getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
+    close()
+end
 local ran = false
 local ran1 = false
 local thing = 1
@@ -6,13 +9,6 @@ local v1 = false
 local v2 = false
 local value1a = 0
 local value2a = 0
-
-
-function onCreatePost()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') == false then
-        close(true)
-    end
-end
 
 function tiltCamera(camera, value, ranVar)
     local angle = 0
@@ -43,25 +39,22 @@ function tiltCamera(camera, value, ranVar)
 end
 
 function onEvent(name, value1, value2)
-    if name == "Tilt" and getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
+    if name == "Tilt" then
         value1 = tonumber(value1)
         value2 = tonumber(value2)
-
         ran = tiltCamera('camHUD', value1, ran)
         ran1 = tiltCamera('camGame', value2, ran1)
     end
 end
 
 function onBeatHit()
-    if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
-        if v2 then
-            thing = -thing
-            doTweenAngle('rotate', 'camGame', thing * 5, crochet / 1000, 'quadInOut')
-        end
-        if v1 then
-            thing2 = -thing2
-            doTweenAngle('rotate', 'camHUD', thing2 * 5, crochet / 1000, 'quadInOut')
-        end
+    if v2 then
+        thing = -thing
+        doTweenAngle('rotate', 'camGame', thing * 5, crochet / 1000, 'quadInOut')
+    end
+    if v1 then
+        thing2 = -thing2
+        doTweenAngle('rotate', 'camHUD', thing2 * 5, crochet / 1000, 'quadInOut')
     end
 end
 
