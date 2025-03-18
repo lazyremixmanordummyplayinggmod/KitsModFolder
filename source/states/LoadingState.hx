@@ -218,7 +218,6 @@ class LoadingState extends MusicBeatState
 
 		#if PSYCH_WATERMARKS // PSYCH LOADING SCREEN
 		timePassed += elapsed;
-		shakeFl += elapsed * 3000;
 		var dots:String = '';
 		switch(Math.floor(timePassed % 1 * 3))
 		{
