@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="t1nman.png">
-	<!-- Created with Adobe Animate version 21.0.6.41649 -->
-	<!-- http://www.adobe.com/products/animate.html -->
 	<SubTexture name="Down0000" x="0" y="0" width="338" height="664" frameX="0" frameY="0" frameWidth="352" frameHeight="664"/>
 	<SubTexture name="Down0001" x="0" y="0" width="338" height="664" frameX="0" frameY="0" frameWidth="352" frameHeight="664"/>
 	<SubTexture name="Down0002" x="0" y="0" width="338" height="664" frameX="0" frameY="0" frameWidth="352" frameHeight="664"/>
