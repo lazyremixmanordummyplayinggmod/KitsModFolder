@@ -4,6 +4,7 @@ end
 ---------------------------------------
 -- This is the Entire Modchart Here! --
 ---------------------------------------
+local danceGame = false
 local nrn = false
 function onStepHit()
     if curStep == 4 then
@@ -218,7 +219,9 @@ function onStepHit()
     elseif curStep == 128 then
         local timeMove = 0
         usD(false, timeMove, 'linear', true)
-        ffi.C.SetWindowLongA(ffi.C.GetActiveWindow(), -20, 0x00000000)
+        if buildTarget ~= 'android' then
+            ffi.C.SetWindowLongA(ffi.C.GetActiveWindow(), -20, 0x00000000)
+        end
         nrn = true
         setProperty('stg1.alpha', 1)
         setProperty('stg2.alpha', 1)
@@ -227,8 +230,10 @@ function onStepHit()
         setProperty('gf.alpha', 1)
     elseif curStep == 370 then
         local winSize = 0.95
+
         setProperty('camHUD.zoom', winSize)
         setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
         setProperty('defaultCamUIZoom', winSize)
         setProperty('defaultCamZoom', winSize)
     elseif curStep == 372 then
@@ -236,27 +241,25 @@ function onStepHit()
 
         setProperty('camHUD.zoom', winSize)
         setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
         setProperty('defaultCamUIZoom', winSize)
         setProperty('defaultCamZoom', winSize)
-
         setProperty('stg1.alpha', 0)
         setProperty('stg2.alpha', 0)
         setProperty('stg3.alpha', 0)
-        setProperty('boyfriend.alpha', 1)
-        setProperty('gf.alpha', 1)
-        ffi.C.SetWindowLongA(ffi.C.GetActiveWindow(), -20, 0x00080000)
-        ffi.C.SetLayeredWindowAttributes(ffi.C.GetActiveWindow(), 0x00000000, 0, 0x00000001)
     elseif curStep == 374 then
         local winSize = 0.85
 
+        if buildTarget ~= 'android' then
+            ffi.C.SetWindowLongA(ffi.C.GetActiveWindow(), -20, 0x00080000)
+            ffi.C.SetLayeredWindowAttributes(ffi.C.GetActiveWindow(), 0x00000000, 0, 0x00000001)
+        end
+        nrn = false
         setProperty('camHUD.zoom', winSize)
         setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
         setProperty('defaultCamUIZoom', winSize)
         setProperty('defaultCamZoom', winSize)
-
-        setProperty('stg1.alpha', 0)
-        setProperty('stg2.alpha', 0)
-        setProperty('stg3.alpha', 0)
         setProperty('boyfriend.alpha', 0)
         setProperty('gf.alpha', 0)
     elseif curStep == 376 then
@@ -264,28 +267,77 @@ function onStepHit()
 
         setProperty('camHUD.zoom', winSize)
         setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
         setProperty('defaultCamUIZoom', winSize)
         setProperty('defaultCamZoom', winSize)
-    elseif curStep == 376 then
+    elseif curStep == 378 then
         local winSize = 0.75
 
         setProperty('camHUD.zoom', winSize)
         setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
         setProperty('defaultCamUIZoom', winSize)
         setProperty('defaultCamZoom', winSize)
-    elseif curStep == 376 then
+    elseif curStep == 380 then
         local winSize = 0.7
 
         setProperty('camHUD.zoom', winSize)
         setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
         setProperty('defaultCamUIZoom', winSize)
         setProperty('defaultCamZoom', winSize)
-    elseif curStep == 376 then
+    elseif curStep == 444 then
+        local winSize = 0.6
+
+        setProperty('camHUD.zoom', winSize)
+        setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
+        setProperty('defaultCamUIZoom', winSize)
+        setProperty('defaultCamZoom', winSize)
+    elseif curStep == 447 then
+        danceGame = true
         
     end  -- First size for camHUD winSize was 0.5 for Noting and currently 0.7
+    if danceGame and curStep % 2 == 0 then
+        local stepMove = 2 * stepCrochet/1000
+        if done then
+            doTweenY('danceZ1Y', 'camGame', 80, stepMove, 'quartInOut')
+            doTweenY('danceZ2Y', 'camHUD', 80, stepMove, 'quartInOut')
+            doTweenY('danceZ3Y', 'camOther', 80, stepMove, 'quartInOut')
+            done = false
+        elseif not done then
+            doTweenY('danceZ1Y', 'camGame', -80, stepMove, 'quadOut')
+            doTweenY('danceZ2Y', 'camHUD', -80, stepMove, 'quadOut')
+            doTweenY('danceZ3Y', 'camOther', -80, stepMove, 'quadOut')
+            done = true
+        end
+    end
     -- ffi.C.SetWindowLongA(ffi.C.GetActiveWindow(), -20, 0x00080000)
     -- ffi.C.SetLayeredWindowAttributes(ffi.C.GetActiveWindow(), 0x00000000, 0, 0x00000001)
     setTextString('step', 'Step: '..curStep)
+end
+
+function onBeatHit()
+    if danceGame then
+        local stepMove = 3 * stepCrochet/1000
+        if doneB then
+            doTweenX('danceZ1X', 'camGame', 120, stepMove, 'linear')
+            doTweenX('danceZ2X', 'camHUD', 120, stepMove, 'linear')
+            doTweenX('danceZ3X', 'camOther', 120, stepMove, 'linear')
+            doTweenAngle('danceZ1A', 'camGame', 10, stepMove, 'cubicInOut')
+            doTweenAngle('danceZ2A', 'camHUD', 10, stepMove, 'cubicInOut')
+            doTweenAngle('danceZ3A', 'camOther', 10, stepMove, 'cubicInOut')
+            doneB = false
+        elseif not doneB then
+            doTweenX('danceZ1X', 'camGame', -120, stepMove, 'linear')
+            doTweenX('danceZ2X', 'camHUD', -120, stepMove, 'linear')
+            doTweenX('danceZ3X', 'camOther', -120, stepMove, 'linear')
+            doTweenAngle('danceZ1A', 'camGame', -10, stepMove, 'cubicInOut')
+            doTweenAngle('danceZ2A', 'camHUD', -10, stepMove, 'cubicInOut')
+            doTweenAngle('danceZ3A', 'camOther', -10, stepMove, 'cubicInOut')
+            doneB = true
+        end
+    end
 end
 
 function usD(yes, tMo, twn, mw)
@@ -357,7 +409,7 @@ function usD(yes, tMo, twn, mw)
 end
 
 function onTweenCompleted(tag)
-    if tag == '1' or tag == '2z' then
+    if tag == '1' or tag == '2z' or tag == '2zg' then
         setProperty("defaultCamUIZoom",getProperty('camHUD.zoom'))
         setProperty("defaultCamZoom",getProperty('camGame.zoom'))
     end
@@ -366,27 +418,6 @@ end
 --------------------
 -- Variables Here --
 --------------------
-
-local startWidth = 0
-local startHeight = 0
-local targetWidth = 0
-local targetHeight = 0
-local startX = 0
-local targetX = 0
-local startY = 0
-local tweenDurationSize = 0
-local tweenDurationPos = 0
-local tweenStartTimeSize = 0
-local tweenStartTimePos = 0
-local tweenEaseSize = nil
-local tweenEasePos = nil
-local isTweeningSize = false
-local isTweeningPos = false
-
-local startOffsetX = 0
-local startOffsetY = 0
-local targetOffsetX = 0
-local targetOffsetY = 0
 
 function onCreatePost()
     luaSprite('stg1', 'cg5/bg/mixroom', -480, -270, 0.88, 0.88, 0.9, 0, 'game', 'n', 3);
@@ -428,7 +459,7 @@ function onCreatePost()
     -- Custom FPS Text since window makes black hard to see --
     ----------------------------------------------------------
     setPropertyFromClass("Main", "fpsVar.visible", false)
-    luaText('fpsDrawer', '', 0, 0, 0, 20, 'other', 200, 'ffff00', 1, 'ff0000', 'left')
+    luaText('fpsDrawer', '', 0, 0, 0, 20, 'other', 200, 'ffffff', 0, '000000', 'left')
     setTextString("fpsDrawer", getPropertyFromClass("Main", "fpsVar.text"))
     runTimer('fpsT', 0.07)
 end
@@ -500,18 +531,6 @@ function onSongStart()
 
     setProperty('showRating', false);
 	setProperty('showComboNum', false);
-    setPropertyFromGroup('opponentStrums',0,'x',defaultOpponentStrumX0+75);
-    setPropertyFromGroup('opponentStrums',1,'x',defaultOpponentStrumX1+75);
-    setPropertyFromGroup('opponentStrums',2,'x',defaultOpponentStrumX2-79);
-    setPropertyFromGroup('opponentStrums',3,'x',defaultOpponentStrumX3-79);
-    setPropertyFromGroup('playerStrums',0,'x',defaultPlayerStrumX0-323);
-    setPropertyFromGroup('playerStrums',1,'x',defaultPlayerStrumX1-323);
-    setPropertyFromGroup('playerStrums',2,'x',defaultPlayerStrumX2-323);
-    setPropertyFromGroup('playerStrums',3,'x',defaultPlayerStrumX3-323);
-    setPropertyFromGroup('opponentStrums',0,'alpha',0);
-    setPropertyFromGroup('opponentStrums',1,'alpha',0);
-    setPropertyFromGroup('opponentStrums',2,'alpha',0);
-    setPropertyFromGroup('opponentStrums',3,'alpha',0);
     setProperty('healthBar.alpha', 0);
 	setProperty('healthBarBG.alpha', 0);
 	setProperty('iconP1.alpha', 0);
@@ -523,11 +542,6 @@ function onSongStart()
 	setProperty('timeBarBG.visible', false)
 	setProperty('timeTxt.visible', false)
 
-    -----------------------------------------------------------------------------------
-    -- No Longer gonna do this but it was to make a sorta fake window title bar hehe --
-    -----------------------------------------------------------------------------------
-    --luaGraphic('bg', 0, -11, 1280, 731, '0000bb')
-    --setObjectCamera('bg', 'game')
     luaGraphic('whiteBar', 0, -40, 1280, 30, 'FFFFFF')
     luaSprite('fnf', 'me/popup/fnf', 8, -33, 1, 1, 0, 1, 'hud', 'n', 106)
     luaText('gameTitle', 'Friday Night Funkin\': Internet Favorites Engine', 0, 29, -34, 16, 'hud', 104, '0000ff', 0, '', 'left')

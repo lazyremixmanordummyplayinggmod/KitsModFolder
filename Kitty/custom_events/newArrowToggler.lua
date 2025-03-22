@@ -1,4 +1,3 @@
-
 local script = false
 function onCreatePost()
     if getPropertyFromClass('backend.ClientPrefs', 'data.assetMovement') then
