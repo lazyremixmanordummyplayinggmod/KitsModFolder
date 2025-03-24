@@ -11,6 +11,8 @@ import states.StoryMenuState;
 import states.FreeplayState;
 import lime.ui.Haptic;
 
+import psychlua.*;
+
 class GameOverSubstate extends MusicBeatSubstate
 {
 	public var boyfriend:Character;
@@ -160,11 +162,19 @@ class GameOverSubstate extends MusicBeatSubstate
 		if(!isEnding)
 		{
 			if (controls.ACCEPT)
-			{
-				endBullshit();
-			}
+				{
+					var ret:Dynamic = PlayState.instance.callOnScripts('onGameOverConfirmPre', true);
+					if (ret == LuaUtils.Function_Stop)
+						return;
+	
+					endBullshit();
+				}
 			else if (controls.BACK)
 			{
+				var ret:Dynamic = PlayState.instance.callOnScripts('onGameOverLeavePre', true);
+				if (ret == LuaUtils.Function_Stop)
+					return;
+				
 				#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 				FlxG.camera.visible = false;
 				FlxG.sound.music.stop();
