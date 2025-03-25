@@ -1,4 +1,3 @@
-close()
 function onUpdate()
     if getProperty('health') < 0.4 then
         callMethod('iconP2.changeIcon', { 'bossguy' }) -- Change to the winning icon

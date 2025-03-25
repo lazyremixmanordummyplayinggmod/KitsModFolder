@@ -6,6 +6,7 @@ function onCreate()
     setPropertyFromClass('substates.GameOverSubstate', 'loopSoundName', 'nothing');
     setPropertyFromClass('substates.GameOverSubstate', 'endSoundName', 'nothing');
 end
+
 function onSongStart()
     local hpPositionx = 350
     local hpPositiony = 600

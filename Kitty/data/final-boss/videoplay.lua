@@ -1,13 +1,17 @@
 local videoName = 'finalboss'
 
-
+startGame = false
 local offset = 0
-function onCountdownTick(counter)
-    if counter == 0 then
+function onStartCountdown()
+    if not startGame then
+        runTimer('startGame', 2)
         startVideo(videoName, false, true)
         setObjectCamera('videoCutscene','game')
         setProperty('videoCutscene.alpha', 0.1)
         setProperty('camGame.zoom',zoom)
+        return Function_Stop
+    elseif startGame then
+        return Function_Continue
     end
 end
 function onSongStart()
@@ -20,6 +24,10 @@ function onSongStart()
 end
 
 function onTimerCompleted(tag)
+    if tag == 'startGame' then
+        startGame = true
+        startCountdown()
+    end
     if tag == 'vid' then
         callScript('scripts/videoSprite', 'makeVideoSprite', {videoName, videoName,'camGame',1})
         close()
