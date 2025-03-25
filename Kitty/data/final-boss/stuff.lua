@@ -7,8 +7,8 @@ function onCreate()
     setPropertyFromClass('substates.GameOverSubstate', 'endSoundName', 'nothing');
 end
 function onSongStart()
-    local hpPositionx = 610
-    local hpPositiony = 620
+    local hpPositionx = 350
+    local hpPositiony = 600
     makeLuaSprite('b6', 'me/popup/blue6', hpPositionx, hpPositiony)
     setObjectCamera('b6', 'hud')
     addLuaSprite('b6')
@@ -47,21 +47,33 @@ function onSongStart()
     setObjectCamera('deadText', 'other')
     setProperty('deadText.alpha', 0)
     addLuaText('deadText')
+
+    setProperty('healthGain', 0)
+    setProperty('healthLoss', 0)
+    setHealth(playerHealth/50)
+    setProperty('camZoomingMult', 0)
 end
 
+local invincible = false
+
 function noteMiss()
-    playerHealth = playerHealth-1
-    setProperty('b'..playerHealth..'.alpha', 1)
-    setProperty('b'..(playerHealth+1)..'.alpha', 0)
-    if playerHealth == 0 and not practice then
-        setProperty('health', 0)
-    elseif playerHealth == 0 and practice then
-        setProperty('deadText.alpha', 1)
-        close()
+    if not invincible then
+        playerHealth = playerHealth-1
+        setProperty('b'..playerHealth..'.alpha', 1)
+        setProperty('b'..(playerHealth+1)..'.alpha', 0)
+        setHealth(playerHealth/50)
+        if playerHealth == 0 and not practice then
+            setHealth(0)
+        elseif playerHealth == 0 and practice then
+            setProperty('deadText.alpha', 1)
+            close()
+        end
+        invincible = true
+        runTimer('invincible', 2)
     end
 end
 
-function onUpdatePost()
+function onUpdate()
     if curBeat < 1 then
         setProperty('timeBar.visible', false)
         setProperty('timeBarBG.visible', false)
@@ -76,7 +88,7 @@ function onUpdatePost()
 end
 
 local enterPressCount = 0
-
+local waited = false
 function onGameOverStart()
     makeLuaSprite('itsoverScreen', 'me/popup/itsover', 0, 0)
     setObjectCamera('itsoverScreen', 'other')
@@ -84,50 +96,72 @@ function onGameOverStart()
     addLuaSprite('itsoverScreen', true)
     startVideo('gameover/itsovervid', false)
     runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
+    runTimer('wait', 4)
 end
 
 function onGameOverConfirmPre(retry)
-    if enterPressCount == 4 then
-        return Function_Stop
-    elseif enterPressCount == 3 then
-        cancelTimer('itsoverLoop')
-        stopSound('itsOLoop')
-        startVideo('gameover/itsnotovervid', false, true)
-        setProperty('itsoverScreen.alpha', 0)
-        setObjectCamera('videoCutscene', 'game')
-        enterPressCount = 4
-        runTimer('restartSong1', 1)
-        return Function_Stop
+    if enterPressCount == 3 then
+        if waited then
+            waited = false
+            cancelTimer('itsoverLoop')
+            stopSound('itsOLoop')
+            startVideo('gameover/itsnotovervid', false, true)
+            setProperty('itsoverScreen.alpha', 0)
+            setObjectCamera('videoCutscene', 'game')
+            enterPressCount = 4
+            runTimer('restartSong1', 1)
+            runTimer('wait', 0.3)
+            return Function_Stop
+        end
     elseif enterPressCount == 2 then
-        cancelTimer('itsoverLoop')
-        stopSound('itsOLoop')
-        startVideo('gameover/noto3', false)
-        setProperty('itsoverScreen.alpha', 0)
-        enterPressCount = 3
-        runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
-        return Function_Stop
+        if waited then
+            waited = false
+            cancelTimer('itsoverLoop')
+            stopSound('itsOLoop')
+            startVideo('gameover/noto3', false)
+            setProperty('itsoverScreen.alpha', 0)
+            enterPressCount = 3
+            runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
+            runTimer('wait', 0.3)
+            return Function_Stop
+        end
     elseif enterPressCount == 1 then
-        cancelTimer('itsoverLoop')
-        stopSound('itsOLoop')
-        startVideo('gameover/noto2', false)
-        setProperty('itsoverScreen.alpha', 0)
-        enterPressCount = 2
-        runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
-        return Function_Stop
+        if waited then
+            waited = false
+            cancelTimer('itsoverLoop')
+            stopSound('itsOLoop')
+            startVideo('gameover/noto2', false)
+            setProperty('itsoverScreen.alpha', 0)
+            enterPressCount = 2
+            runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
+            runTimer('wait', 0.3)
+            return Function_Stop
+        end
     elseif enterPressCount == 0 then
-        cancelTimer('itsoverLoop')
-        stopSound('itsOLoop')
-        startVideo('gameover/noto1', false)
-        setProperty('itsoverScreen.alpha', 0)
-        enterPressCount = 1
-        runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
-        return Function_Stop
+        if waited then
+            waited = false
+            cancelTimer('itsoverLoop')
+            stopSound('itsOLoop')
+            startVideo('gameover/noto1', false)
+            setProperty('itsoverScreen.alpha', 0)
+            enterPressCount = 1
+            runTimer('itsoverLoop', runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;'))
+            runTimer('wait', 0.3)
+            return Function_Stop
+        end
     end
+    return Function_Stop
 end
 
 function onTimerCompleted(tag)
+    if tag == 'wait' then
+        waited = true
+    end
+    if tag == 'invincible' then
+        invincible = false
+    end
     if tag == 'restartSong1' then
-        runTimer('restartSong2', (runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;')-3.8))
+        runTimer('restartSong2', (runHaxeCode('game.videoCutscene.videoSprite.bitmap.length/1000;')-3.6))
     end
     if tag == 'restartSong2' then
         restartSong()

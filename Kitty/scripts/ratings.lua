@@ -1,3 +1,7 @@
+if songName == 'final-boss' then
+	close()
+end
+
 local position = 1 -- 1 is Left | 2 is Right
 local uiType = 0 -- 0 is Psych UI | 1 is IFE UI | 2 is a Mix of both | 3 Is both but doesn't show "Perfects" and uses only health bar
 local uiFollowsHideUIEvent = false -- For separate songs, make a lua script that calls this script to change this to true
@@ -170,7 +174,7 @@ function txtSet(tag,w,a,t,o)
 end
 
 function onCreatePost()
-    health = (getProperty('health')*50)
+    health = (getHealth()*50)
     nr = (math.floor(rating*10000)/100)
     --Text Basics!
     luatxt("msText", 'ms', 0, 0, 0, 'other', 20, 'FFFFFF', '.', 'left', '.')
@@ -293,6 +297,7 @@ function onSongStart()
         end
         removeLuaSprite("mainbeat")
     end
+    allowCountdown = true
 end
 
 --This moves the rating text forward based on when the credits text show up, positions vary for the length of the credit names
@@ -332,7 +337,7 @@ end
 
 function updHP()
     if allowCountdown then
-        health = (getProperty('health')*50)
+        health = (getHealth()*50)
         if health >= 100 then
             health = 100
         end

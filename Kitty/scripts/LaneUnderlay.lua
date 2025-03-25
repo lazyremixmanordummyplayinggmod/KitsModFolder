@@ -1,5 +1,7 @@
+if songName == 'final-boss' then
+	close()
+end
 --Made by RamenDominoes edited by PringleKitten
-
 allowCountdown = false
 allowVerticalScroll = true
 allowHorizontalScroll = false
