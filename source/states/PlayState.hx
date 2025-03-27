@@ -367,7 +367,6 @@ class PlayState extends MusicBeatState
 		curStage = SONG.stage;
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
-		defaultCamZoom = stageData.defaultZoom;
 		if (!Math.isNaN(stageData.defaultUIZoom))
 			defaultCamUIZoom = stageData.defaultUIZoom;
 		else
@@ -586,7 +585,6 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.data.hideHud;
-		updateScore(false);
 		uiGroup.add(scoreTxt);
 
 		botplayTxt = new FlxText(400, healthBar.y - 90, FlxG.width - 800, Language.getPhrase("Botplay").toUpperCase(), 32);
@@ -1360,19 +1358,18 @@ class PlayState extends MusicBeatState
 			songCheated = 1;
 			cheatMult = 0.1;
 		}
-
 		cheatMult = Math.abs(((0.25*(playbackRate-1))+1)*cheatMult);
 
 		stagesFunc(function(stage:BaseStage) stage.startSong());
 
 		// Song duration in a float, useful for the time left feature
-		songLength = FlxG.sound.music.length;
+		songLength = FlxG.sound.music.length + ClientPrefs.data.noteOffset;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 
 		#if DISCORD_ALLOWED
 		// Updating Discord Rich Presence (with Time Left)
-		if(autoUpdateRPC) DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength);
+		if(autoUpdateRPC) DiscordClient.changePresence(detailsText, CoolUtil.floorDecimal(ratingPercent * 100, 2)+"%" + "-Miss: " + songMisses + "-Hit: " + songHits + "-Combo: " + combo, iconP2.getCharacter(), true, songLength);
 		#end
 		setOnScripts('songLength', songLength);
 		callOnScripts('onSongStart');
@@ -1751,9 +1748,9 @@ class PlayState extends MusicBeatState
 		if(!autoUpdateRPC) return;
 
 		if (showTime)
-			DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.data.noteOffset);
+			DiscordClient.changePresence(detailsText, CoolUtil.floorDecimal(ratingPercent * 100, 2)+"%" + "-Miss: " + songMisses + "-Hit: " + songHits + "-Combo: " + combo, iconP2.getCharacter(), true, songLength - Conductor.songPosition - ClientPrefs.data.noteOffset);
 		else
-			DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+			DiscordClient.changePresence(detailsText, CoolUtil.floorDecimal(ratingPercent * 100, 2)+"%" + "-Miss: " + songMisses + "-Hit: " + songHits + "-Combo: " + combo, iconP2.getCharacter(), true, songLength);
 		#end
 	}
 
@@ -1814,6 +1811,10 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
+		if(practiceTxt != null && practiceTxt.visible) {
+			practiceSine += 180 * elapsed;
+			practiceTxt.alpha = 1 - Math.sin((Math.PI * practiceSine) / 180);
+		}
 		if (controls.PAUSE #if android || FlxG.android.justReleased.BACK #end && startedCountdown && canPause)
 		{
 			var ret:Dynamic = callOnScripts('onPause', null, true);
@@ -2049,7 +2050,7 @@ class PlayState extends MusicBeatState
 		openSubState(new PauseSubState());
 
 		#if DISCORD_ALLOWED
-		if(autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+		if(autoUpdateRPC) DiscordClient.changePresence(detailsPausedText, CoolUtil.floorDecimal(ratingPercent * 100, 2)+"%" + "-Miss: " + songMisses + "-Hit: " + songHits + "-Combo: " + combo, iconP2.getCharacter());
 		#end
 	}
 
@@ -2146,7 +2147,7 @@ class PlayState extends MusicBeatState
 
 				#if DISCORD_ALLOWED
 				// Game Over doesn't get his its variable because it's only used here
-				if(autoUpdateRPC) DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
+				if(autoUpdateRPC) DiscordClient.changePresence("Game Over - " + detailsText, CoolUtil.floorDecimal(ratingPercent * 100, 2)+"%" + "-Miss: " + songMisses + "-Hit: " + songHits + "-Combo: " + combo, iconP2.getCharacter());
 				#end
 				isDead = true;
 				return true;
@@ -3755,11 +3756,12 @@ class PlayState extends MusicBeatState
 
 	#if (!flash && sys)
 	public var runtimeShaders:Map<String, Array<String>> = new Map<String, Array<String>>();
+	#end
 	public function createRuntimeShader(shaderName:String):ErrorHandledRuntimeShader
 	{
+		#if (!flash && sys)
 		if(!ClientPrefs.data.shaders) return new ErrorHandledRuntimeShader(shaderName);
 
-		#if (!flash && MODS_ALLOWED && sys)
 		if(!runtimeShaders.exists(shaderName) && !initLuaShader(shaderName))
 		{
 			FlxG.log.warn('Shader $shaderName is missing!');
@@ -3778,7 +3780,7 @@ class PlayState extends MusicBeatState
 	{
 		if(!ClientPrefs.data.shaders) return false;
 
-		#if (MODS_ALLOWED && !flash && sys)
+		#if (!flash && sys)
 		if(runtimeShaders.exists(name))
 		{
 			FlxG.log.warn('Shader $name was already initialized!');
@@ -3821,7 +3823,6 @@ class PlayState extends MusicBeatState
 		#end
 		return false;
 	}
-	#end
 
 	public function makeLuaTouchPad(DPadMode:String, ActionMode:String) {
 		if(members.contains(luaTouchPad)) return;
