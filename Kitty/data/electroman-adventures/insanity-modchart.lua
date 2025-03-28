@@ -296,6 +296,50 @@ function onStepHit()
         setProperty('defaultCamZoom', winSize)
     elseif curStep == 447 then
         danceGame = true
+        setPropertyFromClass('openfl.Lib', 'application.window.x', 0)
+        setPropertyFromClass('openfl.Lib', 'application.window.y', -1)
+        setPropertyFromClass("openfl.Lib", "application.window.width", 1920)
+        setPropertyFromClass("openfl.Lib", "application.window.height", 1081)
+    elseif curStep == 700 then
+        danceGame = false
+        for _, obj in pairs({'danceZ1Y', 'danceZ2Y', 'danceZ3Y','danceZ1X', 'danceZ2X', 'danceZ3X','danceZ1A', 'danceZ2A', 'danceZ3A'}) do
+            cancelTween(obj)
+        end
+        setProperty('whiteBar.alpha', 0)
+        setProperty('gameTitle.alpha', 0)
+        setProperty('fnf.alpha', 0)
+    elseif curStep == 701 then
+        local stepMove = 2 * stepCrochet/1000
+        doTweenAngle('danceZ1A', 'camGame', 0, stepMove, 'elasticIn')
+        doTweenAngle('danceZ2A', 'camHUD', 0, stepMove, 'elasticIn')
+        doTweenAngle('danceZ3A', 'camOther', 0, stepMove, 'elasticIn')
+        doTweenX('danceZ1X', 'camGame', 0, stepMove, 'elasticIn')
+        doTweenX('danceZ2X', 'camHUD', 0, stepMove, 'elasticIn')
+        doTweenX('danceZ3X', 'camOther', 0, stepMove, 'elasticIn')
+        doTweenY('danceZ1Y', 'camGame', 0, stepMove, 'elasticIn')
+        doTweenY('danceZ2Y', 'camHUD', 0, stepMove, 'elasticIn')
+        doTweenY('danceZ3Y', 'camOther', 0, stepMove, 'elasticIn')
+    elseif curStep == 704 then
+        setProperty('stg1.alpha', 1)
+        setProperty('stg2.alpha', 1)
+        setProperty('stg3.alpha', 1)
+        setPropertyFromClass('openfl.Lib', 'application.window.x', 0)
+        setPropertyFromClass('openfl.Lib', 'application.window.y', -1)
+        setPropertyFromClass("openfl.Lib", "application.window.width", 1920)
+        setPropertyFromClass("openfl.Lib", "application.window.height", 1081)
+        setProperty('boyfriend.alpha', 1)
+        setProperty('gf.alpha', 1)
+        local winSize = 1
+        
+        setProperty('camHUD.zoom', winSize)
+        setProperty('camGame.zoom', winSize)
+        setProperty('camOther.zoom', winSize)
+        setProperty('defaultCamUIZoom', winSize)
+        setProperty('defaultCamZoom', winSize)
+        if buildTarget ~= 'android' then
+            ffi.C.SetWindowLongA(ffi.C.GetActiveWindow(), -20, 0x00000000)
+        end
+        nrn = true
         
     end  -- First size for camHUD winSize was 0.5 for Noting and currently 0.7
     if danceGame and curStep % 2 == 0 then
@@ -423,8 +467,8 @@ function onCreatePost()
     luaSprite('stg1', 'cg5/bg/mixroom', -480, -270, 0.88, 0.88, 0.9, 0, 'game', 'n', 3);
     luaSprite('stg2', 'cg5/bg/ploosh', 990, 180, 1, 1, 0.9, 0, 'game', 'n', 6);
     luaSprite('stg3', 'cg5/bg/recordroom', -450, -200, 0.9, 0.9, 0.9, 0, 'game', 'n', 9);
-    setProperty('boyfriend.alpha', 1)
-    setProperty('gf.alpha', 1)
+    setProperty('boyfriend.alpha', 0)
+    setProperty('gf.alpha', 0)
 
     setObjectOrder("gfGroup", getObjectOrder("stg3")-1)
     setObjectOrder("boyfriendGroup", getObjectOrder("stg3")+1)
