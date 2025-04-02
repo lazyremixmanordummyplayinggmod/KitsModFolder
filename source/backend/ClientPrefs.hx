@@ -19,6 +19,7 @@ import states.TitleState;
 	public var popUpRating:Bool = true;
 	public var vsync:Bool = false;
 	public var gameOverVibration:Bool = false;
+	public var fpsRework:Bool = false;
 	
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
@@ -46,7 +47,7 @@ import states.TitleState;
 		public var mobileChoice:Int = 2;
 		//end
 	public var hideHud:Bool = false;
-	public var noteOffset:Int = 90;
+	public var noteOffset:Int = 100;
 	public var arrowRGB:Array<Array<FlxColor>> = [
 		[0xFFC24B99, 0xFFFFFFFF, 0xFF3C1F56],
 		[0xFF00FFFF, 0xFFFFFFFF, 0xFF1542B7],
@@ -235,7 +236,11 @@ class ClientPrefs {
 		}
 		#end
 
-		if(data.framerate > FlxG.drawFramerate)
+		if (data.fpsRework)
+			FlxG.stage.window.frameRate = data.framerate;
+		else
+		{
+			if (data.framerate > FlxG.drawFramerate)
 		{
 			FlxG.updateFramerate = data.framerate;
 			FlxG.drawFramerate = data.framerate;
@@ -244,6 +249,7 @@ class ClientPrefs {
 		{
 			FlxG.drawFramerate = data.framerate;
 			FlxG.updateFramerate = data.framerate;
+			}
 		}
 
 		if(FlxG.save.data.gameplaySettings != null)

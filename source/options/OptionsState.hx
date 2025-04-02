@@ -11,6 +11,7 @@ class OptionsState extends MusicBeatState
 	var options:Array<String> = [
 		'Note Colors',
 		'Mobile Controls',
+		'Mobile Options',
 		'Main Controls',
 		'Adjust Delay and Combo',
 		'Graphics',
@@ -18,7 +19,6 @@ class OptionsState extends MusicBeatState
 		'Gameplay',
 		'Internet Favorites Settings'
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
-		,'Mobile Options'
 	];
     private var grpOptions:FlxGroup;
     private static var curSelected:Int = 3;
@@ -52,6 +52,7 @@ class OptionsState extends MusicBeatState
         optionMap = new StringMap();
         optionMap.set('Note Colors', () -> openSubState(new options.NotesColorSubState()));
 		optionMap.set('Mobile Controls', () -> {persistentUpdate = false; openSubState(new mobile.substates.MobileControlSelectSubState());});
+		optionMap.set('Mobile Options', () -> openSubState(new mobile.options.MobileOptionsSubState()));
         optionMap.set('Main Controls', () -> openSubState(new options.ControlsSubState()));
         optionMap.set('Graphics', () -> openSubState(new options.GraphicsSettingsSubState()));
         optionMap.set('Visuals', () -> openSubState(new options.VisualsSettingsSubState()));
@@ -61,7 +62,6 @@ class OptionsState extends MusicBeatState
         #if TRANSLATIONS_ALLOWED
         optionMap.set('Language', () -> openSubState(new options.LanguageSubState()));
         #end
-		optionMap.set('Mobile Options', () -> openSubState(new mobile.options.MobileOptionsSubState()));
 
         grpOptions = new FlxGroup();
         add(grpOptions);
