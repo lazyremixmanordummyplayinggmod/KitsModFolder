@@ -3135,6 +3135,7 @@ class PlayState extends MusicBeatState
 				gf.specialAnim = true;
 			}
 		}
+		
 		vocals.volume = 0;
 	}
 

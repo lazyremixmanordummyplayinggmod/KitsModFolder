@@ -2060,6 +2060,14 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		Conductor.bpm = PlayState.SONG.bpm;
 	}
 
+	#if DISCORD_ALLOWED
+	function fixRPC() {
+		var curTime:String = FlxStringUtil.formatTime(Conductor.songPosition / 1000, true);
+		var songLength:String = (FlxG.sound.music != null) ? FlxStringUtil.formatTime(FlxG.sound.music.length / 1000, true) : '???';
+		DiscordClient.changePresence('Chart Editor | Song: ' + PlayState.SONG.song, 'Progress: ' + '$curTime / $songLength');
+	}
+	#end
+
 	function loadMusic(?killAudio:Bool = false)
 	{
 		setSongPlaying(false);
@@ -2126,7 +2134,7 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		}
 
 		#if DISCORD_ALLOWED
-		DiscordClient.changePresence('Chart Editor', 'Song: ' + PlayState.SONG.song);
+		fixRPC();
 		#end
 
 		updateAudioVolume();
@@ -2219,6 +2227,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 
 		trace('Note count: ${notes.length}');
 		trace('Events count: ${events.length}');
+		#if DISCORD_ALLOWED
+		fixRPC();
+		#end
 		loadSection();
 	}
 
@@ -2250,6 +2261,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		swagNote.active = false;
 		positionNoteXByData(swagNote);
 		positionNoteYOnTime(swagNote, secNum);
+		#if DISCORD_ALLOWED
+		fixRPC();
+		#end
 		return swagNote;
 	}
 
@@ -2269,6 +2283,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 			secNum++;
 		}
 		positionNoteYOnTime(swagEvent, secNum);
+		#if DISCORD_ALLOWED
+		fixRPC();
+		#end
 		return swagEvent;
 	}
 
@@ -5280,6 +5297,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		showOutput('Undo #${currentUndo+1}: ${action.action}');
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		currentUndo++;
+		#if DISCORD_ALLOWED
+		fixRPC();
+		#end
 	}
 	function redo()
 	{
@@ -5312,6 +5332,9 @@ class ChartingState extends MusicBeatState implements PsychUIEventHandler.PsychU
 		}
 		showOutput('Redo #${currentUndo+1}: ${action.action}');
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		#if DISCORD_ALLOWED
+		fixRPC();
+		#end
 	}
 
 	function actionPushNotes(dataNotes:Array<MetaNote>, dataEvents:Array<EventMetaNote>)
