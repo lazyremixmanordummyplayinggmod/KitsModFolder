@@ -367,10 +367,9 @@ class PlayState extends MusicBeatState
 		curStage = SONG.stage;
 
 		var stageData:StageFile = StageData.getStageFile(curStage);
+		defaultCamUIZoom = 1;
 		if (!Math.isNaN(stageData.defaultUIZoom))
 			defaultCamUIZoom = stageData.defaultUIZoom;
-		else
-			defaultCamUIZoom = 1;
 
 		stageUI = "normal";
 		if (stageData.stageUI != null && stageData.stageUI.trim().length > 0)
