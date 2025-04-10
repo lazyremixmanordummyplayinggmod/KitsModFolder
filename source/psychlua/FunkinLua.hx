@@ -89,6 +89,7 @@ class FunkinLua {
 		set('luaDebugMode', false);
 		set('luaDeprecatedWarnings', true);
 		set('version', MainMenuState.psychEngineVersion.trim());
+		set('iversion', MainMenuState.internetFavsVersion.trim());
 		set('modFolder', this.modFolder);
 
 		// Song/Week shit
@@ -197,10 +198,12 @@ class FunkinLua {
 		set('assetMovement', ClientPrefs.data.assetMovement);
 		set('healthDrain', ClientPrefs.data.healthDrain);
 		set('ratingPenalty', ClientPrefs.data.ratingPenalty);
+		set('lowPercentHurt', ClientPrefs.data.lowPercentHurt);
 		set('mechanics', ClientPrefs.data.mechanics);
 		set('mechanicsAgain', ClientPrefs.data.mechanicsAgain);
 		set('mobileMechanics', ClientPrefs.data.mobileMechanics);
 		set('mobileChoice', ClientPrefs.data.mobileChoice);
+		set('camMovement', ClientPrefs.data.camMovement);
 		//End
 		set('flashingLights', ClientPrefs.data.flashing);
 		set('noteOffset', ClientPrefs.data.noteOffset);
@@ -582,6 +585,8 @@ class FunkinLua {
 				case 'camgame' | 'game': camera = 'camGame';
 				case 'camhud' | 'hud': camera = 'camHUD';
 				case 'camother' | 'other': camera = 'camOther';
+				case 'camone' | 'one': camera = 'camOne';
+				case 'camtwo' | 'two': camera = 'camTwo';
 				default:
 					var cam:FlxCamera = MusicBeatState.getVariables().get(camera);
 					if (cam == null || !Std.isOfType(cam, FlxCamera)) camera = 'camGame';
@@ -855,6 +860,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "getCameraFollowY", () -> game.camFollow.y);
 
 		Lua_helper.add_callback(lua, "cameraShake", function(camera:String, intensity:Float, duration:Float) {
+			duration = duration/divideVal;
 			LuaUtils.cameraFromString(camera).shake(intensity, duration);
 		});
 
@@ -1731,8 +1737,9 @@ class FunkinLua {
 		if(PlayState.instance == null) return null;
 
 		var strumNote:StrumNote = PlayState.instance.strumLineNotes.members[note % PlayState.instance.strumLineNotes.length];
-		duration = duration/divideVal;
 		if(strumNote == null) return null;
+
+		duration = duration/divideVal;
 
 		if(tag != null)
 		{

@@ -66,6 +66,14 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
 
+		var option:GameplayOption = new GameplayOption('Camera Movement Multiplier:', 'camMoveMult', FLOAT, 15);
+		option.scrollSpeed = 10.0;
+		option.minValue = 1.0;
+		option.maxValue = 100.0;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		optionsArray.push(option);
+
 		optionsArray.push(new GameplayOption('Instakill on Miss', 'instakill', BOOL, false));
 		optionsArray.push(new GameplayOption('Practice Mode', 'practice', BOOL, false));
 		optionsArray.push(new GameplayOption('Botplay', 'botplay', BOOL, false));
@@ -367,7 +375,7 @@ class GameplayOption
 	public var type:OptionType = BOOL;
 
 	public var showBoyfriend:Bool = false;
-	public var scrollSpeed:Float = 50; //Only works on int/float, defines how fast it scrolls per second while holding left/right
+	public var scrollSpeed:Float = 500; //Only works on int/float, defines how fast it scrolls per second while holding left/right
 
 	private var variable:String = null; //Variable from ClientPrefs.hx's gameplaySettings
 	public var defaultValue:Dynamic = null;
